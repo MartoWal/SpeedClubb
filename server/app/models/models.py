@@ -120,3 +120,18 @@ class VideoComment(Base):
     # Relationships
     user = relationship("User", back_populates="video_comments")
 
+
+class DailyTriviaSession(Base):
+    __tablename__ = 'daily_trivia_sessions'
+
+    id = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
+    user_id = Column(String(36), ForeignKey('users.id'), nullable=False, index=True)
+    session_date = Column(String(10), nullable=False, index=True)  # 'YYYY-MM-DD'
+    score = Column(Integer, default=0, nullable=False)  # 0 a 5
+    credits_awarded = Column(Integer, default=0, nullable=False)
+    completed_at = Column(DateTime, default=datetime.utcnow, nullable=False)
+
+    # Relationships
+    user = relationship("User", backref="trivia_sessions")
+
+

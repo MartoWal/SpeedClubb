@@ -7,7 +7,7 @@ Implementa transacciones atómicas ACID para evitar duplicación de activos (ant
 - Regla 4: Trueque atómico 1 a 1 bajo una sola transacción ACID de SQLite.
 """
 
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, time
 from typing import List, Optional, Dict, Any
 from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlalchemy.orm import Session
@@ -26,6 +26,21 @@ from app.schemas.schemas import (
 router = APIRouter(prefix="/api/trades", tags=["Paddock Trade"])
 
 
+def get_daily_trade_bounds():
+    """
+    Calcula el inicio del día calendario y los segundos restantes hasta las 23:59:59 (medianoche).
+    Sincronizado con el reinicio de desafíos diarios.
+    """
+    now_local = datetime.now()
+    today_start_local = datetime.combine(now_local.date(), time(0, 0, 0))
+    tomorrow_start_local = datetime.combine(now_local.date() + timedelta(days=1), time(0, 0, 0))
+    seconds_to_midnight = max(0, int((tomorrow_start_local - now_local).total_seconds()))
+
+    offset = now_local - datetime.utcnow()
+    today_start_utc = today_start_local - offset
+    return today_start_utc, seconds_to_midnight
+
+
 @router.get("/status", response_model=TradeStatusResponse)
 def get_trade_status(
     user_id: str = Query("pilot-1", description="ID de piloto autenticado"),
@@ -33,20 +48,19 @@ def get_trade_status(
 ):
     """
     Devuelve la cuota del piloto:
-    - Ofertas creadas en las últimas 24 horas (máx 3).
+    - Ofertas creadas hoy (máx 3 por día, reinicio a las 23:59:59).
     - Ofertas activas simultáneas en el mercado (máx 3).
-    - Segundos restantes de cooldown si se alcanzó la cuota de 3.
+    - Segundos restantes hasta medianoche si se alcanzó la cuota de 3.
     """
-    now = datetime.utcnow()
-    window_start = now - timedelta(hours=24)
+    today_start_utc, seconds_to_midnight = get_daily_trade_bounds()
 
-    # 1. Permutas creadas en las últimas 24 horas
-    trades_in_24h = db.query(Trade).filter(
+    # 1. Permutas creadas en el día calendario
+    trades_today = db.query(Trade).filter(
         Trade.offer_user_id == user_id,
-        Trade.created_at >= window_start
+        Trade.created_at >= today_start_utc
     ).order_by(Trade.created_at.asc()).all()
 
-    trades_created_in_window = len(trades_in_24h)
+    trades_created_in_window = len(trades_today)
 
     # 2. Permutas activas simultáneas actualmente abiertas
     active_trades_count = db.query(Trade).filter(
@@ -57,19 +71,14 @@ def get_trade_status(
     # 3. Determinar si puede publicar
     can_create = (trades_created_in_window < 3) and (active_trades_count < 3)
 
-    # 4. Calcular tiempo de enfriamiento si alcanzó el cupo de 3 en 24h
-    cooldown_seconds = 0
-    if trades_created_in_window >= 3 and trades_in_24h:
-        oldest_trade = trades_in_24h[0]
-        expires_at = oldest_trade.created_at + timedelta(hours=24)
-        if expires_at > now:
-            cooldown_seconds = int((expires_at - now).total_seconds())
+    # 4. Enfriamiento si alcanzó el cupo de 3 diarias
+    cooldown_seconds = seconds_to_midnight if trades_created_in_window >= 3 else 0
 
     message = "Cuota disponible para publicar permutas."
     if active_trades_count >= 3:
         message = "Tienes 3 ofertas de permuta activas simultáneas. Espera a que se complete una o cancela una para publicar."
     elif trades_created_in_window >= 3:
-        message = f"Has alcanzado tu límite de 3 permutas cada 24 horas. Próximo cupo en {cooldown_seconds // 3600}h {(cooldown_seconds % 3600) // 60}m."
+        message = f"Has alcanzado tu límite de 3 permutas diarias. Tu cuota se reinicia a las 23:59:59 (en {seconds_to_midnight // 3600}h {(seconds_to_midnight % 3600) // 60}m)."
 
     return TradeStatusResponse(
         can_create_trade=can_create,
@@ -327,18 +336,17 @@ def create_trade(
                 detail="No puedes solicitar el mismo vehículo que estás entregando."
             )
 
-        # 1. Validar cuota de 3 en 24 horas
-        now = datetime.utcnow()
-        window_start = now - timedelta(hours=24)
-        trades_in_24h_count = db.query(Trade).filter(
+        # 1. Validar cuota de 3 diarias (reinicio a las 23:59:59)
+        today_start_utc, seconds_to_midnight = get_daily_trade_bounds()
+        trades_today_count = db.query(Trade).filter(
             Trade.offer_user_id == user_id,
-            Trade.created_at >= window_start
+            Trade.created_at >= today_start_utc
         ).count()
 
-        if trades_in_24h_count >= 3:
+        if trades_today_count >= 3:
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
-                detail="Has alcanzado tu límite máximo de 3 permutas cada 24 horas."
+                detail=f"Has alcanzado tu límite máximo de 3 permutas diarias. Tu cuota se reinicia a las 23:59:59 (en {seconds_to_midnight // 3600}h {(seconds_to_midnight % 3600) // 60}m)."
             )
 
         # 2. Validar cuota de 3 ofertas simultáneas activas

@@ -14,11 +14,15 @@ import { sound } from '../utils/soundEffects';
 export default function FooterTelemetry({ onTabClick }) {
   const { 
     unopenedCrates, 
+    dailyTriviaStatus,
     openPromoModal, 
     openCrateModal, 
     openTeamModal, 
     openChallengesModal 
   } = useGarageStore();
+
+  const isTriviaPlayed = dailyTriviaStatus?.played === true;
+  const triviaBadge = isTriviaPlayed ? '✓ HECHO' : '+300 CR';
 
   const navItems = [
     { 
@@ -46,7 +50,8 @@ export default function FooterTelemetry({ onTabClick }) {
       id: 'challenges', 
       label: 'DESAFÍOS', 
       icon: Trophy, 
-      badge: 'DIARIOS',
+      badge: triviaBadge,
+      badgeColor: isTriviaPlayed ? 'text-zinc-400 bg-zinc-800 border-zinc-700' : 'text-amber-300 bg-amber-950/60 border-amber-500/60 font-black',
       onClick: openChallengesModal
     },
   ];
@@ -107,10 +112,12 @@ export default function FooterTelemetry({ onTabClick }) {
               </span>
 
               {item.badge && (
-                <span className={`text-[10px] font-mono font-bold px-1.5 py-0.2 rounded-full ${
-                  item.badge === '!' 
-                    ? 'bg-racing-red text-white' 
-                    : 'bg-zinc-800 text-amber-300 border border-amber-600/40'
+                <span className={`text-[10px] font-mono font-bold px-1.5 py-0.2 rounded-full border ${
+                  item.badgeColor 
+                    ? item.badgeColor 
+                    : item.badge === '!' 
+                    ? 'bg-racing-red text-white border-red-500' 
+                    : 'bg-zinc-800 text-amber-300 border-amber-600/40'
                 }`}>
                   {item.badge}
                 </span>

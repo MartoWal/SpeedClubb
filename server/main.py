@@ -20,7 +20,8 @@ from app.api.garage import router as garage_router
 from app.api.unboxing import router as unboxing_router
 from app.api.economy import router as economy_router
 from app.api.trades import router as trades_router
-from app.models.models import VehicleCatalog, User, PackInventory, UserInventory, Trade
+from app.api.trivia import router as trivia_router
+from app.models.models import VehicleCatalog, User, PackInventory, UserInventory, Trade, DailyTriviaSession
 
 
 def seed_database_if_empty():
@@ -190,6 +191,7 @@ app.include_router(garage_router)
 app.include_router(unboxing_router)
 app.include_router(economy_router)
 app.include_router(trades_router)
+app.include_router(trivia_router)
 
 
 @app.get("/")

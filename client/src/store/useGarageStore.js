@@ -67,6 +67,10 @@ export const useGarageStore = create((set, get) => ({
   // Promo Codes & Daily Challenges State
   isPromoModalOpen: false,
   isChallengesModalOpen: false,
+  dailyTriviaStatus: null,
+  isLoadingTrivia: false,
+  triviaError: null,
+  triviaResult: null,
   redeemedCodes: (() => {
     try {
       return JSON.parse(localStorage.getItem('speedclub_redeemed_codes') || '[]');
@@ -721,11 +725,70 @@ export const useGarageStore = create((set, get) => ({
   openChallengesModal: () => {
     sound.playSelect();
     set({ isChallengesModalOpen: true });
+    get().fetchDailyTrivia();
   },
 
   closeChallengesModal: () => {
     sound.playSelect();
     set({ isChallengesModalOpen: false });
+  },
+
+  fetchDailyTrivia: async () => {
+    const { pilot, currentUser } = get();
+    const userId = currentUser?.id || pilot?.id || 'pilot-1';
+    set({ isLoadingTrivia: true, triviaError: null });
+    try {
+      const res = await fetch(`http://127.0.0.1:8000/api/trivia/today?user_id=${userId}`);
+      if (res.ok) {
+        const data = await res.json();
+        set({ dailyTriviaStatus: data, isLoadingTrivia: false });
+        return data;
+      }
+    } catch (err) {
+      console.warn('Error fetching daily trivia:', err);
+    }
+    set({ isLoadingTrivia: false });
+  },
+
+  submitDailyTrivia: async (answers) => {
+    const { pilot, currentUser } = get();
+    const userId = currentUser?.id || pilot?.id || 'pilot-1';
+    set({ isLoadingTrivia: true, triviaError: null });
+    try {
+      const res = await fetch('http://127.0.0.1:8000/api/trivia/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          user_id: userId,
+          answers: answers
+        })
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        set({ triviaError: data.detail || 'Error al enviar trivia', isLoadingTrivia: false });
+        return { success: false, error: data.detail };
+      }
+
+      // Update user credits and status in store
+      set((state) => ({
+        racingCredits: data.new_balance,
+        triviaResult: data,
+        dailyTriviaStatus: {
+          ...state.dailyTriviaStatus,
+          played: true,
+          score: data.score,
+          credits_awarded: data.credits_awarded,
+          seconds_to_midnight: data.seconds_to_midnight
+        },
+        isLoadingTrivia: false
+      }));
+
+      sound.playReward();
+      return { success: true, data };
+    } catch (err) {
+      set({ triviaError: err.message, isLoadingTrivia: false });
+      return { success: false, error: err.message };
+    }
   },
 
   redeemPromoCode: async (rawCode) => {
