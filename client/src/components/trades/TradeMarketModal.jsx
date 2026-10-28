@@ -155,21 +155,56 @@ export default function TradeMarketModal() {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/85 backdrop-blur-md overflow-hidden select-none">
-      {/* Background Ambience Layer */}
-      <div className="absolute inset-0 carbon-pattern opacity-25 pointer-events-none" />
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80 overflow-hidden select-none">
+      {/* ============================================================ */}
+      {/* THEMED ATMOSPHERIC BACKGROUND (HIGH FIDELITY & RESPONSIVE)   */}
+      {/* ============================================================ */}
+      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+        <motion.img
+          src="/assets/backgrounds/fondo_intercambios.jpg"
+          alt="Fondo Intercambios Paddock"
+          initial={{ opacity: 0, scale: 1.05 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6, ease: 'easeOut' }}
+          className="w-full h-full object-cover object-center filter brightness-[0.80] contrast-[1.06] saturate-[1.12]"
+        />
+        {/* Soft, Light Shading & Vignette matching Album Themes */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/50" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/45 via-transparent to-black/45" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_45%,rgba(0,0,0,0.55)_100%)]" />
+      </div>
 
       {/* Main Container Window */}
       <motion.div 
         initial={{ opacity: 0, scale: 0.95, y: 10 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.95 }}
-        className="relative z-10 w-full max-w-5xl h-[94vh] max-h-[860px] bg-zinc-950 border-2 border-zinc-700/80 rounded-2xl shadow-2xl flex flex-col overflow-hidden text-zinc-100"
+        className="relative z-10 w-full max-w-6xl h-[94vh] max-h-[880px] bg-zinc-950/85 backdrop-blur-xl border-2 border-zinc-700/80 rounded-2xl shadow-2xl flex flex-col overflow-hidden text-zinc-100"
       >
+        {/* Thematic Background Underlay inside modal for depth (matching ThemePageSpread) */}
+        <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden rounded-2xl">
+          <img
+            src="/assets/backgrounds/fondo_intercambios.jpg"
+            alt="Interior Ambiance"
+            className="w-full h-full object-cover object-center filter brightness-[0.45] contrast-[1.08] saturate-[1.10] scale-[1.01]"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-zinc-950/90 via-zinc-950/80 to-zinc-950/95" />
+          <div className="absolute inset-0 carbon-pattern opacity-15" />
+        </div>
+
+        {/* Top showroom banner strip in full color (Album Style) */}
+        <div className="absolute top-0 inset-x-0 h-28 opacity-25 pointer-events-none overflow-hidden">
+          <img
+            src="/assets/backgrounds/fondo_intercambios.jpg"
+            alt="Showroom Reflection"
+            className="w-full h-full object-cover object-top filter brightness-[0.90]"
+          />
+        </div>
+
         {/* ========================================================= */}
         {/* TOP TELEMETRY HEADER                                      */}
         {/* ========================================================= */}
-        <div className="px-4 py-3 bg-zinc-900 border-b border-zinc-800 flex flex-wrap items-center justify-between gap-3 shrink-0">
+        <div className="relative z-10 px-4 py-3 bg-zinc-900/90 border-b border-zinc-800 flex flex-wrap items-center justify-between gap-3 shrink-0">
           <div className="flex items-center gap-3">
             <div className="w-9 h-9 rounded-lg bg-red-700 flex items-center justify-center shadow-md">
               <ArrowLeftRight className="w-5 h-5 text-white" />
@@ -245,7 +280,7 @@ export default function TradeMarketModal() {
         {/* ========================================================= */}
         {/* NAVIGATION TABS                                           */}
         {/* ========================================================= */}
-        <div className="px-4 py-2 bg-zinc-900/60 border-b border-zinc-800/80 flex items-center justify-between gap-2 shrink-0">
+        <div className="relative z-10 px-4 py-2 bg-zinc-900/75 border-b border-zinc-800/80 flex items-center justify-between gap-2 shrink-0">
           <div className="flex items-center gap-1.5">
             <button
               onClick={() => {
@@ -304,7 +339,7 @@ export default function TradeMarketModal() {
         {/* ========================================================= */}
         {/* MAIN BODY AREA                                            */}
         {/* ========================================================= */}
-        <div className="flex-1 overflow-y-auto p-4 flex flex-col gap-4">
+        <div className="relative z-10 flex-1 overflow-y-auto p-4 flex flex-col gap-4">
           
           {/* ========================================================= */}
           {/* VIEW: CREAR NUEVA PERMUTA (WIZARD 2 PASOS)                */}
