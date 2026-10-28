@@ -96,9 +96,12 @@ class Trade(Base):
     request_vehicle_id = Column(Integer, ForeignKey('vehicles_catalog.id'), nullable=False)
     status = Column(String(20), default="OPEN", nullable=False)  # "OPEN", "MATCHED", "CANCELLED"
     created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
+    acceptor_user_id = Column(String(36), ForeignKey('users.id'), nullable=True)
+    matched_at = Column(DateTime, nullable=True)
 
     # Relationships
     offer_user = relationship("User", foreign_keys=[offer_user_id], back_populates="trades_offered")
+    acceptor_user = relationship("User", foreign_keys=[acceptor_user_id])
     offer_vehicle = relationship("VehicleCatalog", foreign_keys=[offer_vehicle_id], back_populates="offered_in_trades")
     request_vehicle = relationship("VehicleCatalog", foreign_keys=[request_vehicle_id], back_populates="requested_in_trades")
 

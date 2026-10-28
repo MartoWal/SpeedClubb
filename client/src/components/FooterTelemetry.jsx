@@ -7,15 +7,17 @@ import {
   Gauge, 
   Activity, 
   Flame, 
-  Radio 
+  Radio, 
+  ArrowLeftRight 
 } from 'lucide-react';
 import { sound } from '../utils/soundEffects';
 
 export default function FooterTelemetry({ onTabClick }) {
-  const { currentScreen, setCurrentScreen, openTeamModal, enterSpeedClubTv } = useGarageStore();
+  const { currentScreen, setCurrentScreen, openTeamModal, enterSpeedClubTv, openTradeModal } = useGarageStore();
 
   const navItems = [
     { id: 'tv', label: 'SPEEDCLUB TV', icon: Radio, badge: '+300 CR' },
+    { id: 'trades', label: 'INTERCAMBIOS', icon: ArrowLeftRight, badge: 'SWAP' },
     { id: 'team', label: 'MI ESCUDERÍA', icon: Users, badge: null },
     { id: 'challenges', label: 'DESAFÍOS', icon: Trophy, badge: '!' },
   ];
@@ -64,6 +66,8 @@ export default function FooterTelemetry({ onTabClick }) {
                 sound.playSelect();
                 if (item.id === 'tv') {
                   enterSpeedClubTv();
+                } else if (item.id === 'trades') {
+                  openTradeModal();
                 } else if (item.id === 'team') {
                   openTeamModal();
                 } else if (onTabClick) {

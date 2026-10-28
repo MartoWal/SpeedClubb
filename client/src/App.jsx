@@ -13,6 +13,7 @@ import ContainerUnboxingModal from './components/dashboard/ContainerUnboxingModa
 import TeamFleetModal from './components/dashboard/TeamFleetModal';
 import SpeedClubTvModal from './components/sponsors/SpeedClubTvModal';
 import SpeedClubTvScreen from './pages/SpeedClubTvScreen';
+import TradeMarketModal from './components/trades/TradeMarketModal';
 
 export default function App() {
   const { currentScreen, setCurrentScreen } = useGarageStore();
@@ -176,6 +177,9 @@ export default function App() {
 
       {/* Global SpeedClub TV / Paddock Broadcast Forum Modal */}
       <SpeedClubTvModal />
+
+      {/* Global Paddock Trade / Intercambio de Figuritas Modal */}
+      <TradeMarketModal />
     </div>
   );
 }

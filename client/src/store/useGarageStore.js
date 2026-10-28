@@ -55,6 +55,15 @@ export const useGarageStore = create((set, get) => ({
   isTvPlaying: false,
   tvComments: {},
 
+  // Paddock Trade (Stand de Intercambios) State
+  isTradeModalOpen: false,
+  tradeMarketStatus: null,
+  activeTrades: [],
+  myTrades: { active: [], completed: [], cancelled: [] },
+  eligibleVehicles: { duplicates_to_give: [], missing_to_request: [] },
+  isLoadingTrades: false,
+  tradeSuccessModal: null,
+
   // Global Statistics (Screen 1 counters)
   globalStats: {
     piecesSwapped: 10689427,
@@ -495,6 +504,187 @@ export const useGarageStore = create((set, get) => ({
       containerType: chosenType,
       droppedVehicles: dropped,
     };
+  },
+
+  // ==========================================
+  // Paddock Trade (Stand de Intercambios) Actions
+  // ==========================================
+  openTradeModal: async () => {
+    sound.playSelect();
+    set({ isTradeModalOpen: true, isLoadingTrades: true });
+    await Promise.all([
+      get().fetchTradeStatus(),
+      get().fetchActiveTrades(),
+      get().fetchEligibleVehicles(),
+      get().fetchMyTrades(),
+    ]);
+    set({ isLoadingTrades: false });
+  },
+
+  closeTradeModal: () => {
+    sound.playSelect();
+    set({ isTradeModalOpen: false });
+  },
+
+  fetchTradeStatus: async () => {
+    const userId = get().currentUser?.id || get().pilot?.id || 'pilot-1';
+    try {
+      const res = await fetch(`http://localhost:8000/api/trades/status?user_id=${userId}`);
+      if (res.ok) {
+        const data = await res.json();
+        set({ tradeMarketStatus: data });
+        return data;
+      }
+    } catch (err) {
+      console.warn("Fallo al obtener estado de cuota de permutas:", err);
+    }
+  },
+
+  fetchActiveTrades: async (filters = {}) => {
+    const userId = get().currentUser?.id || get().pilot?.id || 'pilot-1';
+    const params = new URLSearchParams();
+    if (userId) params.append('user_id', userId);
+    if (filters.category && filters.category !== 'ALL' && filters.category !== 'TODAS') {
+      params.append('filter_category', filters.category);
+    }
+    if (filters.search) {
+      params.append('search', filters.search);
+    }
+    if (filters.onlyCanAccept) {
+      params.append('only_can_accept', 'true');
+    }
+
+    try {
+      const res = await fetch(`http://localhost:8000/api/trades/active?${params.toString()}`);
+      if (res.ok) {
+        const data = await res.json();
+        set({ activeTrades: data });
+        return data;
+      }
+    } catch (err) {
+      console.warn("Fallo al listar permutas activas:", err);
+    }
+  },
+
+  fetchEligibleVehicles: async () => {
+    const userId = get().currentUser?.id || get().pilot?.id || 'pilot-1';
+    try {
+      const res = await fetch(`http://localhost:8000/api/trades/eligible-vehicles?user_id=${userId}`);
+      if (res.ok) {
+        const data = await res.json();
+        set({ eligibleVehicles: data });
+        return data;
+      }
+    } catch (err) {
+      console.warn("Fallo al consultar figuritas elegibles:", err);
+    }
+  },
+
+  fetchMyTrades: async () => {
+    const userId = get().currentUser?.id || get().pilot?.id || 'pilot-1';
+    try {
+      const res = await fetch(`http://localhost:8000/api/trades/my-trades?user_id=${userId}`);
+      if (res.ok) {
+        const data = await res.json();
+        set({ myTrades: data });
+        return data;
+      }
+    } catch (err) {
+      console.warn("Fallo al consultar permutas del usuario:", err);
+    }
+  },
+
+  createTrade: async (offerVehicleId, requestVehicleId) => {
+    sound.playSelect();
+    const userId = get().currentUser?.id || get().pilot?.id || 'pilot-1';
+    try {
+      const res = await fetch(`http://localhost:8000/api/trades/create?user_id=${userId}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          offer_vehicle_id: offerVehicleId,
+          request_vehicle_id: requestVehicleId,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        return { success: false, message: data.detail || 'Error al publicar permuta.' };
+      }
+
+      sound.playReward();
+      await Promise.all([
+        get().syncWithBackend(userId),
+        get().fetchTradeStatus(),
+        get().fetchActiveTrades(),
+        get().fetchEligibleVehicles(),
+        get().fetchMyTrades(),
+      ]);
+
+      return { success: true, message: data.message };
+    } catch (err) {
+      return { success: false, message: 'Fallo de conexión con el servidor.' };
+    }
+  },
+
+  acceptTrade: async (tradeId) => {
+    sound.playSelect();
+    const userId = get().currentUser?.id || get().pilot?.id || 'pilot-1';
+    try {
+      const res = await fetch(`http://localhost:8000/api/trades/accept/${tradeId}?acceptor_user_id=${userId}`, {
+        method: 'POST',
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        return { success: false, message: data.detail || 'Error al realizar intercambio.' };
+      }
+
+      sound.playReward();
+      set({ tradeSuccessModal: data });
+
+      await Promise.all([
+        get().syncWithBackend(userId),
+        get().fetchTradeStatus(),
+        get().fetchActiveTrades(),
+        get().fetchEligibleVehicles(),
+        get().fetchMyTrades(),
+      ]);
+
+      return { success: true, data };
+    } catch (err) {
+      return { success: false, message: 'Fallo de conexión con el servidor de intercambios.' };
+    }
+  },
+
+  cancelTrade: async (tradeId) => {
+    sound.playSelect();
+    const userId = get().currentUser?.id || get().pilot?.id || 'pilot-1';
+    try {
+      const res = await fetch(`http://localhost:8000/api/trades/cancel/${tradeId}?user_id=${userId}`, {
+        method: 'POST',
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        return { success: false, message: data.detail || 'Error al cancelar la permuta.' };
+      }
+
+      sound.playSelect();
+      await Promise.all([
+        get().syncWithBackend(userId),
+        get().fetchTradeStatus(),
+        get().fetchActiveTrades(),
+        get().fetchEligibleVehicles(),
+        get().fetchMyTrades(),
+      ]);
+
+      return { success: true, message: data.message };
+    } catch (err) {
+      return { success: false, message: 'Fallo de conexión al cancelar.' };
+    }
+  },
+
+  dismissTradeSuccessModal: () => {
+    sound.playSelect();
+    set({ tradeSuccessModal: null });
   },
 
   addCrate: () => {

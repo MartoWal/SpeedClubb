@@ -1,5 +1,5 @@
 from pydantic import BaseModel, EmailStr
-from typing import Optional, List, Dict
+from typing import Optional, List, Dict, Any
 from datetime import datetime
 
 
@@ -168,10 +168,32 @@ class CreateTradeRequest(BaseModel):
 class TradeOut(BaseModel):
     trade_id: str
     offer_user_id: str
+    offer_user_name: Optional[str] = None
     offer_vehicle: VehicleOut
     request_vehicle: VehicleOut
     status: str
     created_at: datetime
+    acceptor_user_id: Optional[str] = None
+    acceptor_user_name: Optional[str] = None
+    matched_at: Optional[datetime] = None
+    is_own_trade: Optional[bool] = False
+    can_accept: Optional[bool] = False
+    viewer_has_duplicates: Optional[int] = 0
 
     class Config:
         from_attributes = True
+
+
+class TradeStatusResponse(BaseModel):
+    can_create_trade: bool
+    trades_created_in_window: int
+    active_trades_count: int
+    max_daily_trades: int = 3
+    max_active_trades: int = 3
+    cooldown_remaining_seconds: int = 0
+    message: Optional[str] = None
+
+
+class EligibleVehiclesResponse(BaseModel):
+    duplicates_to_give: List[Dict[str, Any]]
+    missing_to_request: List[Dict[str, Any]]

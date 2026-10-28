@@ -30,6 +30,9 @@ export default function DashboardScreen() {
     unopenedCrates, 
     racingCredits, 
     buyContainer,
+    openTradeModal,
+    inventory,
+    eligibleVehicles,
     openCrateModal,
     setCurrentScreen,
     addCredits,
@@ -44,6 +47,7 @@ export default function DashboardScreen() {
   const [isZoomingToGarage, setIsZoomingToGarage] = useState(false);
 
   const completionPct = Math.round((pastedVehicles.length / catalog.length) * 100);
+  const duplicatesCount = eligibleVehicles?.duplicates_to_give?.length ?? (inventory || []).filter(i => (i.count || i.unpasted_count) > 1 || i.is_pasted).length;
 
   const handleEnterGarage = () => {
     sound.playSelect();
@@ -227,10 +231,10 @@ export default function DashboardScreen() {
             className="md:col-span-2 flex flex-col items-center justify-center"
           >
             <TradeCard
-              duplicatesCount={2}
+              duplicatesCount={duplicatesCount}
               onClick={() => {
                 sound.playSelect();
-                alert("Stand de Intercambio: Tienes 2 piezas repetidas (Ferrari F40 Competizione). ¡Listo para intercambiar!");
+                openTradeModal();
               }}
             />
           </motion.div>

@@ -82,13 +82,24 @@ def login_driver(payload: UserLoginRequest, db: Session = Depends(get_db)):
     """
     Inicia sesión de Piloto con Email y Contraseña.
     """
-    clean_email = payload.email.lower().strip()
-    user = db.query(User).filter(User.email == clean_email).first()
+    clean_input = payload.email.lower().strip()
+    user = db.query(User).filter(
+        (User.email == clean_input) | 
+        (User.username.ilike(clean_input)) |
+        (User.id == clean_input)
+    ).first()
+
+    # Convenience aliases for demo pilots
+    if not user:
+        if clean_input in ["piloto1", "piloto 1", "ayrton"]:
+            user = db.query(User).filter(User.id == "pilot-1").first()
+        elif clean_input in ["piloto2", "piloto 2", "schumacher", "michael"]:
+            user = db.query(User).filter(User.id == "pilot-2").first()
 
     if not user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Credenciales de piloto inválidas. Correo no encontrado en el Paddock."
+            detail="Credenciales de piloto inválidas. Licencia no encontrada en el Paddock."
         )
 
     # If demo pilot has no password_hash yet, allow fallback for Ayrton Driver (pilot-1) or verify

@@ -55,6 +55,20 @@ export default function LoginScreen() {
   const ferrariF40 = catalog.find(c => c.id === 17) || catalog[2];
   const porsche = catalog.find(c => c.id === 16) || catalog[3];
 
+  const handleQuickLoginPiloto1 = async () => {
+    sound.playSelect();
+    setEmail('piloto1@speedclub.com');
+    setPassword('speedclub2026');
+    await login('piloto1@speedclub.com', 'speedclub2026');
+  };
+
+  const handleQuickLoginPiloto2 = async () => {
+    sound.playSelect();
+    setEmail('piloto2@speedclub.com');
+    setPassword('speedclub2026');
+    await login('piloto2@speedclub.com', 'speedclub2026');
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setFormError('');
@@ -338,18 +352,57 @@ export default function LoginScreen() {
               </motion.button>
             </form>
 
-            {/* Quick Demo Access Option */}
-            <div className="pt-2 border-t border-zinc-800/80 flex items-center justify-between">
-              <span className="text-[10px] font-mono text-zinc-500">¿ACCESO DE EVALUACIÓN?</span>
-              <button
-                type="button"
-                onClick={loginAsGuest}
-                onMouseEnter={() => sound.playHover()}
-                className="text-[10px] font-racing italic text-amber-400 hover:text-amber-300 uppercase font-bold flex items-center gap-1 cursor-pointer transition-colors"
-              >
-                <span>PILOTO DEMO (AYRTON)</span>
-                <ArrowRight className="w-3 h-3" />
-              </button>
+            {/* Official Test Accounts for Paddock Trade Exchange Testing */}
+            <div className="pt-3 border-t border-zinc-800/80 flex flex-col gap-2">
+              <span className="text-[10px] font-mono text-zinc-400 font-bold tracking-wider uppercase text-center">
+                CUENTAS DE PRUEBA OFICIALES // INTERCAMBIOS
+              </span>
+
+              <div className="grid grid-cols-2 gap-2">
+                {/* Piloto 1 (Ayrton Senna) */}
+                <button
+                  type="button"
+                  onClick={handleQuickLoginPiloto1}
+                  onMouseEnter={() => sound.playHover()}
+                  className="p-2 rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-red-700/70 hover:border-red-500 text-left transition-all cursor-pointer flex flex-col group"
+                >
+                  <div className="flex items-center justify-between text-[9px] font-mono text-red-400 font-bold mb-0.5">
+                    <span>PILOTO 1</span>
+                    <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
+                  </div>
+                  <span className="font-racing text-[11px] text-white uppercase italic font-bold truncate">
+                    AYRTON SENNA
+                  </span>
+                  <span className="text-[8px] font-mono text-zinc-400 truncate">
+                    piloto1@speedclub.com
+                  </span>
+                  <span className="text-[7.5px] font-mono text-amber-400 mt-0.5">
+                    Clave: speedclub2026
+                  </span>
+                </button>
+
+                {/* Piloto 2 (Michael Schumacher) */}
+                <button
+                  type="button"
+                  onClick={handleQuickLoginPiloto2}
+                  onMouseEnter={() => sound.playHover()}
+                  className="p-2 rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-blue-700/70 hover:border-blue-500 text-left transition-all cursor-pointer flex flex-col group"
+                >
+                  <div className="flex items-center justify-between text-[9px] font-mono text-blue-400 font-bold mb-0.5">
+                    <span>PILOTO 2</span>
+                    <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
+                  </div>
+                  <span className="font-racing text-[11px] text-white uppercase italic font-bold truncate">
+                    M. SCHUMACHER
+                  </span>
+                  <span className="text-[8px] font-mono text-zinc-400 truncate">
+                    piloto2@speedclub.com
+                  </span>
+                  <span className="text-[7.5px] font-mono text-amber-400 mt-0.5">
+                    Clave: speedclub2026
+                  </span>
+                </button>
+              </div>
             </div>
           </div>
         </aside>
