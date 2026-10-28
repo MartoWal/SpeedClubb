@@ -64,6 +64,24 @@ export const useGarageStore = create((set, get) => ({
   isLoadingTrades: false,
   tradeSuccessModal: null,
 
+  // Promo Codes & Daily Challenges State
+  isPromoModalOpen: false,
+  isChallengesModalOpen: false,
+  redeemedCodes: (() => {
+    try {
+      return JSON.parse(localStorage.getItem('speedclub_redeemed_codes') || '[]');
+    } catch {
+      return [];
+    }
+  })(),
+  completedChallenges: (() => {
+    try {
+      return JSON.parse(localStorage.getItem('speedclub_completed_challenges') || '[]');
+    } catch {
+      return [];
+    }
+  })(),
+
   // Global Statistics (Screen 1 counters)
   globalStats: {
     piecesSwapped: 10689427,
@@ -685,6 +703,112 @@ export const useGarageStore = create((set, get) => ({
   dismissTradeSuccessModal: () => {
     sound.playSelect();
     set({ tradeSuccessModal: null });
+  },
+
+  // ==========================================
+  // Promo Codes & Daily Challenges Actions
+  // ==========================================
+  openPromoModal: () => {
+    sound.playSelect();
+    set({ isPromoModalOpen: true });
+  },
+
+  closePromoModal: () => {
+    sound.playSelect();
+    set({ isPromoModalOpen: false });
+  },
+
+  openChallengesModal: () => {
+    sound.playSelect();
+    set({ isChallengesModalOpen: true });
+  },
+
+  closeChallengesModal: () => {
+    sound.playSelect();
+    set({ isChallengesModalOpen: false });
+  },
+
+  redeemPromoCode: async (rawCode) => {
+    sound.playSelect();
+    const code = (rawCode || '').trim().toUpperCase();
+    if (!code) {
+      return { success: false, message: 'Por favor ingresa un código promocional.' };
+    }
+
+    const { redeemedCodes, containers, racingCredits } = get();
+    if (redeemedCodes.includes(code)) {
+      return { success: false, message: 'Este código promocional ya ha sido canjeado en tu cuenta.' };
+    }
+
+    // Official SpeedClub FIA Promo Codes Dictionary
+    const PROMO_CODES = {
+      'SPEED2026': { credits: 200, standardContainers: 1, premiumContainers: 0, title: 'Bono Temporada 2026' },
+      'PADDOCKVIP': { credits: 500, standardContainers: 0, premiumContainers: 1, title: 'Acceso VIP Paddock' },
+      'AYRTON100': { credits: 100, standardContainers: 0, premiumContainers: 0, title: 'Tributo Ayrton Senna' },
+      'FERRARI4K': { credits: 150, standardContainers: 0, premiumContainers: 0, title: 'Bono Scuderia Ferrari' },
+      'WRC2026': { credits: 150, standardContainers: 1, premiumContainers: 0, title: 'Pack Especial FIA WRC' },
+      'INITIALD': { credits: 120, standardContainers: 1, premiumContainers: 0, title: 'Tributo Touge Initial D' },
+      'MARTINGR1': { credits: 300, standardContainers: 1, premiumContainers: 1, title: 'Creador Martin Waltar GR.1' }
+    };
+
+    const promo = PROMO_CODES[code];
+    if (!promo) {
+      return { success: false, message: 'Código promocional inválido o no reconocido por la FIA.' };
+    }
+
+    const nextRedeemed = [...redeemedCodes, code];
+    try {
+      localStorage.setItem('speedclub_redeemed_codes', JSON.stringify(nextRedeemed));
+    } catch {}
+
+    const nextContainers = {
+      standard: (containers.standard || 0) + (promo.standardContainers || 0),
+      premium: (containers.premium || 0) + (promo.premiumContainers || 0)
+    };
+    const nextUnopened = (nextContainers.standard || 0) + (nextContainers.premium || 0);
+    const nextCredits = (racingCredits || 0) + (promo.credits || 0);
+
+    sound.playReward();
+
+    set({
+      redeemedCodes: nextRedeemed,
+      containers: nextContainers,
+      unopenedCrates: nextUnopened,
+      racingCredits: nextCredits
+    });
+
+    let rewardDesc = `+${promo.credits} CR`;
+    if (promo.standardContainers > 0) rewardDesc += ` y +${promo.standardContainers} Container Común`;
+    if (promo.premiumContainers > 0) rewardDesc += ` y +${promo.premiumContainers} Container VIP Oro`;
+
+    return {
+      success: true,
+      promo,
+      message: `¡Código '${code}' canjeado con éxito! Recibiste: ${rewardDesc}.`
+    };
+  },
+
+  claimChallengeReward: (challengeId, rewardCredits) => {
+    sound.playReward();
+    const { completedChallenges, racingCredits } = get();
+    if (completedChallenges.includes(challengeId)) {
+      return { success: false, message: 'Ya has reclamado la recompensa de este desafío.' };
+    }
+
+    const nextCompleted = [...completedChallenges, challengeId];
+    try {
+      localStorage.setItem('speedclub_completed_challenges', JSON.stringify(nextCompleted));
+    } catch {}
+
+    set({
+      completedChallenges: nextCompleted,
+      racingCredits: (racingCredits || 0) + rewardCredits
+    });
+
+    return {
+      success: true,
+      message: `¡Desafío completado! Has recibido +${rewardCredits} Créditos de Carrera.`
+    };
   },
 
   addCrate: () => {

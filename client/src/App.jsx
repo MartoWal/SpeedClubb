@@ -14,6 +14,8 @@ import TeamFleetModal from './components/dashboard/TeamFleetModal';
 import SpeedClubTvModal from './components/sponsors/SpeedClubTvModal';
 import SpeedClubTvScreen from './pages/SpeedClubTvScreen';
 import TradeMarketModal from './components/trades/TradeMarketModal';
+import PromoCodesModal from './components/telemetry/PromoCodesModal';
+import DailyChallengesModal from './components/telemetry/DailyChallengesModal';
 
 export default function App() {
   const { currentScreen, setCurrentScreen } = useGarageStore();
@@ -180,6 +182,12 @@ export default function App() {
 
       {/* Global Paddock Trade / Intercambio de Figuritas Modal */}
       <TradeMarketModal />
+
+      {/* Global Promo Codes Redemption Modal */}
+      <PromoCodesModal />
+
+      {/* Global Daily Challenges / Missions Modal */}
+      <DailyChallengesModal />
     </div>
   );
 }

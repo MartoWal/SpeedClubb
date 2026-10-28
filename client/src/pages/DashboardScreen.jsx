@@ -2,9 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useGarageStore } from '../store/useGarageStore';
 import { 
-  Car, 
   Box, 
-  Ticket, 
   Sparkles, 
   Flame, 
   ShieldCheck, 
@@ -94,37 +92,7 @@ export default function DashboardScreen() {
 
   return (
     <div className="relative min-h-[calc(100vh-4rem)] w-full flex flex-col justify-between overflow-x-hidden text-white select-none pb-20 bg-transparent">
-      {/* Top Secondary Action Bar (Clean, Classic, No Neon) */}
-      <div className="relative z-10 w-full bg-zinc-950/80 border-b border-zinc-800/80 backdrop-blur-md py-2 px-4 shadow-md">
-        <div className="max-w-6xl mx-auto flex items-center justify-center sm:justify-between flex-wrap gap-2 text-xs font-racing italic">
-          <button 
-            onMouseEnter={() => sound.playHover()}
-            onClick={handleEnterGarage}
-            className="px-3 py-1.5 rounded-lg btn-racing-red flex items-center gap-1.5 text-white font-bold cursor-pointer"
-          >
-            <Car className="w-3.5 h-3.5" />
-            <span>TU GARAJE ({completionPct}%)</span>
-          </button>
-
-          <button 
-            onMouseEnter={() => sound.playHover()}
-            onClick={() => { sound.playSelect(); openCrateModal(); }}
-            className="px-3 py-1.5 rounded-lg btn-metallic flex items-center gap-1.5 text-zinc-300 hover:text-white cursor-pointer"
-          >
-            <Box className="w-3.5 h-3.5 text-amber-400" />
-            <span>ABRIR SOBRES CONTAINERS ({unopenedCrates})</span>
-          </button>
-
-          <button 
-            onMouseEnter={() => sound.playHover()}
-            onClick={() => { sound.playSelect(); alert("Introduce el código 'SPEED2026' para 200 Créditos."); }}
-            className="px-3 py-1.5 rounded-lg btn-metallic flex items-center gap-1.5 text-zinc-300 hover:text-white cursor-pointer"
-          >
-            <Ticket className="w-3.5 h-3.5 text-yellow-400" />
-            <span>CÓDIGO PROMO</span>
-          </button>
-        </div>
-      </div>
+      
 
       {/* Floating Alert / Notification Banner */}
       {activeBanner && (
@@ -402,17 +370,7 @@ export default function DashboardScreen() {
       </main>
 
       {/* Bottom Telemetry Console Footer */}
-      <FooterTelemetry 
-        onTabClick={(tabId) => {
-          if (tabId === 'challenges') {
-            alert("Desafío del Día: Colecciona 3 vehículos JDM Legends para obtener 150 Créditos de Carrera.");
-          } else if (tabId === 'team') {
-            openTeamModal();
-          } else {
-            alert("Panel de Telemetría: Monitoreo de presión de neumáticos, temperatura de aceite y telemetría ECU.");
-          }
-        }}
-      />
+      <FooterTelemetry />
     </div>
   );
 }

@@ -3,23 +3,52 @@ import { useGarageStore } from '../store/useGarageStore';
 import { 
   Trophy, 
   Users, 
-  MoreHorizontal, 
   Gauge, 
   Activity, 
   Flame, 
-  Radio, 
-  ArrowLeftRight 
+  Ticket, 
+  Box 
 } from 'lucide-react';
 import { sound } from '../utils/soundEffects';
 
 export default function FooterTelemetry({ onTabClick }) {
-  const { currentScreen, setCurrentScreen, openTeamModal, enterSpeedClubTv, openTradeModal } = useGarageStore();
+  const { 
+    unopenedCrates, 
+    openPromoModal, 
+    openCrateModal, 
+    openTeamModal, 
+    openChallengesModal 
+  } = useGarageStore();
 
   const navItems = [
-    { id: 'tv', label: 'SPEEDCLUB TV', icon: Radio, badge: '+300 CR' },
-    { id: 'trades', label: 'INTERCAMBIOS', icon: ArrowLeftRight, badge: 'SWAP' },
-    { id: 'team', label: 'MI ESCUDERÍA', icon: Users, badge: null },
-    { id: 'challenges', label: 'DESAFÍOS', icon: Trophy, badge: '!' },
+    { 
+      id: 'codes', 
+      label: 'CÓDIGOS', 
+      icon: Ticket, 
+      badge: 'PROMO',
+      onClick: openPromoModal
+    },
+    { 
+      id: 'containers', 
+      label: 'CONTAINERS', 
+      icon: Box, 
+      badge: unopenedCrates > 0 ? `${unopenedCrates} LISTOS` : null,
+      onClick: openCrateModal
+    },
+    { 
+      id: 'team', 
+      label: 'MI ESCUDERÍA', 
+      icon: Users, 
+      badge: null,
+      onClick: openTeamModal
+    },
+    { 
+      id: 'challenges', 
+      label: 'DESAFÍOS', 
+      icon: Trophy, 
+      badge: 'DIARIOS',
+      onClick: openChallengesModal
+    },
   ];
 
   return (
@@ -64,12 +93,8 @@ export default function FooterTelemetry({ onTabClick }) {
               onMouseEnter={() => sound.playHover()}
               onClick={() => {
                 sound.playSelect();
-                if (item.id === 'tv') {
-                  enterSpeedClubTv();
-                } else if (item.id === 'trades') {
-                  openTradeModal();
-                } else if (item.id === 'team') {
-                  openTeamModal();
+                if (item.onClick) {
+                  item.onClick();
                 } else if (onTabClick) {
                   onTabClick(item.id);
                 }

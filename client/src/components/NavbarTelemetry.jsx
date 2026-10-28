@@ -7,9 +7,7 @@ import {
   Box, 
   Coins, 
   ShieldCheck, 
-  LogOut, 
-  Radio, 
-  ArrowLeftRight 
+  LogOut 
 } from 'lucide-react';
 import { sound } from '../utils/soundEffects';
 
@@ -24,9 +22,6 @@ export default function NavbarTelemetry() {
     addCredits,
     openCrateModal,
     openTeamModal,
-    openTvModal,
-    enterSpeedClubTv,
-    openTradeModal,
     logout,
     isAuthenticated
   } = useGarageStore();
@@ -101,35 +96,6 @@ export default function NavbarTelemetry() {
             }`}
           >
             {soundEnabled ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
-          </button>
-
-          {/* SpeedClub TV Quick Access */}
-          <button
-            onClick={() => {
-              sound.playSelect();
-              enterSpeedClubTv();
-            }}
-            onMouseEnter={() => sound.playHover()}
-            title="Sintonizar SpeedClub TV (Gana hasta 300 CR)"
-            className="hidden sm:flex items-center gap-1.5 bg-zinc-900 hover:bg-zinc-800 px-2.5 py-1.5 rounded-lg border border-red-700/80 hover:border-red-600 text-zinc-200 font-mono text-xs cursor-pointer shadow-metallic transition-all group"
-          >
-            <Radio className="w-3.5 h-3.5 text-red-500" />
-            <span className="font-racing italic tracking-wider text-white">SPEEDCLUB TV</span>
-            <span className="text-[9px] bg-red-700 text-white px-1.5 py-0.2 rounded font-bold font-mono">+300 CR</span>
-          </button>
-
-          {/* Intercambios Quick Access */}
-          <button
-            onClick={() => {
-              sound.playSelect();
-              openTradeModal();
-            }}
-            onMouseEnter={() => sound.playHover()}
-            title="Stand de Intercambios (Permutas 1 a 1)"
-            className="hidden lg:flex items-center gap-1.5 bg-zinc-900 hover:bg-zinc-800 px-2.5 py-1.5 rounded-lg border border-amber-600/80 hover:border-amber-500 text-zinc-200 font-mono text-xs cursor-pointer shadow-metallic transition-all group"
-          >
-            <ArrowLeftRight className="w-3.5 h-3.5 text-amber-400 group-hover:rotate-180 transition-transform duration-500" />
-            <span className="font-racing italic tracking-wider text-white">INTERCAMBIOS</span>
           </button>
 
           {/* Crate / Container Count Badge (Opens Container Unboxing Modal) */}
