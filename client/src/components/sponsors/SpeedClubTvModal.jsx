@@ -251,8 +251,22 @@ export default function SpeedClubTvModal() {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-sm p-2 md:p-6 overflow-y-auto animate-fade-in font-sans">
       
+      {/* Full Backdrop SpeedClub TV Wallpaper */}
+      <div 
+        className="fixed inset-0 bg-cover bg-center pointer-events-none opacity-25"
+        style={{ backgroundImage: `url('/fondo_speedclub_tv.webp'), url('/fondo_speedclub_tv.jpg')` }}
+      />
+
       {/* Main Container (Classic Racing Dark Zinc with Red & Blue accents) */}
       <div className="relative w-full max-w-6xl bg-zinc-950 border border-zinc-800 rounded-xl shadow-2xl flex flex-col overflow-hidden my-auto max-h-[96vh]">
+        
+        {/* Subtle In-Modal Background Texture */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center opacity-30 pointer-events-none"
+          style={{ backgroundImage: `url('/fondo_speedclub_tv.webp'), url('/fondo_speedclub_tv.jpg')` }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-zinc-950/85 via-zinc-950/90 to-zinc-950 pointer-events-none" />
+        <div className="absolute inset-0 carbon-pattern opacity-25 pointer-events-none" />
         
         {/* Top Control Bar / Paddock Header */}
         <div className="flex items-center justify-between px-4 py-3 bg-zinc-900 border-b border-zinc-800">

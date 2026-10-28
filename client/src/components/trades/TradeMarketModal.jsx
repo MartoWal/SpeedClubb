@@ -331,7 +331,7 @@ export default function TradeMarketModal() {
           </div>
 
           <div className="text-[10px] font-mono text-zinc-400 hidden md:flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 inline-block animate-pulse" />
+            <span className="w-2 h-2 rounded-full bg-emerald-500 inline-block" />
             <span>PADDOCK EXCHANGE EN VIVO</span>
           </div>
         </div>
@@ -549,7 +549,7 @@ export default function TradeMarketModal() {
                   disabled={!selectedToGive || !selectedToRequest || isSubmitting}
                   className={`px-5 py-2 rounded-lg font-racing text-xs italic font-black uppercase tracking-wider flex items-center gap-2 transition-all cursor-pointer ${
                     selectedToGive && selectedToRequest && !isSubmitting
-                      ? 'bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white shadow-lg shadow-red-900/30'
+                      ? 'bg-red-700 hover:bg-red-600 border border-red-500 text-white shadow-md'
                       : 'bg-zinc-800 text-zinc-500 border border-zinc-700 cursor-not-allowed opacity-60'
                   }`}
                 >
@@ -808,8 +808,8 @@ export default function TradeMarketModal() {
                       className="rounded-xl border border-blue-600/60 bg-zinc-950 p-3 flex flex-col justify-between"
                     >
                       <div className="flex items-center justify-between text-[10px] font-mono pb-2 mb-2 border-b border-zinc-800">
-                        <span className="text-emerald-400 font-bold flex items-center gap-1">
-                          <span className="w-2 h-2 rounded-full bg-emerald-400 inline-block animate-pulse" />
+                        <span className="text-emerald-400 font-bold flex items-center gap-1.5">
+                          <span className="w-2 h-2 rounded-full bg-emerald-500 inline-block" />
                           DISPONIBLE EN EL PADDOCK GLOBAL
                         </span>
                         <span className="text-zinc-400">

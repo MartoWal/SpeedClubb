@@ -55,7 +55,7 @@ export default function TachometerProgressBar({ onComplete, duration = 3.6 }) {
           <div className="w-12 h-14 rounded-lg bg-zinc-950 border-2 border-zinc-700 flex flex-col items-center justify-center shadow-inner">
             <span className="text-[8px] font-mono text-zinc-500 uppercase leading-none">GEAR</span>
             <span className={`font-racing text-2xl font-black italic leading-none ${
-              isRedline ? 'text-racing-red animate-pulse' : 'text-amber-400'
+              isRedline ? 'text-racing-red' : 'text-amber-400'
             }`}>
               {gear}
             </span>
@@ -74,7 +74,7 @@ export default function TachometerProgressBar({ onComplete, duration = 3.6 }) {
             if (lit) {
               if (idx <= 4) ledColor = 'bg-emerald-500';
               else if (idx <= 7) ledColor = 'bg-amber-500';
-              else ledColor = 'bg-red-600 animate-pulse';
+              else ledColor = 'bg-red-600';
             }
             return (
               <span 
@@ -90,7 +90,7 @@ export default function TachometerProgressBar({ onComplete, duration = 3.6 }) {
           <span className="text-[10px] font-mono text-zinc-400">TACÓMETRO</span>
           <div className="flex items-baseline gap-1">
             <span className={`font-display text-2xl sm:text-3xl font-black tracking-tight ${
-              isRedline ? 'text-racing-red animate-pulse' : 'text-white'
+              isRedline ? 'text-racing-red' : 'text-white'
             }`}>
               {rpm.toLocaleString()}
             </span>
@@ -129,7 +129,7 @@ export default function TachometerProgressBar({ onComplete, duration = 3.6 }) {
       {/* Bottom Subtitle / Step Progress */}
       <div className="w-full mt-4 flex items-center justify-between text-xs font-mono text-zinc-400">
         <div className="flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
+          <span className="w-2 h-2 rounded-full bg-amber-400" />
           <span className="text-zinc-200 font-medium tracking-wide">
             {currentStep.msg}
           </span>

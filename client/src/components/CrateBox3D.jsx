@@ -58,7 +58,7 @@ export default function CrateBox3D({
               {isPremium ? 'SPEEDCLUB GOLD' : 'SPEEDCLUB RED'}
             </span>
             <div className="flex items-center gap-1 text-emerald-400">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
               <span>SELLADO</span>
             </div>
           </div>

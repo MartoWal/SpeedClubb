@@ -127,12 +127,9 @@ export default function AlbumCoverCard({
         if (onOpen) onOpen();
       }}
       style={{ perspective: '1400px' }}
-      className="relative w-full max-w-[285px] sm:max-w-[315px] aspect-[1/1.32] rounded-2xl overflow-hidden cursor-pointer select-none group shadow-[0_20px_50px_rgba(0,0,0,0.95)]"
+      className="relative w-full max-w-[285px] sm:max-w-[315px] aspect-[1/1.32] rounded-2xl overflow-hidden cursor-pointer select-none group shadow-2xl border-2 border-zinc-700/80"
     >
-      {/* Outer Fiery Aura (Radiating beyond the book edges) */}
-      <div className="absolute -inset-1 bg-gradient-to-tr from-orange-600 via-amber-500 to-red-600 rounded-2xl blur-md opacity-75 group-hover:opacity-100 transition-opacity animate-pulse pointer-events-none" />
-
-      {/* Main Hardcover Body (Border-free, completely the album itself) */}
+      {/* Main Hardcover Body (Classic Gran Turismo Hardcover) */}
       <div className="relative w-full h-full rounded-2xl bg-[#0b0e14] flex flex-col justify-between overflow-hidden p-3 sm:p-4 text-white">
         
         {/* Carbon Fiber & Asphalt Base Texture */}
@@ -185,10 +182,8 @@ export default function AlbumCoverCard({
           {/* Top Diamond Pin */}
           <div className="w-3.5 h-3.5 bg-gradient-to-br from-red-600 to-amber-700 border border-white rotate-45 transform shadow-md mb-1" />
 
-          {/* Fiery Arch Notch */}
-          <div className="relative px-5 py-1 rounded-full bg-black/80 border border-orange-500/80 shadow-[0_0_12px_rgba(249,115,22,0.6)] flex flex-col items-center">
-            {/* Fiery top flare */}
-            <div className="absolute -top-1.5 inset-x-4 h-1 bg-gradient-to-r from-transparent via-amber-400 to-transparent blur-[1px]" />
+          {/* Classic Motorsport Arch Notch */}
+          <div className="relative px-5 py-1 rounded-full bg-black/80 border border-amber-600/70 shadow-md flex flex-col items-center">
             <span className="font-mono text-[9px] sm:text-[10px] font-black text-white uppercase tracking-widest leading-none drop-shadow">
               MARTIN WALTAR
             </span>
@@ -197,9 +192,9 @@ export default function AlbumCoverCard({
             </span>
           </div>
 
-          {/* Flaming Curved Border Trim (Top Notch) */}
+          {/* Clean Border Trim */}
           <div className="w-full flex items-center justify-center my-0.5">
-            <div className="w-36 h-1 bg-gradient-to-r from-transparent via-orange-500 to-transparent blur-[1px]" />
+            <div className="w-36 h-0.5 bg-gradient-to-r from-transparent via-amber-600 to-transparent" />
           </div>
         </div>
 
@@ -209,28 +204,20 @@ export default function AlbumCoverCard({
         <div className="relative z-20 flex flex-col items-center justify-center my-auto py-1">
           {/* The Iconic 3D SPEEDCLUB Chrome Title */}
           <div className="relative py-1">
-            {/* Fiery Outer Aura behind text */}
-            <h2 className="absolute inset-0 font-racing text-3xl sm:text-4xl lg:text-[42px] font-black italic tracking-wider text-orange-500 blur-md select-none transform scale-105">
-              SPEEDCLUB
-            </h2>
-            <h2 className="absolute inset-0 font-racing text-3xl sm:text-4xl lg:text-[42px] font-black italic tracking-wider text-amber-400 blur-sm select-none">
-              SPEEDCLUB
-            </h2>
-
             {/* Main Chrome Metallic Typography */}
             <h2 
               className="relative font-racing text-3xl sm:text-4xl lg:text-[42px] font-black italic tracking-wider text-transparent bg-clip-text bg-gradient-to-b from-white via-slate-100 to-slate-400 select-none"
               style={{
                 textShadow: '0 2px 4px rgba(0,0,0,0.9), 0 -1px 0 rgba(255,255,255,0.8)',
-                WebkitTextStroke: '1px rgba(249, 115, 22, 0.9)',
+                WebkitTextStroke: '1px rgba(217, 119, 6, 0.8)',
               }}
             >
               SPEEDCLUB
             </h2>
           </div>
 
-          {/* Fiery Divider Line */}
-          <div className="w-48 h-0.5 bg-gradient-to-r from-transparent via-orange-500 to-transparent shadow-[0_0_8px_rgba(249,115,22,0.9)] mb-1" />
+          {/* Classic Racing Divider Line */}
+          <div className="w-48 h-0.5 bg-gradient-to-r from-transparent via-amber-600 to-transparent mb-1" />
 
           {/* Grid of 13 Manufacturer Brand Emblems */}
           <BrandLogos />

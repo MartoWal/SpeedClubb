@@ -250,14 +250,26 @@ export default function TeamFleetModal() {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/90 backdrop-blur-md overflow-hidden select-none">
+      {/* Full Backdrop Racetrack Fleet Wallpaper */}
+      <div 
+        className="fixed inset-0 bg-cover bg-center pointer-events-none opacity-20"
+        style={{ backgroundImage: `url('/fondo_escuderia.webp'), url('/fondo_escuderia.jpg')` }}
+      />
+
       <motion.div
         initial={{ opacity: 0, scale: 0.96, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.96, y: 20 }}
         className="relative w-full max-w-7xl h-[94vh] rounded-2xl bg-zinc-950 border-2 border-zinc-700/80 p-3 sm:p-5 shadow-2xl flex flex-col justify-between overflow-hidden"
       >
+        {/* Racetrack Fleet Background with matte vignette */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center pointer-events-none opacity-30"
+          style={{ backgroundImage: `url('/fondo_escuderia.webp'), url('/fondo_escuderia.jpg')` }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-zinc-950/85 via-zinc-950/75 to-zinc-950/90 pointer-events-none" />
         {/* Carbon fiber pattern background */}
-        <div className="absolute inset-0 carbon-pattern opacity-45 pointer-events-none" />
+        <div className="absolute inset-0 carbon-pattern opacity-35 pointer-events-none" />
 
         {/* ======================================================== */}
         {/* HEADER: TITLE, PILOT BADGE & SUMMARY TELEMETRY           */}

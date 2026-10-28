@@ -145,7 +145,7 @@ export default function DashboardScreen() {
               {/* Screen Top Header */}
               <div className="flex items-center justify-between pb-2 mb-2 border-b border-zinc-800 text-[10px] font-mono">
                 <span className="flex items-center gap-1.5 text-blue-400 font-bold">
-                  <span className="w-2 h-2 rounded-full bg-red-600 inline-block animate-ping" />
+                  <span className="w-2 h-2 rounded-full bg-red-600 inline-block" />
                   SPEEDCLUB TV // LIVE
                 </span>
                 <span className="bg-yellow-400/20 text-yellow-300 border border-yellow-400/40 px-1.5 py-0.2 rounded font-mono font-bold text-[9px]">
@@ -183,7 +183,7 @@ export default function DashboardScreen() {
               <div className="mt-2 text-center">
                 <h4 className="font-racing text-xs text-white uppercase italic tracking-wider flex items-center justify-center gap-1">
                   <span>TELEMETRÍA EN DIRECTO</span>
-                  <Radio className="w-3.5 h-3.5 text-blue-400 animate-pulse" />
+                  <Radio className="w-3.5 h-3.5 text-blue-400" />
                 </h4>
                 <p className="text-[9px] font-mono text-zinc-400 mt-0.5">
                   Mira transmisiones oficiales y gana hasta 300 CR cada 2h

@@ -119,14 +119,26 @@ export default function ContainerUnboxingModal() {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/85 backdrop-blur-md overflow-y-auto select-none">
+      {/* Full Backdrop Shipping Port Terminal Background */}
+      <div 
+        className="fixed inset-0 bg-cover bg-center pointer-events-none opacity-25"
+        style={{ backgroundImage: `url('/fondo_containers.webp'), url('/fondo_containers.jpg')` }}
+      />
+
       <motion.div
         initial={{ opacity: 0, scale: 0.95, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.95, y: 20 }}
         className="relative w-full max-w-2xl rounded-2xl bg-zinc-950 border-2 border-zinc-700/80 p-4 sm:p-6 shadow-2xl flex flex-col justify-between overflow-hidden"
       >
+        {/* Real Container Port Background with matte contrast overlay */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center pointer-events-none opacity-35"
+          style={{ backgroundImage: `url('/fondo_containers.webp'), url('/fondo_containers.jpg')` }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-zinc-950/85 via-zinc-950/80 to-zinc-950/95 pointer-events-none" />
         {/* Subtle Carbon Fiber Background */}
-        <div className="absolute inset-0 carbon-pattern opacity-40 pointer-events-none" />
+        <div className="absolute inset-0 carbon-pattern opacity-30 pointer-events-none" />
 
         {/* Modal Top Header Bar */}
         <div className="relative z-10 flex items-center justify-between pb-3 border-b border-zinc-800 mb-3">
@@ -416,8 +428,8 @@ export default function ContainerUnboxingModal() {
               />
 
               {isOpening && (
-                <div className="absolute inset-0 bg-white/20 backdrop-blur-[1px] flex items-center justify-center">
-                  <div className="px-4 py-2 rounded-xl bg-black/90 border border-amber-500 text-amber-300 font-racing text-sm italic font-black uppercase tracking-wider animate-pulse">
+                <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
+                  <div className="px-4 py-2 rounded-xl bg-black/95 border border-zinc-700 text-amber-300 font-racing text-sm italic font-black uppercase tracking-wider">
                     DESENCRIPTANDO CONTENIDO...
                   </div>
                 </div>
@@ -435,8 +447,8 @@ export default function ContainerUnboxingModal() {
                     onClick={handleStartOpen}
                     className={`w-full py-3.5 px-6 rounded-xl font-racing text-sm sm:text-base italic font-black uppercase transition-all shadow-md cursor-pointer flex items-center justify-center gap-2 ${
                       selectedType === 'premium'
-                        ? 'bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-600 hover:from-amber-400 hover:to-yellow-300 text-black shadow-amber-950/50'
-                        : 'btn-racing-red text-white shadow-red-950/50'
+                        ? 'bg-amber-500 hover:bg-amber-400 text-black border border-amber-400 font-black'
+                        : 'bg-red-700 hover:bg-red-600 text-white border border-red-500 font-black'
                     }`}
                   >
                     <Box className="w-4 h-4" />
@@ -452,7 +464,7 @@ export default function ContainerUnboxingModal() {
                     disabled={isBuying || isOpening || !hasCredits}
                     onMouseEnter={() => sound.playHover()}
                     onClick={() => handleBuyInModal(selectedType)}
-                    className="w-full py-2 px-4 rounded-xl bg-zinc-900/90 hover:bg-zinc-800 border border-zinc-800 hover:border-zinc-700 text-zinc-300 font-racing text-xs italic font-bold uppercase transition-colors cursor-pointer flex items-center justify-center gap-2 disabled:opacity-40"
+                    className="w-full py-2 px-4 rounded-xl bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 hover:border-zinc-700 text-zinc-300 font-racing text-xs italic font-bold uppercase transition-colors cursor-pointer flex items-center justify-center gap-2 disabled:opacity-40"
                   >
                     <Plus className="w-3.5 h-3.5 text-amber-400" />
                     <span>
@@ -462,7 +474,7 @@ export default function ContainerUnboxingModal() {
                 </>
               ) : (
                 /* Empty Stock State: Purchase directly in modal without returning to paddock! */
-                <div className="w-full flex flex-col items-center p-3.5 rounded-xl bg-zinc-900/90 border border-zinc-800">
+                <div className="w-full flex flex-col items-center p-3.5 rounded-xl bg-zinc-900 border border-zinc-800">
                   <div className="flex items-center gap-2 mb-1.5">
                     <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-black/60 border border-zinc-700 text-zinc-400 font-bold uppercase">
                       0 SOBRES EN INVENTARIO
@@ -480,8 +492,8 @@ export default function ContainerUnboxingModal() {
                     onClick={() => handleBuyInModal(selectedType)}
                     className={`w-full mt-2 py-3 px-5 rounded-xl font-racing text-sm italic font-black uppercase transition-all shadow-md cursor-pointer flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed ${
                       selectedType === 'premium'
-                        ? 'bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-600 hover:from-amber-400 hover:to-yellow-300 text-black shadow-amber-950/40'
-                        : 'bg-red-600 hover:bg-red-500 text-white shadow-red-950/40'
+                        ? 'bg-amber-500 hover:bg-amber-400 text-black border border-amber-400'
+                        : 'bg-red-700 hover:bg-red-600 text-white border border-red-500'
                     }`}
                   >
                     <Coins className="w-4 h-4" />

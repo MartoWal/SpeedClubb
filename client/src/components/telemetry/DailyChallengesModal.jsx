@@ -64,7 +64,6 @@ export default function DailyChallengesModal() {
     const interval = setInterval(() => {
       setCountdownRemaining((prev) => {
         if (prev <= 1) {
-          // Re-fetch when midnight hits
           fetchDailyTrivia();
           return 0;
         }
@@ -123,7 +122,7 @@ export default function DailyChallengesModal() {
   const handleTimeOut = () => {
     if (isAnswerLocked) return;
     setIsAnswerLocked(true);
-    setSelectedOption(-1); // -1 indicates timeout
+    setSelectedOption(-1);
 
     const currentQ = questions[currentQuestionIndex];
     const newAnswers = [
@@ -162,7 +161,6 @@ export default function DailyChallengesModal() {
     if (currentQuestionIndex + 1 < questions.length) {
       setCurrentQuestionIndex((prev) => prev + 1);
     } else {
-      // Completed all 5 questions: Submit to backend
       setGamePhase('SUMMARY');
       const res = await submitDailyTrivia(currentAnswers);
       if (res?.success) {
@@ -191,25 +189,29 @@ export default function DailyChallengesModal() {
   const isAlreadyPlayedToday = dailyTriviaStatus?.played === true;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/85 backdrop-blur-md overflow-hidden select-none">
-      {/* Background Hangar Wallpaper with Dark Motorsport Overlay */}
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/90 backdrop-blur-md overflow-hidden select-none">
+      {/* Official Fondo Desafíos Wallpaper with Classic Gran Turismo Vignette */}
       <div 
-        className="absolute inset-0 bg-cover bg-center opacity-20 filter contrast-125 brightness-75 pointer-events-none scale-105"
-        style={{ backgroundImage: `url('/backgrounds/trivia_hangar_bg.jpg')` }}
+        className="absolute inset-0 bg-cover bg-center pointer-events-none scale-100"
+        style={{ backgroundImage: `url('/fondo_desafios.webp'), url('/fondo_desafios.jpg')` }}
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-black via-zinc-950/90 to-black/80 pointer-events-none" />
+      
+      {/* Classic Matte Overlays: Carbon Weave + Dark Vignette (Zero Neons) */}
+      <div className="absolute inset-0 carbon-pattern opacity-25 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black via-zinc-950/85 to-black/80 pointer-events-none" />
+      <div className="absolute inset-0 bg-radial-gradient from-transparent via-black/40 to-black/90 pointer-events-none" />
 
-      {/* Main Modal Window */}
+      {/* Main Modal Window - Classic Titanium & Zinc Architecture */}
       <motion.div
-        initial={{ opacity: 0, scale: 0.95, y: 15 }}
+        initial={{ opacity: 0, scale: 0.96, y: 12 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
-        exit={{ opacity: 0, scale: 0.95 }}
-        className="relative z-10 w-full max-w-2xl bg-zinc-950 border-2 border-zinc-700/80 rounded-2xl shadow-2xl flex flex-col overflow-hidden text-zinc-100 max-h-[92vh]"
+        exit={{ opacity: 0, scale: 0.96 }}
+        className="relative z-10 w-full max-w-2xl bg-zinc-950/95 border border-zinc-700 rounded-2xl shadow-2xl flex flex-col overflow-hidden text-zinc-100 max-h-[92vh]"
       >
-        {/* Top Header Bar */}
-        <div className="px-4 py-3 bg-zinc-900 border-b border-zinc-800 flex items-center justify-between">
+        {/* Top Header Bar - FIA Motorsport Livery */}
+        <div className="px-4 py-3 bg-zinc-900/90 border-b border-zinc-800 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-red-600/20 border border-red-500/60 flex items-center justify-center text-red-400">
+            <div className="w-8 h-8 rounded-lg bg-red-950/80 border border-red-700/80 flex items-center justify-center text-red-400">
               <Trophy className="w-4 h-4" />
             </div>
             <div>
@@ -217,7 +219,7 @@ export default function DailyChallengesModal() {
                 <h3 className="font-racing text-sm sm:text-base text-white uppercase italic font-bold tracking-wider">
                   TRIVIA DIARIA DE PADDOCK
                 </h3>
-                <span className="text-[9px] font-mono px-2 py-0.5 rounded bg-red-950/80 text-red-300 border border-red-700 font-bold uppercase">
+                <span className="text-[9px] font-mono px-2 py-0.5 rounded bg-zinc-800 text-zinc-300 border border-zinc-700 font-bold uppercase">
                   FIA SPEEDCLUB KNOWLEDGE
                 </span>
               </div>
@@ -229,7 +231,7 @@ export default function DailyChallengesModal() {
 
           <button
             onClick={closeChallengesModal}
-            className="p-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-400 hover:text-white transition-colors cursor-pointer"
+            className="p-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 text-zinc-400 hover:text-white transition-colors cursor-pointer"
           >
             <X className="w-4 h-4" />
           </button>
@@ -239,7 +241,7 @@ export default function DailyChallengesModal() {
         <div className="p-4 sm:p-5 overflow-y-auto flex-1 flex flex-col">
           {isLoadingTrivia && !finalResult ? (
             <div className="py-16 flex flex-col items-center justify-center gap-3">
-              <div className="w-9 h-9 border-3 border-red-600 border-t-transparent rounded-full animate-spin" />
+              <div className="w-8 h-8 border-2 border-red-600 border-t-transparent rounded-full animate-spin" />
               <p className="font-mono text-xs text-zinc-400 tracking-wider">
                 CONECTANDO CON SERVIDOR DE TELEMETRÍA FIA...
               </p>
@@ -249,7 +251,7 @@ export default function DailyChallengesModal() {
                STATE: ALREADY PLAYED TODAY (Countdown to 23:59:59)
                ========================================================================= */
             <div className="flex flex-col items-center text-center py-6 px-2 sm:px-6">
-              <div className="w-16 h-16 rounded-2xl bg-amber-500/10 border-2 border-amber-500/40 flex items-center justify-center text-amber-400 mb-4 shadow-lg">
+              <div className="w-16 h-16 rounded-2xl bg-zinc-900 border border-amber-600/70 flex items-center justify-center text-amber-400 mb-4 shadow-md">
                 <Award className="w-8 h-8" />
               </div>
 
@@ -266,30 +268,30 @@ export default function DailyChallengesModal() {
               </p>
 
               {/* Score card */}
-              <div className="mt-4 p-4 rounded-xl bg-zinc-900/90 border border-zinc-800 w-full max-w-md flex items-center justify-around shadow-inner">
+              <div className="mt-4 p-4 rounded-xl bg-zinc-900 border border-zinc-800 w-full max-w-md flex items-center justify-around shadow-inner">
                 <div className="flex flex-col items-center">
-                  <span className="text-[10px] font-mono text-zinc-400">ACIERTOS</span>
+                  <span className="text-[10px] font-mono text-zinc-400 uppercase">ACIERTOS</span>
                   <span className="font-racing text-2xl font-black text-white italic">
                     {dailyTriviaStatus.score ?? 0} / 5
                   </span>
                 </div>
                 <div className="w-px h-10 bg-zinc-800" />
                 <div className="flex flex-col items-center">
-                  <span className="text-[10px] font-mono text-zinc-400">CRÉDITOS OBTENIDOS</span>
-                  <span className="font-racing text-2xl font-black text-amber-400 italic flex items-center gap-1">
+                  <span className="text-[10px] font-mono text-zinc-400 uppercase">CRÉDITOS OBTENIDOS</span>
+                  <span className="font-racing text-2xl font-black text-amber-400 italic flex items-center gap-1.5">
                     <Coins className="w-5 h-5 text-amber-400" />
                     +{dailyTriviaStatus.credits_awarded ?? 0} CR
                   </span>
                 </div>
               </div>
 
-              {/* Countdown box */}
-              <div className="mt-6 p-4 rounded-xl bg-red-950/30 border border-red-800/60 w-full max-w-md flex flex-col items-center gap-1.5">
-                <div className="flex items-center gap-2 text-red-400 text-xs font-mono font-bold">
-                  <Clock className="w-4 h-4 animate-pulse" />
+              {/* Countdown box - Solid Classic Border (No Blurs) */}
+              <div className="mt-6 p-4 rounded-xl bg-zinc-900/90 border border-zinc-700 w-full max-w-md flex flex-col items-center gap-1.5">
+                <div className="flex items-center gap-2 text-zinc-300 text-xs font-mono font-bold">
+                  <Clock className="w-4 h-4 text-red-500" />
                   <span>PRÓXIMA TRIVIA Y 3 PERMUTAS EN:</span>
                 </div>
-                <div className="font-mono text-2xl sm:text-3xl font-black text-white tracking-widest bg-black/60 px-4 py-1.5 rounded-lg border border-red-900/80">
+                <div className="font-mono text-2xl sm:text-3xl font-black text-white tracking-widest bg-black/70 px-5 py-2 rounded-lg border border-zinc-800">
                   {formatTime(countdownRemaining)}
                 </div>
                 <p className="text-[9px] font-mono text-zinc-400 text-center mt-1">
@@ -300,7 +302,7 @@ export default function DailyChallengesModal() {
               <div className="mt-6 flex gap-3">
                 <button
                   onClick={closeChallengesModal}
-                  className="py-2 px-6 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-zinc-200 font-racing text-xs italic uppercase tracking-wider transition-colors cursor-pointer"
+                  className="py-2.5 px-6 rounded-xl bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 text-zinc-200 font-racing text-xs italic uppercase tracking-wider transition-colors cursor-pointer"
                 >
                   VOLVER AL PADDOCK
                 </button>
@@ -311,10 +313,10 @@ export default function DailyChallengesModal() {
                STATE: INTRO (Ready to start round)
                ========================================================================= */
             <div className="flex flex-col gap-4">
-              {/* Hero Banner */}
-              <div className="p-4 rounded-xl bg-gradient-to-r from-red-950/50 via-zinc-900 to-zinc-900 border border-red-900/50 flex flex-col sm:flex-row items-center justify-between gap-4">
+              {/* Hero Banner - Classic Motorsport Finish */}
+              <div className="p-4 rounded-xl bg-zinc-900/90 border border-zinc-800 flex flex-col sm:flex-row items-center justify-between gap-4">
                 <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-xl bg-red-600/20 border border-red-500/60 flex items-center justify-center text-red-400 shrink-0">
+                  <div className="w-12 h-12 rounded-xl bg-zinc-950 border border-red-700/70 flex items-center justify-center text-red-500 shrink-0">
                     <Flame className="w-6 h-6 text-red-500" />
                   </div>
                   <div>
@@ -337,8 +339,8 @@ export default function DailyChallengesModal() {
 
               {/* Rules & Features */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div className="p-3 rounded-xl bg-zinc-900/70 border border-zinc-800 flex items-start gap-2.5">
-                  <div className="p-1.5 rounded-lg bg-amber-500/10 text-amber-400 border border-amber-500/30 shrink-0">
+                <div className="p-3.5 rounded-xl bg-zinc-900/80 border border-zinc-800 flex items-start gap-2.5">
+                  <div className="p-1.5 rounded-lg bg-zinc-950 text-amber-400 border border-zinc-700 shrink-0">
                     <Timer className="w-4 h-4" />
                   </div>
                   <div>
@@ -351,8 +353,8 @@ export default function DailyChallengesModal() {
                   </div>
                 </div>
 
-                <div className="p-3 rounded-xl bg-zinc-900/70 border border-zinc-800 flex items-start gap-2.5">
-                  <div className="p-1.5 rounded-lg bg-blue-500/10 text-blue-400 border border-blue-500/30 shrink-0">
+                <div className="p-3.5 rounded-xl bg-zinc-900/80 border border-zinc-800 flex items-start gap-2.5">
+                  <div className="p-1.5 rounded-lg bg-zinc-950 text-blue-400 border border-zinc-700 shrink-0">
                     <HelpCircle className="w-4 h-4" />
                   </div>
                   <div>
@@ -367,7 +369,7 @@ export default function DailyChallengesModal() {
               </div>
 
               {/* Reward Scale Table */}
-              <div className="p-3 rounded-xl bg-zinc-900/60 border border-zinc-800 flex flex-col gap-2">
+              <div className="p-3.5 rounded-xl bg-zinc-900/80 border border-zinc-800 flex flex-col gap-2">
                 <span className="text-[10px] font-mono text-zinc-400 uppercase font-bold tracking-wider">
                   TABLA OFICIAL DE CRÉDITOS DE CARRERA (CR):
                 </span>
@@ -375,7 +377,7 @@ export default function DailyChallengesModal() {
                   {REWARD_TABLE.map((row) => (
                     <div 
                       key={row.correct}
-                      className="p-2 rounded-lg bg-black/50 border border-zinc-800 flex items-center justify-between"
+                      className="p-2 rounded-lg bg-zinc-950 border border-zinc-800 flex items-center justify-between"
                     >
                       <span className="font-mono text-xs text-zinc-300 font-bold">
                         {row.correct} {row.correct === 1 ? 'acierto' : 'aciertos'}
@@ -388,13 +390,13 @@ export default function DailyChallengesModal() {
                 </div>
               </div>
 
-              {/* Start Button */}
+              {/* Start Button - Classic Racing Red (Solid, No Neon Glow) */}
               <button
                 onClick={handleStartTrivia}
                 disabled={!questions || questions.length === 0}
-                className="mt-2 w-full py-3 px-6 rounded-xl bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white font-racing text-sm sm:text-base font-black italic uppercase tracking-wider transition-all shadow-lg shadow-red-950/60 cursor-pointer flex items-center justify-center gap-2 disabled:opacity-50"
+                className="mt-2 w-full py-3.5 px-6 rounded-xl bg-red-700 hover:bg-red-600 border border-red-500/80 text-white font-racing text-sm sm:text-base font-black italic uppercase tracking-wider transition-all shadow-md cursor-pointer flex items-center justify-center gap-2 disabled:opacity-50"
               >
-                <Sparkles className="w-4 h-4 text-yellow-300" />
+                <Sparkles className="w-4 h-4 text-amber-300" />
                 <span>INICIAR DESAFÍO DIARIO (5 PREGUNTAS)</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
@@ -425,13 +427,13 @@ export default function DailyChallengesModal() {
                   </span>
                 </div>
 
-                {/* 20s Arcade Timer */}
+                {/* 20s Classic Solid Timer */}
                 <div className="flex items-center gap-2">
-                  <div className={`flex items-center gap-1.5 px-3 py-1 rounded-lg font-mono font-black text-sm tracking-widest border transition-all ${
+                  <div className={`flex items-center gap-1.5 px-3 py-1 rounded-lg font-mono font-black text-sm tracking-widest border transition-colors ${
                     timeLeft <= 5 
-                      ? 'bg-red-950 text-red-400 border-red-600 animate-pulse'
+                      ? 'bg-red-950 text-red-400 border-red-700'
                       : timeLeft <= 10
-                      ? 'bg-amber-950 text-amber-400 border-amber-600'
+                      ? 'bg-amber-950 text-amber-400 border-amber-700'
                       : 'bg-zinc-900 text-white border-zinc-700'
                   }`}>
                     <Timer className="w-4 h-4" />
@@ -440,28 +442,28 @@ export default function DailyChallengesModal() {
                 </div>
               </div>
 
-              {/* Timer Progress Bar */}
+              {/* Timer Progress Bar - Solid Matte Fill */}
               <div className="w-full h-1.5 rounded-full bg-zinc-800 overflow-hidden">
                 <div 
                   className={`h-full transition-all duration-1000 ${
                     timeLeft <= 5 
-                      ? 'bg-red-500' 
+                      ? 'bg-red-600' 
                       : timeLeft <= 10 
                       ? 'bg-amber-500' 
-                      : 'bg-emerald-500'
+                      : 'bg-emerald-600'
                   }`}
                   style={{ width: `${(timeLeft / 20) * 100}%` }}
                 />
               </div>
 
-              {/* Question Text */}
-              <div className="p-4 sm:p-5 rounded-xl bg-zinc-900/90 border border-zinc-800/90 min-h-[90px] flex items-center">
+              {/* Question Text Card */}
+              <div className="p-4 sm:p-5 rounded-xl bg-zinc-900/90 border border-zinc-800 min-h-[90px] flex items-center">
                 <h4 className="font-racing text-sm sm:text-base font-bold text-white tracking-wide leading-relaxed">
                   {currentQuestion.question}
                 </h4>
               </div>
 
-              {/* 4 Options Grid */}
+              {/* 4 Options Grid - Classic Clean Borders */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                 {currentQuestion.options.map((option, idx) => {
                   const letters = ['A', 'B', 'C', 'D'];
@@ -474,10 +476,10 @@ export default function DailyChallengesModal() {
                       disabled={isAnswerLocked}
                       className={`p-3.5 rounded-xl border text-left transition-all flex items-center gap-3 cursor-pointer ${
                         isSelected
-                          ? 'bg-red-600 border-red-400 text-white shadow-lg scale-[1.01]'
+                          ? 'bg-red-700 border-red-500 text-white shadow-md'
                           : isAnswerLocked
-                          ? 'bg-zinc-900/40 border-zinc-800/60 text-zinc-500 opacity-60'
-                          : 'bg-zinc-900/80 hover:bg-zinc-800/90 border-zinc-800 text-zinc-200 hover:border-zinc-600'
+                          ? 'bg-zinc-900/40 border-zinc-800 text-zinc-500 opacity-60'
+                          : 'bg-zinc-900/80 hover:bg-zinc-800 border-zinc-800 text-zinc-200 hover:border-zinc-600'
                       }`}
                     >
                       <div className={`w-7 h-7 rounded-lg flex items-center justify-center font-racing text-xs font-bold shrink-0 ${
@@ -508,9 +510,9 @@ export default function DailyChallengesModal() {
                STATE: SUMMARY & REWARD FANFARE
                ========================================================================= */
             <div className="flex flex-col gap-4">
-              {/* Fanfare Banner */}
-              <div className="p-5 rounded-2xl bg-gradient-to-r from-red-950/80 via-zinc-900 to-amber-950/80 border-2 border-amber-500/60 flex flex-col items-center text-center shadow-2xl">
-                <div className="w-14 h-14 rounded-2xl bg-amber-500/20 border-2 border-amber-400/80 flex items-center justify-center text-amber-400 mb-2">
+              {/* Fanfare Banner - Matte Podium Design */}
+              <div className="p-5 rounded-2xl bg-zinc-900/95 border border-amber-600/70 flex flex-col items-center text-center shadow-lg">
+                <div className="w-14 h-14 rounded-2xl bg-zinc-950 border border-amber-500/70 flex items-center justify-center text-amber-400 mb-2 shadow-inner">
                   <Trophy className="w-7 h-7" />
                 </div>
 
@@ -520,22 +522,22 @@ export default function DailyChallengesModal() {
 
                 <div className="mt-3 flex items-center gap-4">
                   <div className="p-2.5 rounded-xl bg-black/60 border border-zinc-800 flex flex-col items-center min-w-[120px]">
-                    <span className="text-[10px] font-mono text-zinc-400">ACIERTOS</span>
+                    <span className="text-[10px] font-mono text-zinc-400 uppercase">ACIERTOS</span>
                     <span className="font-racing text-2xl font-black text-white italic">
                       {finalResult?.score ?? 0} / 5
                     </span>
                   </div>
 
                   <div className="p-2.5 rounded-xl bg-black/60 border border-amber-700/80 flex flex-col items-center min-w-[140px]">
-                    <span className="text-[10px] font-mono text-amber-400">RECOMPENSA</span>
-                    <span className="font-racing text-2xl font-black text-amber-400 italic flex items-center gap-1">
+                    <span className="text-[10px] font-mono text-amber-400 uppercase">RECOMPENSA</span>
+                    <span className="font-racing text-2xl font-black text-amber-400 italic flex items-center gap-1.5">
                       <Coins className="w-5 h-5" />
                       +{finalResult?.credits_awarded ?? 0} CR
                     </span>
                   </div>
                 </div>
 
-                <p className="mt-3 text-[11px] font-mono text-emerald-400 font-bold bg-emerald-950/60 border border-emerald-800/80 px-3 py-1 rounded-full">
+                <p className="mt-3 text-[11px] font-mono text-emerald-400 font-bold bg-emerald-950/70 border border-emerald-800 px-3 py-1 rounded-full">
                   ✓ {finalResult?.credits_awarded ?? 0} Créditos de Carrera acreditados en tu cuenta.
                 </p>
               </div>
@@ -549,10 +551,10 @@ export default function DailyChallengesModal() {
                 {(finalResult?.breakdown || []).map((item, index) => (
                   <div
                     key={item.id || index}
-                    className={`p-3 rounded-xl border flex flex-col gap-2 transition-all ${
+                    className={`p-3 rounded-xl border flex flex-col gap-2 transition-colors ${
                       item.is_correct
-                        ? 'bg-zinc-900/80 border-emerald-600/70'
-                        : 'bg-zinc-900/80 border-red-700/70'
+                        ? 'bg-zinc-900/85 border-emerald-700/80'
+                        : 'bg-zinc-900/85 border-red-700/80'
                     }`}
                   >
                     <div className="flex items-start justify-between gap-2">
@@ -598,7 +600,7 @@ export default function DailyChallengesModal() {
                     </div>
 
                     {item.lore && (
-                      <div className="p-2 rounded-lg bg-black/40 border border-zinc-800 text-[10px] font-mono text-zinc-400 italic">
+                      <div className="p-2 rounded-lg bg-black/50 border border-zinc-800 text-[10px] font-mono text-zinc-400 italic">
                         <span className="text-amber-400 font-bold not-italic">🏁 Paddock Lore: </span>
                         {item.lore}
                       </div>
@@ -611,7 +613,7 @@ export default function DailyChallengesModal() {
               <div className="mt-2 flex justify-end">
                 <button
                   onClick={closeChallengesModal}
-                  className="w-full py-2.5 px-6 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-white font-racing text-xs italic uppercase tracking-wider transition-colors cursor-pointer"
+                  className="w-full py-2.5 px-6 rounded-xl bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 text-white font-racing text-xs italic uppercase tracking-wider transition-colors cursor-pointer"
                 >
                   VOLVER AL PADDOCK PRINCIPAL
                 </button>
@@ -620,10 +622,10 @@ export default function DailyChallengesModal() {
           ) : null}
         </div>
 
-        {/* Modal Footer */}
+        {/* Modal Footer - Classic Telemetry Strip */}
         <div className="px-4 py-2.5 bg-zinc-900 border-t border-zinc-800 flex items-center justify-between text-[10px] font-mono text-zinc-400">
-          <div className="flex items-center gap-1.5">
-            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
+          <div className="flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-emerald-500" />
             <span>SPEEDCLUB RACING TELEMETRY // EN LÍNEA</span>
           </div>
 

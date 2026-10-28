@@ -303,12 +303,19 @@ export default function SpeedClubTvScreen() {
 
   return (
     <div className="min-h-screen w-full bg-zinc-950 text-white flex flex-col font-sans select-none relative overflow-x-hidden">
-      {/* Dynamic Ambient Background - subtle, dark, classic */}
+      {/* Responsive SpeedClub TV Official Circuit Background Wallpaper */}
       <div 
-        className="fixed inset-0 bg-cover bg-center pointer-events-none opacity-15 filter blur-md transition-all duration-700"
+        className="fixed inset-0 bg-cover bg-center bg-no-repeat pointer-events-none opacity-40 transition-all duration-700"
+        style={{ backgroundImage: `url('/fondo_speedclub_tv.webp'), url('/fondo_speedclub_tv.jpg')` }}
+      />
+      {/* Dynamic Ambient Thumbnail Tint */}
+      <div 
+        className="fixed inset-0 bg-cover bg-center pointer-events-none opacity-10 filter blur-xl transition-all duration-700"
         style={{ backgroundImage: `url('${currentChannel.thumbnail_url}')` }}
       />
-      <div className="fixed inset-0 bg-gradient-to-b from-black/85 via-zinc-950/95 to-black pointer-events-none" />
+      {/* Matte Motorsport Vignette & Contrast Overlay */}
+      <div className="fixed inset-0 bg-gradient-to-b from-black/80 via-zinc-950/85 to-black/95 pointer-events-none" />
+      <div className="fixed inset-0 carbon-pattern opacity-25 pointer-events-none" />
 
       {/* Top Header Broadcast Navigation (Classic Racing Red & Blue) */}
       <header className="relative z-20 w-full bg-zinc-900 border-b border-zinc-800 px-4 sm:px-8 py-3 shadow-md">

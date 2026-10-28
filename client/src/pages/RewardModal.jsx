@@ -51,8 +51,8 @@ export default function RewardModal({ onClose }) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md overflow-y-auto">
-      {/* Light beam & radial glow in background (Matching Reference 4 sunburst rays) */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-racing-red/20 via-zinc-950/70 to-black pointer-events-none" />
+      {/* Classic dark vignette in background */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-zinc-900/60 via-zinc-950/90 to-black pointer-events-none" />
 
       {/* Main Modal Card */}
       <motion.div
@@ -60,7 +60,7 @@ export default function RewardModal({ onClose }) {
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.9, y: 20 }}
         transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-        className="relative z-10 w-full max-w-2xl rounded-2xl bg-zinc-950 border-2 border-zinc-700/80 p-6 sm:p-8 shadow-[0_0_50px_rgba(0,0,0,0.9)] flex flex-col items-center text-center overflow-hidden"
+        className="relative z-10 w-full max-w-2xl rounded-2xl bg-zinc-950 border-2 border-zinc-700/80 p-6 sm:p-8 shadow-2xl flex flex-col items-center text-center overflow-hidden"
       >
         {/* Carbon fiber pattern background */}
         <div className="absolute inset-0 carbon-pattern opacity-60 pointer-events-none" />

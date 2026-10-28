@@ -21,7 +21,7 @@ export default function GarageAssemblyScreen() {
         <div className="mb-4 relative">
           <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-zinc-800 to-black p-0.5 border border-zinc-600 shadow-metallic">
             <div className="w-full h-full rounded-[10px] bg-telemetry-950 flex items-center justify-center">
-              <Wrench className="w-8 h-8 text-racing-red animate-pulse" />
+              <Wrench className="w-8 h-8 text-racing-red" />
             </div>
           </div>
           <span className="absolute -bottom-1 -right-1 w-3 h-3 rounded-full bg-emerald-400 border-2 border-black" />
