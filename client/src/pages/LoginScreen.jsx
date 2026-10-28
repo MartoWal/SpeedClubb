@@ -7,26 +7,30 @@ import {
   ArrowRight, 
   ShieldCheck, 
   Sparkles, 
-  ChevronRight,
-  Flame,
-  Award,
-  Mail,
-  Lock,
-  User,
-  KeyRound,
-  AlertCircle,
-  CheckCircle2,
-  Loader2,
-  Gauge,
-  Zap
+  ChevronRight, 
+  Flame, 
+  Award, 
+  Mail, 
+  Lock, 
+  User, 
+  KeyRound, 
+  AlertCircle, 
+  CheckCircle2, 
+  Loader2, 
+  Gauge, 
+  Zap,
+  Package,
+  Box
 } from 'lucide-react';
 import FloatingHoloCard from '../components/FloatingHoloCard';
+import AlbumCoverCard from '../components/garage/AlbumCoverCard';
 import { sound } from '../utils/soundEffects';
 
 export default function LoginScreen() {
   const { 
     globalStats, 
     catalog, 
+    pastedVehicles,
     login, 
     register, 
     loginAsGuest, 
@@ -39,6 +43,11 @@ export default function LoginScreen() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [formError, setFormError] = useState('');
+
+  // Default values matching official paddock showcase (20/95 autos, 21% completion)
+  const pastedCount = (pastedVehicles && pastedVehicles.length > 0) ? pastedVehicles.length : 20;
+  const totalCount = (catalog && catalog.length > 0) ? catalog.length : 95;
+  const completionPct = Math.round((pastedCount / totalCount) * 100);
 
   // Pick 4 iconic showcase vehicles to float around the central album cover
   const fiatUno = catalog.find(c => c.id === 1) || catalog[0];
@@ -136,67 +145,18 @@ export default function LoginScreen() {
             <FloatingHoloCard vehicle={porsche} rotation={9} />
           </div>
 
-          {/* Centerpiece: The Official SpeedClub Album Cover */}
-          <motion.div
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 0.8, type: 'spring' }}
-            whileHover={{ scale: 1.02, rotateY: 4 }}
-            className="relative z-10 w-60 sm:w-72 h-88 sm:h-[400px] rounded-2xl p-1 bg-zinc-900 border border-zinc-700 shadow-xl cursor-pointer group"
-          >
-            {/* 3D Binder spine reflection */}
-            <div className="absolute top-0 bottom-0 left-3 w-3 bg-gradient-to-r from-black/60 to-transparent z-20 pointer-events-none" />
-            
-            {/* Cover Inner */}
-            <div className="relative w-full h-full rounded-xl bg-zinc-950 overflow-hidden flex flex-col justify-between p-4 sm:p-5 border border-zinc-800 shadow-inner">
-              <div className="absolute inset-0 carbon-pattern opacity-85" />
-              <div className="absolute inset-0 bg-gradient-to-br from-red-950/20 via-transparent to-black pointer-events-none" />
-
-              {/* Cover Top Badges */}
-              <div className="relative z-10 flex items-center justify-between">
-                <div className="flex items-center gap-1.5 px-2 py-0.5 rounded bg-black/80 border border-zinc-700 text-[10px] font-mono text-zinc-300">
-                  <Award className="w-3 h-3 text-amber-400" />
-                  <span>OFFICIAL STICKER ALBUM</span>
-                </div>
-                <span className="font-racing italic text-racing-red text-xs font-bold tracking-widest">
-                  EDICIÓN 2026
-                </span>
-              </div>
-
-              {/* Center Huge Graphic: Classic Speed Trophy / SpeedClub Emblem */}
-              <div className="relative z-10 my-auto text-center flex flex-col items-center">
-                <div className="relative w-24 h-24 sm:w-32 sm:h-32 rounded-full bg-zinc-900 p-1 shadow-md mb-2 flex items-center justify-center border border-zinc-700">
-                  <div className="w-full h-full rounded-full bg-zinc-950 flex flex-col items-center justify-center p-2 relative overflow-hidden">
-                    <div className="absolute inset-0 scanlines opacity-30" />
-                    <span className="font-display text-3xl sm:text-4xl font-black text-white italic tracking-tighter">
-                      20<span className="text-racing-red">26</span>
-                    </span>
-                    <span className="font-racing text-[9px] text-zinc-400 uppercase tracking-widest">
-                      SPEED TROPHY
-                    </span>
-                  </div>
-                </div>
-
-                <h2 className="font-display text-xl sm:text-2xl font-black italic tracking-wider text-white">
-                  SPEED<span className="text-racing-red">CLUB</span>
-                </h2>
-                <p className="font-racing text-[10px] sm:text-xs text-zinc-400 uppercase tracking-widest mt-0.5">
-                  GARAGE COLLECTOR'S BOOK
-                </p>
-              </div>
-
-              {/* Cover Footer */}
-              <div className="relative z-10 pt-2 border-t border-zinc-800 flex items-center justify-between">
-                <div className="flex items-center gap-1 text-[10px] font-mono text-zinc-400">
-                  <ShieldCheck className="w-3.5 h-3.5 text-amber-400" />
-                  <span>28 VEHÍCULOS OFICIALES</span>
-                </div>
-                <span className="text-[10px] font-racing italic text-amber-400 font-bold bg-zinc-900 px-1.5 py-0.5 rounded border border-zinc-700">
-                  GR.1 CERTIFICADO
-                </span>
-              </div>
-            </div>
-          </motion.div>
+          {/* Centerpiece: The Official SpeedClub Album Cover (Exact Same Cover as in the Paddock) */}
+          <div className="relative z-10 flex items-center justify-center">
+            <AlbumCoverCard
+              completionPct={completionPct}
+              pastedCount={pastedCount}
+              totalCount={totalCount}
+              onOpen={() => {
+                sound.playSelect();
+                loginAsGuest();
+              }}
+            />
+          </div>
         </div>
 
         {/* Right: Gran Turismo FIA Pilot Super License Terminal */}
