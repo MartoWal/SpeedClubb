@@ -1,0 +1,250 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+  
+  body {
+    background-color: #080a0e;
+    color: #e2e8f0;
+    font-family: 'Rajdhani', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+}
+
+/* Custom Racing Fonts */
+.font-racing {
+  font-family: 'Kanit', sans-serif;
+  font-style: italic;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.font-telemetry {
+  font-family: 'Rajdhani', sans-serif;
+  letter-spacing: 0.05em;
+}
+
+.font-hud {
+  font-family: 'Chakra Petch', sans-serif;
+}
+
+.font-display {
+  font-family: 'Orbitron', monospace;
+  letter-spacing: 0.08em;
+}
+
+/* Carbon Fiber Texture */
+.carbon-pattern {
+  background: 
+    radial-gradient(black 15%, transparent 16%) 0 0,
+    radial-gradient(black 15%, transparent 16%) 8px 8px,
+    radial-gradient(rgba(255,255,255,.07) 15%, transparent 20%) 0 1px,
+    radial-gradient(rgba(255,255,255,.07) 15%, transparent 20%) 8px 9px;
+  background-color: #121316;
+  background-size: 16px 16px;
+}
+
+/* Asfalto Oscuro Mojado Texture */
+.asphalt-texture {
+  background-color: #0c0e12;
+  background-image: 
+    radial-gradient(circle at 50% 50%, rgba(20, 24, 33, 0.6) 0%, rgba(8, 10, 14, 0.95) 100%),
+    repeating-linear-gradient(45deg, rgba(255,255,255,0.015) 0px, rgba(255,255,255,0.015) 2px, transparent 2px, transparent 6px);
+}
+
+/* Telemetry Grid & Scanlines */
+.telemetry-grid {
+  background-size: 32px 32px;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+}
+
+.scanlines {
+  background: linear-gradient(
+    rgba(18, 16, 16, 0) 50%, 
+    rgba(0, 0, 0, 0.25) 50%
+  ), linear-gradient(
+    90deg,
+    rgba(255, 0, 0, 0.03),
+    rgba(0, 255, 0, 0.01),
+    rgba(0, 0, 255, 0.03)
+  );
+  background-size: 100% 4px, 6px 100%;
+}
+
+/* Angular Chamfered Borders (Telemetry Panel style) */
+.clip-chamfer {
+  clip-path: polygon(
+    14px 0%, 
+    calc(100% - 14px) 0%, 
+    100% 14px, 
+    100% calc(100% - 14px), 
+    calc(100% - 14px) 100%, 
+    14px 100%, 
+    0% calc(100% - 14px), 
+    0% 14px
+  );
+}
+
+.clip-chamfer-tl-br {
+  clip-path: polygon(
+    16px 0%, 
+    100% 0%, 
+    100% calc(100% - 16px), 
+    calc(100% - 16px) 100%, 
+    0% 100%, 
+    0% 16px
+  );
+}
+
+.clip-slanted {
+  clip-path: polygon(12px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%);
+}
+
+/* Metallic Beveled Racing Buttons */
+.btn-metallic {
+  background: linear-gradient(180deg, #2a2e39 0%, #171a22 50%, #0e1017 100%);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.35),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.8),
+    0 4px 15px rgba(0, 0, 0, 0.6);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-metallic:hover {
+  background: linear-gradient(180deg, #373d4d 0%, #20242f 50%, #141720 100%);
+  border-color: rgba(255, 255, 255, 0.35);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.9),
+    0 6px 20px rgba(0, 0, 0, 0.8);
+  transform: translateY(-2px);
+}
+
+.btn-metallic:active {
+  transform: translateY(1px);
+  box-shadow: 
+    inset 0 2px 4px rgba(0, 0, 0, 0.9),
+    0 2px 6px rgba(0, 0, 0, 0.5);
+}
+
+/* Primary Racing Red Metallic Button (Classic Warm Racing) */
+.btn-racing-red {
+  background: linear-gradient(180deg, #c8102e 0%, #a00d24 50%, #680514 100%);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.7),
+    0 4px 12px rgba(0, 0, 0, 0.6);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-racing-red:hover {
+  background: linear-gradient(180deg, #db1637 0%, #b30f29 50%, #7a0818 100%);
+  border-color: rgba(255, 255, 255, 0.35);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.8),
+    0 6px 16px rgba(0, 0, 0, 0.75);
+  transform: translateY(-2px);
+}
+
+.btn-racing-red:active {
+  transform: translateY(1px);
+}
+
+/* Classic Warm Ambient Shadows (No Neon Lighting) */
+.shadow-glow-fire {
+  box-shadow: 
+    0 4px 20px rgba(0, 0, 0, 0.8),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.shadow-glow-gold-intense {
+  box-shadow: 
+    0 4px 20px rgba(0, 0, 0, 0.8),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+/* 3D Book Sheen Animation */
+.album-sheen {
+  background: linear-gradient(
+    105deg,
+    transparent 20%,
+    rgba(255, 255, 255, 0.15) 35%,
+    rgba(255, 255, 255, 0.25) 45%,
+    transparent 60%
+  );
+  background-size: 200% 100%;
+  animation: sheen-sweep 4s infinite ease-in-out;
+}
+
+@keyframes sheen-sweep {
+  0% { background-position: 200% 0; }
+  50%, 100% { background-position: -200% 0; }
+}
+
+/* Chromatic Aberration Text Effect */
+.chromatic-text {
+  position: relative;
+  display: inline-block;
+  color: #ffffff;
+}
+
+.chromatic-text::before,
+.chromatic-text::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  clip: rect(0, 0, 0, 0);
+}
+
+.chromatic-active {
+  text-shadow: 
+    2px 0 0 rgba(0, 240, 255, 0.75),
+    -2px 0 0 rgba(255, 14, 56, 0.75);
+  animation: glitch-anim 2s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-anim {
+  0% {
+    text-shadow: 2px 0 0 rgba(0, 240, 255, 0.8), -2px 0 0 rgba(255, 20, 60, 0.8);
+  }
+  25% {
+    text-shadow: -2px 1px 0 rgba(0, 240, 255, 0.8), 2px -1px 0 rgba(255, 20, 60, 0.8);
+  }
+  50% {
+    text-shadow: 3px -1px 0 rgba(0, 240, 255, 0.8), -3px 1px 0 rgba(255, 20, 60, 0.8);
+  }
+  75% {
+    text-shadow: -1px 2px 0 rgba(0, 240, 255, 0.8), 1px -2px 0 rgba(255, 20, 60, 0.8);
+  }
+  100% {
+    text-shadow: 2px 0 0 rgba(0, 240, 255, 0.8), -2px 0 0 rgba(255, 20, 60, 0.8);
+  }
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #080a0e;
+}
+::-webkit-scrollbar-thumb {
+  background: #27272a;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #e10600;
+}
