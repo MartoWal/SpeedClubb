@@ -29,7 +29,7 @@ export default function App() {
   }, [setCurrentScreen]);
 
   return (
-    <div className="relative min-h-screen w-full flex flex-col font-telemetry selection:bg-racing-red selection:text-white bg-slate-100">
+    <div className="relative min-h-screen w-full flex flex-col font-telemetry selection:bg-racing-red selection:text-white bg-zinc-950">
       {/* Dynamic Background System */}
       {currentScreen === 'DASHBOARD' ? (
         <div 
@@ -50,15 +50,15 @@ export default function App() {
       ) : (
         <>
           <div 
-            className="fixed inset-0 bg-cover bg-center z-0 pointer-events-none"
+            className="fixed inset-0 bg-cover bg-center z-0 pointer-events-none opacity-20 filter invert"
             style={{ 
               backgroundImage: `url('/assets/backgrounds/fondo_marcas_blanco.jpg')`,
               backgroundAttachment: 'fixed',
-              backgroundColor: '#ffffff',
+              backgroundColor: '#090a0f',
             }}
           />
-          {/* Subtle translucent ambient layer for crisp card contrast */}
-          <div className="fixed inset-0 bg-white/10 pointer-events-none z-0" />
+          {/* Dark matte ambient layer for classic racing contrast (eliminates high glare) */}
+          <div className="fixed inset-0 bg-gradient-to-b from-zinc-950/90 via-black/85 to-zinc-950 pointer-events-none z-0" />
         </>
       )}
 

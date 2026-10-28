@@ -81,16 +81,34 @@ export default function LoginScreen() {
 
   return (
     <div className="relative min-h-screen w-full flex flex-col justify-between overflow-hidden text-white select-none bg-transparent">
-      {/* Top banner headline */}
-      <header className="relative z-10 pt-3 sm:pt-4 px-4 text-center">
+      {/* Top classic racing title plaque */}
+      <header className="relative z-10 pt-4 sm:pt-6 px-4 text-center flex flex-col items-center">
         <motion.div
-          initial={{ opacity: 0, y: -20 }}
+          initial={{ opacity: 0, y: -15 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-950/70 border border-red-500/50 text-racing-red text-xs font-mono mb-2 shadow-md"
+          transition={{ duration: 0.5 }}
+          className="inline-flex items-center gap-3 px-4 sm:px-6 py-2.5 rounded-xl bg-zinc-900 border border-zinc-700/80 shadow-md mb-2"
         >
-          <Flame className="w-3.5 h-3.5" />
-          <span className="font-bold tracking-wider uppercase">TEMPORADA 2026 // OFICIAL PADDOCK COLLECTION</span>
+          {/* Classic Motorsport Tri-Color Livery (Rojo, Blanco, Azul) */}
+          <div className="flex items-center gap-1 border-r border-zinc-700 pr-3">
+            <span className="w-2.5 h-3.5 bg-red-600 rounded-xs inline-block" />
+            <span className="w-2.5 h-3.5 bg-white rounded-xs inline-block" />
+            <span className="w-2.5 h-3.5 bg-blue-600 rounded-xs inline-block" />
+          </div>
+
+          <div className="flex items-center gap-2">
+            <Award className="w-4 h-4 text-amber-400" />
+            <h1 className="font-racing text-xs sm:text-sm md:text-base font-bold tracking-wider uppercase italic text-zinc-100">
+              SpeedClub Temporada 2026 Martin Waltar
+            </h1>
+          </div>
+
+          <div className="hidden sm:flex items-center gap-1 border-l border-zinc-700 pl-3">
+            <span className="w-1.5 h-1.5 rounded-full bg-zinc-400 inline-block" />
+            <span className="text-[10px] font-mono text-zinc-400 uppercase tracking-wider font-bold">
+              OFICIAL
+            </span>
+          </div>
         </motion.div>
       </header>
 
@@ -98,9 +116,6 @@ export default function LoginScreen() {
       <main className="relative z-10 max-w-7xl mx-auto px-4 py-2 sm:py-6 flex flex-col lg:flex-row items-center justify-between gap-6 sm:gap-10 w-full">
         {/* Left / Center: 3D Official Garage Collector's Binder + Floating Vehicle Stickers */}
         <div className="relative flex-1 flex items-center justify-center w-full min-h-[350px] sm:min-h-[420px]">
-          {/* Subtle circuit lines & aura glow */}
-          <div className="absolute w-72 sm:w-96 h-72 sm:h-96 rounded-full bg-racing-red/15 filter blur-3xl pointer-events-none" />
-          
           {/* Floating Sticker 1: Fiat Uno Denver (Upper Left) */}
           <div className="hidden md:block absolute -top-4 -left-4 sm:left-4 z-20">
             <FloatingHoloCard vehicle={fiatUno} rotation={-14} />
@@ -127,7 +142,7 @@ export default function LoginScreen() {
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 0.8, type: 'spring' }}
             whileHover={{ scale: 1.02, rotateY: 4 }}
-            className="relative z-10 w-60 sm:w-72 h-88 sm:h-[400px] rounded-2xl p-1 bg-gradient-to-tr from-zinc-800 via-zinc-600 to-zinc-900 border-2 border-zinc-500 shadow-2xl cursor-pointer group"
+            className="relative z-10 w-60 sm:w-72 h-88 sm:h-[400px] rounded-2xl p-1 bg-zinc-900 border border-zinc-700 shadow-xl cursor-pointer group"
           >
             {/* 3D Binder spine reflection */}
             <div className="absolute top-0 bottom-0 left-3 w-3 bg-gradient-to-r from-black/60 to-transparent z-20 pointer-events-none" />
@@ -135,7 +150,7 @@ export default function LoginScreen() {
             {/* Cover Inner */}
             <div className="relative w-full h-full rounded-xl bg-zinc-950 overflow-hidden flex flex-col justify-between p-4 sm:p-5 border border-zinc-800 shadow-inner">
               <div className="absolute inset-0 carbon-pattern opacity-85" />
-              <div className="absolute inset-0 bg-gradient-to-br from-racing-red/25 via-transparent to-black pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-br from-red-950/20 via-transparent to-black pointer-events-none" />
 
               {/* Cover Top Badges */}
               <div className="relative z-10 flex items-center justify-between">
@@ -148,11 +163,11 @@ export default function LoginScreen() {
                 </span>
               </div>
 
-              {/* Center Huge Graphic: High Tech Speed Trophy / SpeedClub Emblem */}
+              {/* Center Huge Graphic: Classic Speed Trophy / SpeedClub Emblem */}
               <div className="relative z-10 my-auto text-center flex flex-col items-center">
-                <div className="relative w-24 h-24 sm:w-32 sm:h-32 rounded-full bg-gradient-to-br from-racing-red via-zinc-900 to-black p-1 shadow-md mb-2 flex items-center justify-center border border-red-500/60">
-                  <div className="w-full h-full rounded-full bg-telemetry-950 flex flex-col items-center justify-center p-2 relative overflow-hidden">
-                    <div className="absolute inset-0 scanlines opacity-40" />
+                <div className="relative w-24 h-24 sm:w-32 sm:h-32 rounded-full bg-zinc-900 p-1 shadow-md mb-2 flex items-center justify-center border border-zinc-700">
+                  <div className="w-full h-full rounded-full bg-zinc-950 flex flex-col items-center justify-center p-2 relative overflow-hidden">
+                    <div className="absolute inset-0 scanlines opacity-30" />
                     <span className="font-display text-3xl sm:text-4xl font-black text-white italic tracking-tighter">
                       20<span className="text-racing-red">26</span>
                     </span>
@@ -162,7 +177,7 @@ export default function LoginScreen() {
                   </div>
                 </div>
 
-                <h2 className="font-display text-xl sm:text-2xl font-black italic tracking-wider text-white drop-shadow-md">
+                <h2 className="font-display text-xl sm:text-2xl font-black italic tracking-wider text-white">
                   SPEED<span className="text-racing-red">CLUB</span>
                 </h2>
                 <p className="font-racing text-[10px] sm:text-xs text-zinc-400 uppercase tracking-widest mt-0.5">
@@ -176,7 +191,7 @@ export default function LoginScreen() {
                   <ShieldCheck className="w-3.5 h-3.5 text-amber-400" />
                   <span>28 VEHÍCULOS OFICIALES</span>
                 </div>
-                <span className="text-[10px] font-racing italic text-amber-400 font-bold bg-amber-950/70 px-1.5 py-0.5 rounded border border-amber-600/50">
+                <span className="text-[10px] font-racing italic text-amber-400 font-bold bg-zinc-900 px-1.5 py-0.5 rounded border border-zinc-700">
                   GR.1 CERTIFICADO
                 </span>
               </div>
@@ -186,16 +201,16 @@ export default function LoginScreen() {
 
         {/* Right: Gran Turismo FIA Pilot Super License Terminal */}
         <aside className="relative z-10 w-full lg:w-[420px] flex flex-col items-center lg:items-start text-center lg:text-left">
-          <div className="w-full rounded-2xl bg-zinc-950/95 border-2 border-zinc-700/90 shadow-2xl overflow-hidden p-4 sm:p-5 flex flex-col gap-4 backdrop-blur-xl">
+          <div className="w-full rounded-2xl bg-zinc-950 border border-zinc-800 shadow-xl overflow-hidden p-4 sm:p-5 flex flex-col gap-4">
             {/* Terminal Header Plaque */}
             <div className="flex items-center justify-between pb-3 border-b border-zinc-800">
               <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-lg bg-red-950 border border-red-700/80 flex items-center justify-center text-racing-red shadow">
+                <div className="w-8 h-8 rounded-lg bg-zinc-900 border border-zinc-700 flex items-center justify-center text-red-500 shadow-sm">
                   <Gauge className="w-4 h-4" />
                 </div>
                 <div className="flex flex-col text-left">
-                  <span className="font-racing text-xs text-racing-red font-black tracking-wider uppercase flex items-center gap-1">
-                    <span className="w-1.5 h-1.5 rounded-full bg-racing-red animate-pulse" />
+                  <span className="font-racing text-xs text-racing-red font-black tracking-wider uppercase flex items-center gap-1.5">
+                    <span className="w-2 h-2 rounded-full bg-red-600 inline-block" />
                     FIA SUPER LICENSE // PADDOCK TERMINAL
                   </span>
                   <span className="text-[9px] font-mono text-zinc-400">
@@ -203,7 +218,7 @@ export default function LoginScreen() {
                   </span>
                 </div>
               </div>
-              <span className="text-[9px] font-mono font-bold bg-black/80 px-2 py-0.5 rounded border border-zinc-800 text-amber-400">
+              <span className="text-[9px] font-mono font-bold bg-black/80 px-2 py-0.5 rounded border border-zinc-800 text-zinc-300">
                 PORTAL 2026
               </span>
             </div>
@@ -247,7 +262,7 @@ export default function LoginScreen() {
 
             {/* Welcome & Incentives info strip */}
             <div className="text-left bg-zinc-900/60 rounded-lg p-2.5 border border-zinc-800/80 text-[11px] font-mono flex items-start gap-2">
-              <Sparkles className="w-4 h-4 text-amber-400 flex-shrink-0 mt-0.5" />
+              <Award className="w-4 h-4 text-amber-400 flex-shrink-0 mt-0.5" />
               <div>
                 {authMode === 'LOGIN' ? (
                   <p className="text-zinc-300">
@@ -279,7 +294,7 @@ export default function LoginScreen() {
               {authMode === 'REGISTER' && (
                 <div className="flex flex-col gap-1">
                   <label className="text-[10px] font-mono uppercase text-zinc-400 font-bold flex items-center gap-1">
-                    <User className="w-3 h-3 text-amber-400" />
+                    <User className="w-3 h-3 text-zinc-400" />
                     <span>NOMBRE DE PILOTO / GAMERTAG</span>
                   </label>
                   <div className="relative flex items-center">
@@ -288,7 +303,7 @@ export default function LoginScreen() {
                       value={username}
                       onChange={(e) => setUsername(e.target.value)}
                       placeholder="Ej: Ayrton Senna, Max Speed..."
-                      className="w-full py-2.5 pl-3 pr-3 rounded-lg bg-black/70 border border-zinc-700/80 focus:border-amber-400 focus:outline-none text-white font-telemetry text-sm placeholder:text-zinc-600 transition-colors"
+                      className="w-full py-2.5 pl-3 pr-3 rounded-lg bg-black/70 border border-zinc-700/80 focus:border-zinc-400 focus:outline-none text-white font-telemetry text-sm placeholder:text-zinc-600 transition-colors"
                       required
                     />
                   </div>
@@ -298,7 +313,7 @@ export default function LoginScreen() {
               {/* Email Input */}
               <div className="flex flex-col gap-1">
                 <label className="text-[10px] font-mono uppercase text-zinc-400 font-bold flex items-center gap-1">
-                  <Mail className="w-3 h-3 text-racing-red" />
+                  <Mail className="w-3 h-3 text-zinc-400" />
                   <span>CORREO ELECTRÓNICO OFICIAL</span>
                 </label>
                 <div className="relative flex items-center">
@@ -307,7 +322,7 @@ export default function LoginScreen() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="piloto@speedclub.io"
-                    className="w-full py-2.5 pl-3 pr-3 rounded-lg bg-black/70 border border-zinc-700/80 focus:border-red-500 focus:outline-none text-white font-telemetry text-sm placeholder:text-zinc-600 transition-colors"
+                    className="w-full py-2.5 pl-3 pr-3 rounded-lg bg-black/70 border border-zinc-700/80 focus:border-zinc-400 focus:outline-none text-white font-telemetry text-sm placeholder:text-zinc-600 transition-colors"
                     required
                   />
                 </div>
@@ -316,7 +331,7 @@ export default function LoginScreen() {
               {/* Password Input */}
               <div className="flex flex-col gap-1">
                 <label className="text-[10px] font-mono uppercase text-zinc-400 font-bold flex items-center gap-1">
-                  <Lock className="w-3 h-3 text-amber-400" />
+                  <Lock className="w-3 h-3 text-zinc-400" />
                   <span>CLAVE DE TELEMETRÍA (CONTRASEÑA)</span>
                 </label>
                 <div className="relative flex items-center">
@@ -325,7 +340,7 @@ export default function LoginScreen() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Mínimo 6 caracteres"
-                    className="w-full py-2.5 pl-3 pr-3 rounded-lg bg-black/70 border border-zinc-700/80 focus:border-amber-400 focus:outline-none text-white font-telemetry text-sm placeholder:text-zinc-600 transition-colors"
+                    className="w-full py-2.5 pl-3 pr-3 rounded-lg bg-black/70 border border-zinc-700/80 focus:border-zinc-400 focus:outline-none text-white font-telemetry text-sm placeholder:text-zinc-600 transition-colors"
                     required
                   />
                 </div>

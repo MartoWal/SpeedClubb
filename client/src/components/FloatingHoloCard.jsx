@@ -6,31 +6,27 @@ import { sound } from '../utils/soundEffects';
 const tierConfig = {
   C: {
     label: 'COMÚN',
-    color: 'from-emerald-600 to-teal-800',
-    border: 'border-emerald-500/60',
-    glow: 'rgba(16, 185, 129, 0.4)',
-    badgeBg: 'bg-emerald-950 text-emerald-300 border-emerald-700',
+    color: 'from-zinc-700 to-zinc-900',
+    border: 'border-zinc-700',
+    badgeBg: 'bg-zinc-900 text-zinc-300 border-zinc-700',
   },
   B: {
     label: 'RARO',
-    color: 'from-blue-600 to-indigo-900',
-    border: 'border-blue-500/60',
-    glow: 'rgba(59, 130, 246, 0.4)',
-    badgeBg: 'bg-blue-950 text-blue-300 border-blue-700',
+    color: 'from-blue-900 to-zinc-950',
+    border: 'border-blue-900',
+    badgeBg: 'bg-blue-950 text-blue-300 border-blue-800',
   },
   A: {
     label: 'ÉPICO',
-    color: 'from-purple-600 to-pink-900',
-    border: 'border-purple-500/60',
-    glow: 'rgba(168, 85, 247, 0.4)',
-    badgeBg: 'bg-purple-950 text-purple-300 border-purple-700',
+    color: 'from-red-900 to-zinc-950',
+    border: 'border-red-900',
+    badgeBg: 'bg-red-950 text-red-300 border-red-800',
   },
   S: {
     label: 'LEGENDARIO',
-    color: 'from-amber-400 via-yellow-500 to-orange-700',
-    border: 'border-yellow-400',
-    glow: 'rgba(245, 158, 11, 0.6)',
-    badgeBg: 'bg-amber-950 text-yellow-300 border-yellow-500',
+    color: 'from-amber-900 to-zinc-950',
+    border: 'border-amber-700',
+    badgeBg: 'bg-amber-950 text-amber-300 border-amber-700',
   },
 };
 
@@ -50,13 +46,12 @@ export default function FloatingHoloCard({
       onMouseEnter={() => sound.playHover()}
       onClick={() => sound.playSelect()}
       style={{ rotate: `${rotation}deg` }}
-      className={`relative w-44 sm:w-52 h-64 sm:h-72 rounded-xl p-0.5 cursor-pointer select-none group shadow-xl ${className}`}
+      className={`relative w-44 sm:w-52 h-64 sm:h-72 rounded-xl p-0.5 cursor-pointer select-none group shadow-md ${className}`}
     >
-      {/* Card Body */}
-      <div className={`relative w-full h-full rounded-lg bg-zinc-950 border ${tier.border} p-2 flex flex-col justify-between overflow-hidden shadow-metallic group-hover:border-zinc-400 transition-colors`}>
-        {/* Subtle Shimmer lines */}
-        <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-black/60 pointer-events-none" />
-        <div className="absolute -top-1/2 -left-1/2 w-[200%] h-[200%] bg-gradient-to-r from-transparent via-white/5 to-transparent rotate-45 transform translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 pointer-events-none" />
+      {/* Card Body (Classic Collector Sticker) */}
+      <div className={`relative w-full h-full rounded-lg bg-zinc-950 border ${tier.border} p-2 flex flex-col justify-between overflow-hidden group-hover:border-zinc-500 transition-colors`}>
+        {/* Subtle Matte Contrast */}
+        <div className="absolute inset-0 bg-gradient-to-br from-white/[0.03] via-transparent to-black/60 pointer-events-none" />
 
         {/* Top Header info */}
         <div className="relative z-10 flex items-center justify-between">
@@ -69,29 +64,22 @@ export default function FloatingHoloCard({
         </div>
 
         {/* Vehicle Image Container */}
-        <div className="relative z-10 my-auto w-full h-28 sm:h-32 rounded bg-zinc-900/90 border border-zinc-800 flex items-center justify-center overflow-hidden group-hover:border-zinc-700 transition-colors">
+        <div className="relative z-10 my-auto w-full h-28 sm:h-32 rounded bg-zinc-900 border border-zinc-800 flex items-center justify-center overflow-hidden group-hover:border-zinc-700 transition-colors">
           <img
             src={vehicle.image || vehicle.image_url}
             alt={vehicle.name}
             onError={(e) => {
-              // High tech vehicle silhouette fallback
+              // Classic vehicle silhouette fallback
               e.target.style.display = 'none';
               e.target.nextSibling.style.display = 'flex';
             }}
-            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
           />
           {/* Fallback silhouette if image fails */}
           <div className="hidden absolute inset-0 flex flex-col items-center justify-center bg-zinc-900 text-zinc-500 p-2 text-center">
-            <Gauge className="w-8 h-8 text-racing-red mb-1" />
+            <Gauge className="w-8 h-8 text-zinc-400 mb-1" />
             <span className="text-[10px] font-racing text-zinc-300 italic">{vehicle.name}</span>
           </div>
-
-          {/* Hologram badge icon for tier S */}
-          {vehicle.tier === 'S' && (
-            <div className="absolute top-1 right-1 bg-yellow-500/90 text-black p-0.5 rounded-full shadow-lg">
-              <Sparkles className="w-3 h-3 animate-spin" />
-            </div>
-          )}
         </div>
 
         {/* Bottom Specs */}

@@ -40,7 +40,7 @@ export default function ConnectingScreen() {
               <div 
                 className={`w-5 h-5 sm:w-6 sm:h-6 rounded-full border border-zinc-700 transition-all duration-200 ${
                   isLit 
-                    ? 'bg-racing-red shadow-[0_0_15px_rgba(225,6,0,1)]' 
+                    ? 'bg-red-600 border-red-500 shadow-sm' 
                     : 'bg-zinc-900'
                 }`} 
               />
