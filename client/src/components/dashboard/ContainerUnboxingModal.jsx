@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useGarageStore } from '../../store/useGarageStore';
 import { 
@@ -12,7 +12,9 @@ import {
   Flame, 
   ShieldCheck, 
   RotateCcw,
-  BookOpen
+  BookOpen,
+  Plus,
+  AlertTriangle
 } from 'lucide-react';
 import { sound } from '../../utils/soundEffects';
 
@@ -27,6 +29,7 @@ export default function ContainerUnboxingModal() {
   const { 
     isOpeningCrateModalOpen, 
     closeCrateModal, 
+    openingCrateType,
     containers, 
     unopenedCrates, 
     racingCredits, 
@@ -39,13 +42,24 @@ export default function ContainerUnboxingModal() {
 
   const [selectedType, setSelectedType] = useState('standard');
   const [isOpening, setIsOpening] = useState(false);
+  const [isBuying, setIsBuying] = useState(false);
   const [revealedCards, setRevealedCards] = useState(null);
   const [openedContainerType, setOpenedContainerType] = useState('standard');
+  const [purchaseNotice, setPurchaseNotice] = useState(null); // { type: 'success' | 'error', message: string }
+
+  // Sync selected type when modal is opened from dashboard cards or footer
+  useEffect(() => {
+    if (openingCrateType) {
+      setSelectedType(openingCrateType);
+    }
+  }, [openingCrateType, isOpeningCrateModalOpen]);
 
   if (!isOpeningCrateModalOpen) return null;
 
   const currentAvailable = containers[selectedType] || 0;
-  const pastedIds = new Set(pastedVehicles.map((v) => v.id));
+  const cost = selectedType === 'premium' ? 500 : 100;
+  const hasCredits = (racingCredits || 0) >= cost;
+  const pastedIds = new Set((pastedVehicles || []).map((v) => v.id));
 
   const handleStartOpen = () => {
     if (currentAvailable <= 0) {
@@ -66,15 +80,41 @@ export default function ContainerUnboxingModal() {
     }, 1200);
   };
 
+  // Return to containers station (View 2) regardless of whether stock is > 0 or == 0
   const handleReset = () => {
     sound.playSelect();
     setRevealedCards(null);
+    setPurchaseNotice(null);
   };
 
   const handleGoToGarage = () => {
     sound.playSelect();
     closeCrateModal();
     enterGarageAlbum();
+  };
+
+  const handleBuyInModal = async (typeToBuy) => {
+    if (isBuying) return;
+    setIsBuying(true);
+    sound.playSelect();
+
+    const res = await buyContainer(typeToBuy);
+    setIsBuying(false);
+
+    if (res.success) {
+      sound.playReward();
+      setPurchaseNotice({
+        type: 'success',
+        message: `¡Container ${typeToBuy === 'premium' ? 'Premium Dorado' : 'Común'} adquirido con éxito (+1 en inventario)!`
+      });
+      setTimeout(() => setPurchaseNotice(null), 4000);
+    } else {
+      setPurchaseNotice({
+        type: 'error',
+        message: res.message || 'Créditos de Carrera insuficientes para esta compra.'
+      });
+      setTimeout(() => setPurchaseNotice(null), 4000);
+    }
   };
 
   return (
@@ -88,7 +128,7 @@ export default function ContainerUnboxingModal() {
         {/* Subtle Carbon Fiber Background */}
         <div className="absolute inset-0 carbon-pattern opacity-40 pointer-events-none" />
 
-        {/* Modal Top Header */}
+        {/* Modal Top Header Bar */}
         <div className="relative z-10 flex items-center justify-between pb-3 border-b border-zinc-800 mb-3">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-lg bg-zinc-900 border border-zinc-700 flex items-center justify-center text-amber-400">
@@ -99,21 +139,35 @@ export default function ContainerUnboxingModal() {
                 ESTACIÓN DE APERTURA // <span className="text-amber-400">SOBRES CONTAINERS</span>
               </h3>
               <span className="text-[9px] font-mono text-zinc-400">
-                {unopenedCrates} CONTAINERS DISPONIBLES EN TU PODER
+                {unopenedCrates} CONTAINERS TOTALES EN TU PODER
               </span>
             </div>
           </div>
 
-          <button
-            onMouseEnter={() => sound.playHover()}
-            onClick={() => {
-              sound.playSelect();
-              closeCrateModal();
-            }}
-            className="w-8 h-8 rounded-full bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 flex items-center justify-center text-zinc-400 hover:text-white transition-colors cursor-pointer"
-          >
-            <X className="w-4 h-4" />
-          </button>
+          <div className="flex items-center gap-2.5">
+            {/* Real-time Pilot Credits Display */}
+            <div className="px-3 py-1 rounded-lg bg-black/70 border border-amber-600/50 flex items-center gap-1.5 shadow-inner">
+              <Coins className="w-3.5 h-3.5 text-amber-400" />
+              <div className="flex items-center gap-1">
+                <span className="text-[9px] font-mono text-zinc-400 uppercase hidden sm:inline">SALDO:</span>
+                <span className="font-racing text-xs font-black text-amber-300 italic">
+                  {racingCredits} CR
+                </span>
+              </div>
+            </div>
+
+            {/* Close Modal Button */}
+            <button
+              onMouseEnter={() => sound.playHover()}
+              onClick={() => {
+                sound.playSelect();
+                closeCrateModal();
+              }}
+              className="w-8 h-8 rounded-full bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 flex items-center justify-center text-zinc-400 hover:text-white transition-colors cursor-pointer"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          </div>
         </div>
 
         {/* ======================================================== */}
@@ -121,7 +175,7 @@ export default function ContainerUnboxingModal() {
         {/* ======================================================== */}
         {revealedCards ? (
           <div className="relative z-10 flex flex-col items-center py-2">
-            <div className="text-center mb-4">
+            <div className="text-center mb-3">
               <span className="px-3 py-1 rounded-full bg-amber-950/80 border border-amber-600/60 text-amber-300 font-mono text-xs font-bold uppercase tracking-wider">
                 ¡{openedContainerType === 'premium' ? 'CONTAINER PREMIUM ORO' : 'CONTAINER ESTÁNDAR'} ABIERTO!
               </span>
@@ -199,27 +253,27 @@ export default function ContainerUnboxingModal() {
               })}
             </div>
 
-            {/* Bottom Actions */}
+            {/* Bottom Actions Bar */}
             <div className="w-full mt-4 pt-3 border-t border-zinc-800/80 flex flex-col sm:flex-row items-center justify-between gap-3">
-              {unopenedCrates > 0 ? (
-                <button
-                  onMouseEnter={() => sound.playHover()}
-                  onClick={handleReset}
-                  className="w-full sm:w-auto py-2.5 px-4 rounded-xl btn-metallic text-zinc-200 hover:text-white font-racing text-xs italic font-bold uppercase transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
-                >
-                  <RotateCcw className="w-3.5 h-3.5" />
-                  <span>ABRIR OTRO SOBRE ({unopenedCrates})</span>
-                </button>
-              ) : (
-                <span className="text-[10px] font-mono text-zinc-500">
-                  Sin más sobres en inventario
+              {/* Option to return to containers (Always available, with or without containers) */}
+              <button
+                onMouseEnter={() => sound.playHover()}
+                onClick={handleReset}
+                className="w-full sm:w-auto py-2.5 px-5 rounded-xl bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 hover:border-zinc-500 text-zinc-200 hover:text-white font-racing text-xs italic font-bold uppercase transition-all flex items-center justify-center gap-2 cursor-pointer shadow-md"
+              >
+                <RotateCcw className="w-3.5 h-3.5 text-amber-400" />
+                <span>
+                  {unopenedCrates > 0 
+                    ? `ABRIR OTRO SOBRE (${unopenedCrates} LISTOS)` 
+                    : 'VOLVER A CONTAINERS // COMPRAR MÁS'}
                 </span>
-              )}
+              </button>
 
+              {/* Option to navigate to the album */}
               <button
                 onMouseEnter={() => sound.playHover()}
                 onClick={handleGoToGarage}
-                className="w-full sm:w-auto py-2.5 px-6 rounded-xl btn-racing-red text-white font-racing text-xs italic font-black uppercase transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+                className="w-full sm:w-auto py-2.5 px-6 rounded-xl btn-racing-red text-white font-racing text-xs italic font-black uppercase transition-all flex items-center justify-center gap-2 cursor-pointer shadow-md"
               >
                 <BookOpen className="w-4 h-4" />
                 <span>IR AL ÁLBUM A PEGARLAS</span>
@@ -228,22 +282,23 @@ export default function ContainerUnboxingModal() {
           </div>
         ) : (
           /* ======================================================== */
-          /* VIEW 2: CONTAINER SELECT & UNBOXING STAGE                */
+          /* VIEW 2: CONTAINER SELECT & UNBOXING / PURCHASE STAGE     */
           /* ======================================================== */
           <div className="relative z-10 flex flex-col items-center py-2">
             
             {/* Container Type Selector Tabs */}
-            <div className="w-full grid grid-cols-2 gap-3 mb-4">
+            <div className="w-full grid grid-cols-2 gap-3 mb-3">
               {/* Common Red Tab */}
               <button
                 onMouseEnter={() => sound.playHover()}
                 onClick={() => {
                   sound.playSelect();
                   setSelectedType('standard');
+                  setPurchaseNotice(null);
                 }}
                 className={`p-3 rounded-xl border flex flex-col justify-between text-left transition-all cursor-pointer ${
                   selectedType === 'standard'
-                    ? 'bg-red-950/40 border-red-600/80 shadow-md'
+                    ? 'bg-red-950/40 border-red-600/80 shadow-md ring-1 ring-red-600/50'
                     : 'bg-zinc-900/60 border-zinc-800 hover:border-zinc-700'
                 }`}
               >
@@ -251,13 +306,18 @@ export default function ContainerUnboxingModal() {
                   <span className="font-racing text-xs italic font-bold text-white uppercase">
                     CONTAINER COMÚN
                   </span>
-                  <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-black/60 border border-zinc-700 font-bold text-red-400">
+                  <span className={`text-[10px] font-mono px-2 py-0.5 rounded border font-bold ${
+                    (containers.standard || 0) > 0
+                      ? 'bg-black/60 border-red-700 text-red-400'
+                      : 'bg-black/40 border-zinc-800 text-zinc-500'
+                  }`}>
                     {containers.standard || 0} EN PODER
                   </span>
                 </div>
-                <span className="text-[9px] font-mono text-zinc-400">
-                  Sobre con 3 Figuritas de Colección
-                </span>
+                <div className="flex items-center justify-between text-[9px] font-mono text-zinc-400">
+                  <span>3 Figuritas de Colección</span>
+                  <span className="text-amber-400 font-bold">100 CR</span>
+                </div>
               </button>
 
               {/* Premium Gold Tab */}
@@ -266,10 +326,11 @@ export default function ContainerUnboxingModal() {
                 onClick={() => {
                   sound.playSelect();
                   setSelectedType('premium');
+                  setPurchaseNotice(null);
                 }}
                 className={`p-3 rounded-xl border flex flex-col justify-between text-left transition-all cursor-pointer ${
                   selectedType === 'premium'
-                    ? 'bg-amber-950/40 border-amber-500/80 shadow-md'
+                    ? 'bg-amber-950/40 border-amber-500/80 shadow-md ring-1 ring-amber-500/50'
                     : 'bg-zinc-900/60 border-zinc-800 hover:border-zinc-700'
                 }`}
               >
@@ -277,18 +338,55 @@ export default function ContainerUnboxingModal() {
                   <span className="font-racing text-xs italic font-bold text-amber-300 uppercase">
                     CONTAINER PREMIUM
                   </span>
-                  <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-black/60 border border-zinc-700 font-bold text-amber-400">
+                  <span className={`text-[10px] font-mono px-2 py-0.5 rounded border font-bold ${
+                    (containers.premium || 0) > 0
+                      ? 'bg-black/60 border-amber-600 text-amber-400'
+                      : 'bg-black/40 border-zinc-800 text-zinc-500'
+                  }`}>
                     {containers.premium || 0} EN PODER
                   </span>
                 </div>
-                <span className="text-[9px] font-mono text-zinc-400">
-                  Sobre con 5 Figuritas // Tier A & S
-                </span>
+                <div className="flex items-center justify-between text-[9px] font-mono text-zinc-400">
+                  <span>5 Figuritas // Tier A & S</span>
+                  <span className="text-amber-400 font-bold">500 CR</span>
+                </div>
               </button>
             </div>
 
+            {/* In-Modal Purchase Notice Banner */}
+            <AnimatePresence>
+              {purchaseNotice && (
+                <motion.div
+                  initial={{ opacity: 0, y: -6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -6 }}
+                  className={`w-full p-2.5 rounded-xl border text-xs font-mono mb-2 flex items-center justify-between gap-2 shadow-md ${
+                    purchaseNotice.type === 'success'
+                      ? 'bg-emerald-950/80 border-emerald-600/80 text-emerald-300'
+                      : 'bg-red-950/80 border-red-600/80 text-red-300'
+                  }`}
+                >
+                  <div className="flex items-center gap-2">
+                    {purchaseNotice.type === 'success' ? (
+                      <Check className="w-4 h-4 text-emerald-400 shrink-0" />
+                    ) : (
+                      <AlertTriangle className="w-4 h-4 text-red-400 shrink-0" />
+                    )}
+                    <span>{purchaseNotice.message}</span>
+                  </div>
+
+                  <button
+                    onClick={() => setPurchaseNotice(null)}
+                    className="p-1 rounded text-zinc-400 hover:text-white"
+                  >
+                    <X className="w-3.5 h-3.5" />
+                  </button>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
             {/* Central 3D Container Display */}
-            <div className="relative w-full max-w-sm h-52 sm:h-60 rounded-2xl bg-black/70 border border-zinc-800 flex items-center justify-center p-4 my-2 overflow-hidden shadow-inner">
+            <div className="relative w-full max-w-sm h-52 sm:h-56 rounded-2xl bg-black/70 border border-zinc-800 flex items-center justify-center p-4 my-1 overflow-hidden shadow-inner">
               <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/40 pointer-events-none" />
 
               <motion.img
@@ -326,44 +424,77 @@ export default function ContainerUnboxingModal() {
               )}
             </div>
 
-            {/* Info & Open Button */}
-            <div className="w-full mt-3 flex flex-col items-center">
+            {/* Controls: Open or Purchase In-Modal */}
+            <div className="w-full mt-3 flex flex-col items-center gap-2">
               {currentAvailable > 0 ? (
-                <button
-                  disabled={isOpening}
-                  onMouseEnter={() => sound.playHover()}
-                  onClick={handleStartOpen}
-                  className={`w-full py-3.5 px-6 rounded-xl font-racing text-sm sm:text-base italic font-black uppercase transition-all shadow-md cursor-pointer flex items-center justify-center gap-2 ${
-                    selectedType === 'premium'
-                      ? 'bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-600 hover:from-amber-400 hover:to-yellow-300 text-black'
-                      : 'btn-racing-red text-white'
-                  }`}
-                >
-                  <Box className="w-4 h-4" />
-                  <span>
-                    {isOpening ? 'ABRIENDO...' : `ABRIR SOBRE ${selectedType === 'premium' ? 'PREMIUM (5 FIGURITAS)' : 'COMÚN (3 FIGURITAS)'}`}
-                  </span>
-                </button>
-              ) : (
-                <div className="w-full flex flex-col items-center p-3 rounded-xl bg-zinc-900 border border-zinc-800">
-                  <span className="text-zinc-400 text-xs font-mono mb-2">
-                    No tienes containers {selectedType === 'premium' ? 'Premium' : 'Comunes'} en tu inventario.
-                  </span>
+                <>
+                  {/* Primary Open Button */}
                   <button
+                    disabled={isOpening}
                     onMouseEnter={() => sound.playHover()}
-                    onClick={() => {
-                      const res = buyContainer(selectedType);
-                      alert(res.message);
-                    }}
-                    className={`py-2 px-5 rounded-lg font-racing text-xs italic font-bold uppercase transition-colors cursor-pointer flex items-center gap-1.5 ${
+                    onClick={handleStartOpen}
+                    className={`w-full py-3.5 px-6 rounded-xl font-racing text-sm sm:text-base italic font-black uppercase transition-all shadow-md cursor-pointer flex items-center justify-center gap-2 ${
                       selectedType === 'premium'
-                        ? 'bg-amber-500 hover:bg-amber-400 text-black'
-                        : 'bg-red-700 hover:bg-red-600 text-white'
+                        ? 'bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-600 hover:from-amber-400 hover:to-yellow-300 text-black shadow-amber-950/50'
+                        : 'btn-racing-red text-white shadow-red-950/50'
                     }`}
                   >
-                    <Coins className="w-3.5 h-3.5" />
-                    <span>COMPRAR POR {selectedType === 'premium' ? '500 CR' : '100 CR'}</span>
+                    <Box className="w-4 h-4" />
+                    <span>
+                      {isOpening 
+                        ? 'ABRIENDO...' 
+                        : `ABRIR SOBRE ${selectedType === 'premium' ? 'PREMIUM (5 FIGURITAS)' : 'COMÚN (3 FIGURITAS)'} // ${currentAvailable} DISPONIBLES`}
+                    </span>
                   </button>
+
+                  {/* Secondary Quick-Buy Button (Allows stocking up without leaving!) */}
+                  <button
+                    disabled={isBuying || isOpening || !hasCredits}
+                    onMouseEnter={() => sound.playHover()}
+                    onClick={() => handleBuyInModal(selectedType)}
+                    className="w-full py-2 px-4 rounded-xl bg-zinc-900/90 hover:bg-zinc-800 border border-zinc-800 hover:border-zinc-700 text-zinc-300 font-racing text-xs italic font-bold uppercase transition-colors cursor-pointer flex items-center justify-center gap-2 disabled:opacity-40"
+                  >
+                    <Plus className="w-3.5 h-3.5 text-amber-400" />
+                    <span>
+                      COMPRAR OTRO SOBRE {selectedType === 'premium' ? 'PREMIUM' : 'COMÚN'} (+1 POR {cost} CR)
+                    </span>
+                  </button>
+                </>
+              ) : (
+                /* Empty Stock State: Purchase directly in modal without returning to paddock! */
+                <div className="w-full flex flex-col items-center p-3.5 rounded-xl bg-zinc-900/90 border border-zinc-800">
+                  <div className="flex items-center gap-2 mb-1.5">
+                    <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-black/60 border border-zinc-700 text-zinc-400 font-bold uppercase">
+                      0 SOBRES EN INVENTARIO
+                    </span>
+                    <span className="text-zinc-400 text-xs font-mono">
+                      {selectedType === 'premium' 
+                        ? '5 figuritas con alta probabilidad Tier A y S' 
+                        : '3 figuritas aleatorias del álbum oficial'}
+                    </span>
+                  </div>
+
+                  <button
+                    disabled={isBuying || !hasCredits}
+                    onMouseEnter={() => sound.playHover()}
+                    onClick={() => handleBuyInModal(selectedType)}
+                    className={`w-full mt-2 py-3 px-5 rounded-xl font-racing text-sm italic font-black uppercase transition-all shadow-md cursor-pointer flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed ${
+                      selectedType === 'premium'
+                        ? 'bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-600 hover:from-amber-400 hover:to-yellow-300 text-black shadow-amber-950/40'
+                        : 'bg-red-600 hover:bg-red-500 text-white shadow-red-950/40'
+                    }`}
+                  >
+                    <Coins className="w-4 h-4" />
+                    <span>
+                      {hasCredits 
+                        ? `COMPRAR Y AÑADIR (+1) POR ${cost} CR` 
+                        : `CRÉDITOS INSUFICIENTES (${racingCredits} / ${cost} CR)`}
+                    </span>
+                  </button>
+
+                  <span className="text-[10px] font-mono text-zinc-500 mt-2">
+                    Una vez adquirido, el sobre se habilitará instantáneamente para su apertura aquí mismo.
+                  </span>
                 </div>
               )}
             </div>

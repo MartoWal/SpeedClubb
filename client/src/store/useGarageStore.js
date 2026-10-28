@@ -369,7 +369,7 @@ export const useGarageStore = create((set, get) => ({
     // Background sync to backend SQLite
     const activeUserId = get().currentUser?.id || get().pilot?.id || 'pilot-1';
     try {
-      const res = await fetch(`http://localhost:8000/api/buy-container?user_id=${activeUserId}&pack_type=${type}`, {
+      const res = await fetch(`http://127.0.0.1:8000/api/buy-container?user_id=${activeUserId}&pack_type=${type}`, {
         method: 'POST',
       });
       if (res.ok) {
