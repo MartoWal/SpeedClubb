@@ -70,6 +70,7 @@ class QuestionOptionOut(BaseModel):
     difficulty: str
     question: str
     options: List[str]
+    correct_index: int
 
 
 class DailyTriviaStatusResponse(BaseModel):
@@ -167,7 +168,8 @@ def get_daily_trivia(
                 category=q["category"],
                 difficulty=q["difficulty"],
                 question=q["question"],
-                options=q["options"]
+                options=q["options"],
+                correct_index=q.get("correct_index", 0)
             )
         )
 

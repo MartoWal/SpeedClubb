@@ -5,12 +5,12 @@
     "difficulty": "MEDIA",
     "question": "¿Qué modelo de fabricación nacional lideró la histórica 'Misión Argentina' en las 84 Horas de Nürburgring en 1969?",
     "options": [
-      "Torino 380W",
-      "Ford Falcon Sprint",
       "Chevrolet Chevy SS Coupe",
-      "Fiat 128 IAVA"
+      "Ford Falcon Sprint",
+      "Fiat 128 IAVA",
+      "Torino 380W"
     ],
-    "correct_index": 0,
+    "correct_index": 3,
     "lore": "El Torino 380W N° 3, comandado por Juan Manuel Fangio y Oreste Berta, fue el auto que más vueltas completó en el mítico circuito alemán."
   },
   {
@@ -19,12 +19,12 @@
     "difficulty": "FÁCIL",
     "question": "¿Qué preparador oficial desarrolló las versiones deportivas más icónicas del Fiat 128 en Argentina?",
     "options": [
-      "IAVA",
-      "Berta Sport",
+      "Carlos Pairetti",
       "Heriberto Pronello",
-      "Carlos Pairetti"
+      "IAVA",
+      "Berta Sport"
     ],
-    "correct_index": 0,
+    "correct_index": 2,
     "lore": "IAVA (Industria Argentina de Vehículos de Avanzada) potenció al Fiat 128 con árboles de levas cruzados y carburadores Weber dobles."
   },
   {
@@ -33,12 +33,12 @@
     "difficulty": "MEDIA",
     "question": "¿Qué emblemático Hot-Hatch de 1994 fue lanzado en homenaje al equipo Williams de F1 con llantas doradas Speedline?",
     "options": [
-      "Renault Clio Williams",
       "Peugeot 205 GTI",
+      "Volkswagen Gol GTI",
       "Fiat Uno Turbo",
-      "Volkswagen Gol GTI"
+      "Renault Clio Williams"
     ],
-    "correct_index": 0,
+    "correct_index": 3,
     "lore": "El Renault Clio Williams equipaba un motor F7R de 2.0 litros 16V y 147 CV, celebrando los títulos de Renault y Williams en la F1."
   },
   {
@@ -47,12 +47,12 @@
     "difficulty": "DIFÍCIL",
     "question": "¿Qué motor de 6 cilindros en línea equipaba al mítico Ford Falcon Sprint presentado en 1973?",
     "options": [
-      "Motor 221 SP (Special Performance)",
       "Motor 188 Standard",
       "Motor 292 V8 Fase II",
+      "Motor 221 SP (Special Performance)",
       "Slant Six 225"
     ],
-    "correct_index": 0,
+    "correct_index": 2,
     "lore": "El Falcon Sprint equipaba el motor 221 SP con tapa de cilindros especial, múltiple de escape de tubos individuales y carburador Holley 40/40."
   },
   {
@@ -61,12 +61,12 @@
     "difficulty": "MEDIA",
     "question": "¿Cuál era la versión deportiva de serie más picante del Fiat 147 fabricada por Sevel en Argentina?",
     "options": [
-      "Fiat 147 Sorpasso",
       "Fiat 147 Vivace",
       "Fiat 147 Spazio TR",
-      "Fiat 147 Brio"
+      "Fiat 147 Brio",
+      "Fiat 147 Sorpasso"
     ],
-    "correct_index": 0,
+    "correct_index": 3,
     "lore": "El 147 Sorpasso de IAVA contaba con motor 1.301 cc llevado a 90 CV, alerón aerodinámico trasero y doble salida de escape cromada."
   },
   {
@@ -75,12 +75,12 @@
     "difficulty": "FÁCIL",
     "question": "¿Qué célebre modelo de Chevrolet dominó las pistas del Turismo Carretera en los 70 y 80 con su carrocería cupé?",
     "options": [
-      "Chevy SS Serie 2",
       "Chevrolet 400",
+      "Chevrolet Astra GSi",
       "Chevrolet Monza",
-      "Chevrolet Astra GSi"
+      "Chevy SS Serie 2"
     ],
-    "correct_index": 0,
+    "correct_index": 3,
     "lore": "La Cupé Chevy Serie 2 con motor 250 ci y franjas decorativas es uno de los conos absolutos del automovilismo deportivo argentino."
   },
   {
@@ -89,12 +89,12 @@
     "difficulty": "DIFÍCIL",
     "question": "¿Qué versión especial del Renault 12 montaba carburador Solex doble boca y desarrollaba 110 CV con preparación de fábrica en 1978?",
     "options": [
-      "Renault 12 Alpine",
-      "Renault 12 TS",
       "Renault 12 TL",
+      "Renault 12 TS",
+      "Renault 12 Alpine",
       "Renault 12 GTL"
     ],
-    "correct_index": 0,
+    "correct_index": 2,
     "lore": "El R12 Alpine fue desarrollado por Renault Argentina utilizando la culata hemisférica del Alpine A110 y tapa de válvulas especial."
   },
   {
@@ -103,12 +103,12 @@
     "difficulty": "MEDIA",
     "question": "¿Qué versión de homologación con tracción integral y motor turbo de 220 CV comercializó Peugeot a principios de los 90?",
     "options": [
-      "Peugeot 405 T16 4x4",
       "Peugeot 205 Turbo 16",
-      "Peugeot 306 Maxi",
-      "Peugeot 505 Turbo Injection"
+      "Peugeot 505 Turbo Injection",
+      "Peugeot 405 T16 4x4",
+      "Peugeot 306 Maxi"
     ],
-    "correct_index": 0,
+    "correct_index": 2,
     "lore": "El 405 T16 combinaba confort ejecutivo con tecnología del Grupo B de rally: motor 2.0 16V Turbo con overboost y tracción integral permanente."
   },
   {
@@ -118,8 +118,8 @@
     "question": "¿Qué popular deportivo compacto de Ford presentaba un alerón doble 'cola de ballena' diseñado para rally?",
     "options": [
       "Ford Escort RS Cosworth",
-      "Ford Sierra XR4",
       "Ford Fiesta RS Turbo",
+      "Ford Sierra XR4",
       "Ford Escort XR3i"
     ],
     "correct_index": 0,
@@ -131,12 +131,12 @@
     "difficulty": "MEDIA",
     "question": "¿Cuál fue el primer automóvil fabricado en serie en el Mercosur en incorporar inyección electrónica multipunto de combustible en 1989?",
     "options": [
-      "Volkswagen Gol GTI",
-      "Chevrolet Kadett GSi",
       "Fiat Uno 1.6R",
-      "Ford Escort XR3"
+      "Ford Escort XR3",
+      "Volkswagen Gol GTI",
+      "Chevrolet Kadett GSi"
     ],
-    "correct_index": 0,
+    "correct_index": 2,
     "lore": "El Gol GTI azul con molduras grises estrenó la inyección Bosch LE-Jetronic en la región, marcando el fin de la era del carburador."
   },
   {
@@ -145,12 +145,12 @@
     "difficulty": "FÁCIL",
     "question": "¿Qué bólido apodado cariñosamente 'La Fitito' alcanzaba más de 180 km/h en sus variantes de competición Abarth?",
     "options": [
-      "Fiat 600 Abarth 1000 TC",
-      "Fiat 500 Giannini",
       "Fiat 850 Spider",
-      "Fiat 133 IAVA"
+      "Fiat 500 Giannini",
+      "Fiat 133 IAVA",
+      "Fiat 600 Abarth 1000 TC"
     ],
-    "correct_index": 0,
+    "correct_index": 3,
     "lore": "Carlo Abarth descubrió que abriendo la tapa trasera del motor no solo mejoraba la refrigeración, sino que reducía la turbulencia aerodinámica."
   },
   {
@@ -159,12 +159,12 @@
     "difficulty": "FÁCIL",
     "question": "¿Qué vehículo conduce Takumi Fujiwara en el monte Akina para realizar las entregas de tofu?",
     "options": [
-      "Toyota Sprinter Trueno AE86",
-      "Mazda RX-7 FD3S",
+      "Honda Civic EK9",
       "Nissan Skyline GT-R R32",
-      "Honda Civic EK9"
+      "Mazda RX-7 FD3S",
+      "Toyota Sprinter Trueno AE86"
     ],
-    "correct_index": 0,
+    "correct_index": 3,
     "lore": "El 'Panda Trueno' AE86 de Takumi se convirtió en el ícono mundial del drift gracias a su perfecto balance de chasis y tracción trasera."
   },
   {
@@ -173,12 +173,12 @@
     "difficulty": "MEDIA",
     "question": "¿Qué código de motor legendario de 4 cilindros y 16 válvulas con culata Yamaha impulsa al Toyota AE86 original?",
     "options": [
-      "4A-GE",
+      "1JZ-FSE",
       "3S-GTE",
-      "2JZ-GTE",
-      "1JZ-FSE"
+      "4A-GE",
+      "2JZ-GTE"
     ],
-    "correct_index": 0,
+    "correct_index": 2,
     "lore": "El motor 4A-GE, diseñado en conjunto por Toyota y Yamaha, es célebre por subir de revoluciones limpiamente por encima de las 7.500 RPM."
   },
   {
@@ -187,12 +187,12 @@
     "difficulty": "MEDIA",
     "question": "¿Qué motor rotativo Wankel biturbo secuencial impulsa al Mazda RX-7 (FD3S) de Keisuke Takahashi?",
     "options": [
-      "13B-REW",
-      "20B-REW",
       "12A Twin Turbo",
-      "Renesis 13B-MSP"
+      "Renesis 13B-MSP",
+      "20B-REW",
+      "13B-REW"
     ],
-    "correct_index": 0,
+    "correct_index": 3,
     "lore": "El 13B-REW del FD3S fue el primer motor biturbo rotativo producido en serie para el mercado japonés, entregando 255 a 280 CV."
   },
   {
@@ -203,8 +203,8 @@
     "options": [
       "Godzilla",
       "El Samurai Negro",
-      "El Demonio de Akina",
-      "Hachiroku"
+      "Hachiroku",
+      "El Demonio de Akina"
     ],
     "correct_index": 0,
     "lore": "La revista 'Wheels' lo bautizó 'Godzilla' en 1989 al ver cómo su tracción integral ATTESA E-TS destruía a los V8 australianos."
@@ -215,12 +215,12 @@
     "difficulty": "MEDIA",
     "question": "¿Qué vehículo con tracción total y motor Boxer Turbo adquiere Bunta Fujiwara tras probar el límite del Trueno?",
     "options": [
+      "Nissan Pulsar GTI-R",
       "Subaru Impreza WRX STI Coupe (GC8)",
-      "Mitsubishi Lancer Evolution IV",
       "Toyota Celica GT-Four",
-      "Nissan Pulsar GTI-R"
+      "Mitsubishi Lancer Evolution IV"
     ],
-    "correct_index": 0,
+    "correct_index": 1,
     "lore": "Bunta adquirió el Subaru Impreza STI Coupe 22B/GC8 para demostrarle a Takumi el salto tecnológico de la tracción integral moderna."
   },
   {
@@ -229,12 +229,12 @@
     "difficulty": "DIFÍCIL",
     "question": "¿A qué régimen estratosférico de giro llegaba el motor 4A-GE de competición (Formula Atlantic) instalado en el AE86?",
     "options": [
-      "11.000 RPM",
       "9.000 RPM",
+      "8.500 RPM",
       "13.000 RPM",
-      "8.500 RPM"
+      "11.000 RPM"
     ],
-    "correct_index": 0,
+    "correct_index": 3,
     "lore": "El motor de 20 válvulas procedente de la categoría Formula Atlantic podía girar a 11.000 RPM con cuatro cuerpos de acelerador independientes."
   },
   {
@@ -243,12 +243,12 @@
     "difficulty": "MEDIA",
     "question": "¿Qué sistema electrónico de 'Anti-Lag' (Misfiring System) utilizaban los pilotos del equipo Emperor en sus Lancer Evolution?",
     "options": [
-      "Misfiring System (Bang-Bang)",
       "VTEC Crossover",
-      "Twin-Scroll Bypass",
-      "NOS Direct Port"
+      "NOS Direct Port",
+      "Misfiring System (Bang-Bang)",
+      "Twin-Scroll Bypass"
     ],
-    "correct_index": 0,
+    "correct_index": 2,
     "lore": "El sistema detonaba mezcla en el múltiple de escape antes de la turbina para mantener la presión del turbo al soltar el acelerador."
   },
   {
@@ -257,12 +257,12 @@
     "difficulty": "FÁCIL",
     "question": "¿Cómo se llama el equipo de carreras de montaña fundado por Ryosuke Takahashi para conquistar todas las prefecturas?",
     "options": [
-      "Project D",
-      "Akagi RedSuns",
+      "SpeedStars",
       "Myogi NightKids",
-      "SpeedStars"
+      "Akagi RedSuns",
+      "Project D"
     ],
-    "correct_index": 0,
+    "correct_index": 3,
     "lore": "Ryosuke ideó Project D como una escudería con datos telemétricos puros, teniendo a Takumi para el descenso y a Keisuke para el ascenso."
   },
   {
@@ -286,9 +286,9 @@
     "question": "¿Cuál era el límite de caballaje impuesto por el 'Acuerdo de Caballeros' no oficial de los fabricantes japoneses en los 90?",
     "options": [
       "276 HP (280 PS)",
-      "320 HP (325 PS)",
       "250 HP (253 PS)",
-      "300 HP (304 PS)"
+      "300 HP (304 PS)",
+      "320 HP (325 PS)"
     ],
     "correct_index": 0,
     "lore": "Aunque todos declaraban 280 PS, autos como el R34 GT-R y el Supra RZ salían de fábrica rindiendo fácilmente más de 320 CV reales."
@@ -300,9 +300,9 @@
     "question": "¿Qué técnica audaz utiliza Takumi en las horquillas de Akina enganchando los neumáticos interiores?",
     "options": [
       "Gutter Run (Bloqueo en la canaleta)",
-      "Handbrake Turn de 180°",
+      "Braking Drift invertido",
       "Scandinavian Flick ciego",
-      "Braking Drift invertido"
+      "Handbrake Turn de 180°"
     ],
     "correct_index": 0,
     "lore": "Al meter la rueda delantera en el desnivel de la canaleta de hormigón, Takumi contrarrestaba la fuerza centrífuga sin perder velocidad."
@@ -313,12 +313,12 @@
     "difficulty": "FÁCIL",
     "question": "¿Qué legendario piloto escocés fue campeón mundial de rallyes en 1995 al volante del Subaru Impreza 555?",
     "options": [
-      "Colin McRae",
       "Richard Burns",
+      "Juha Kankkunen",
       "Carlos Sainz",
-      "Juha Kankkunen"
+      "Colin McRae"
     ],
-    "correct_index": 0,
+    "correct_index": 3,
     "lore": "La frase de Colin McRae 'If in doubt, flat out' (Ante la duda, a fondo) definió la era más electrizante del rally mundial."
   },
   {
@@ -327,12 +327,12 @@
     "difficulty": "MEDIA",
     "question": "¿Qué innovador automóvil revolucionó el rally mundial en 1980 al introducir la tracción en las cuatro ruedas?",
     "options": [
-      "Audi Quattro",
-      "Lancia 037",
       "Peugeot 205 T16",
-      "Renault 5 Maxi Turbo"
+      "Renault 5 Maxi Turbo",
+      "Audi Quattro",
+      "Lancia 037"
     ],
-    "correct_index": 0,
+    "correct_index": 2,
     "lore": "Hasta la llegada del Audi Quattro con diferencial central permanente, se creía que la tracción integral era demasiado pesada para competir."
   },
   {
@@ -341,12 +341,12 @@
     "difficulty": "DIFÍCIL",
     "question": "¿Qué automóvil ostenta el récord histórico absoluto de seis títulos mundiales consecutivos de constructores entre 1987 y 1992?",
     "options": [
+      "Peugeot 206 WRC",
       "Lancia Delta HF Integrale",
       "Subaru Impreza WRC",
-      "Peugeot 206 WRC",
       "Toyota Celica GT-Four"
     ],
-    "correct_index": 0,
+    "correct_index": 1,
     "lore": "El Delta Integrale es el rey indiscutido del Grupo A de la FIA, sumando 46 victorias totales en el mundial de rally."
   },
   {
@@ -355,12 +355,12 @@
     "difficulty": "FÁCIL",
     "question": "¿Qué piloto francés es el máximo campeón de la historia del WRC con 9 títulos mundiales consecutivos?",
     "options": [
-      "Sébastien Loeb",
       "Sébastien Ogier",
-      "Didier Auriol",
-      "Michèle Mouton"
+      "Michèle Mouton",
+      "Sébastien Loeb",
+      "Didier Auriol"
     ],
-    "correct_index": 0,
+    "correct_index": 2,
     "lore": "Sébastien Loeb conquistó 9 campeonatos mundiales al hilo entre 2004 y 2012 con Citroën y su copiloto Daniel Elena."
   },
   {
@@ -369,12 +369,12 @@
     "difficulty": "MEDIA",
     "question": "¿Qué célebre piloto español bicampeón del mundo sufrió la rotura de motor de su Corolla a 500 metros de la meta en 1998?",
     "options": [
-      "Carlos Sainz",
-      "Dani Sordo",
+      "Jesús Puras",
       "Antonio Zanini",
-      "Jesús Puras"
+      "Dani Sordo",
+      "Carlos Sainz"
     ],
-    "correct_index": 0,
+    "correct_index": 3,
     "lore": "El grito de Luis Moya '¡Trata de arrancarlo, Carlos!' en el Rally de Gran Bretaña 1998 quedó grabado en la historia del deporte motor."
   },
   {
@@ -383,12 +383,12 @@
     "difficulty": "DIFÍCIL",
     "question": "¿Qué piloto finlandés ganó cuatro títulos del WRC de forma consecutiva entre 1996 y 1999 con Mitsubishi?",
     "options": [
-      "Tommi Mäkinen",
       "Marcus Grönholm",
-      "Hannu Mikkola",
-      "Ari Vatanen"
+      "Ari Vatanen",
+      "Tommi Mäkinen",
+      "Hannu Mikkola"
     ],
-    "correct_index": 0,
+    "correct_index": 2,
     "lore": "Mäkinen fue tan dominante que Mitsubishi creó la edición especial de calle 'Tommi Mäkinen Edition' (TME) del Lancer Evolution VI."
   },
   {
@@ -397,12 +397,12 @@
     "difficulty": "FÁCIL",
     "question": "¿Qué mítica categoría de los años 80 fue cancelada por la FIA debido a la desmedida potencia de bólidos con más de 500 CV?",
     "options": [
-      "Grupo B",
+      "World Rally Car (WRC)",
       "Grupo A",
-      "Grupo 4",
-      "World Rally Car (WRC)"
+      "Grupo B",
+      "Grupo 4"
     ],
-    "correct_index": 0,
+    "correct_index": 2,
     "lore": "Los Grupo B aceleraban de 0 a 100 km/h en tierra en menos de 3 segundos, lo que los hacía casi imposibles de controlar ante el público."
   },
   {
@@ -425,12 +425,12 @@
     "difficulty": "MEDIA",
     "question": "¿Qué compacto francés le devolvió la gloria a Peugeot a principios de los 2000 logrando tres títulos de constructores?",
     "options": [
-      "Peugeot 206 WRC",
-      "Peugeot 307 WRC",
       "Peugeot 205 T16",
-      "Peugeot 306 Maxi"
+      "Peugeot 206 WRC",
+      "Peugeot 306 Maxi",
+      "Peugeot 307 WRC"
     ],
-    "correct_index": 0,
+    "correct_index": 1,
     "lore": "Para homologar el 206 WRC, Peugeot tuvo que alargar los paragolpes de calle de la serie 'GT' para alcanzar los 4 metros exigidos por la FIA."
   },
   {
@@ -440,9 +440,9 @@
     "question": "¿En qué provincia de Argentina se disputó históricamente el Rally de Argentina del WRC con sus emblemáticos vados de agua?",
     "options": [
       "Córdoba (Valle de Punilla y Traslasierra)",
-      "Mendoza",
+      "Tucumán",
       "San Juan",
-      "Tucumán"
+      "Mendoza"
     ],
     "correct_index": 0,
     "lore": "Los tramos de El Cóndor-Copina y Giulio Cesare en las Altas Cumbres cordobesas eran considerados por los pilotos los más espectaculares del planeta."
@@ -467,12 +467,12 @@
     "difficulty": "FÁCIL",
     "question": "¿Dónde se ubica tradicionalmente el motor de combustión en el icónico Porsche 911?",
     "options": [
-      "Colgado por detrás del eje trasero",
       "En posición central delantera",
-      "En el eje delantero transversal",
-      "Bajo los asientos delanteros"
+      "Bajo los asientos delanteros",
+      "Colgado por detrás del eje trasero",
+      "En el eje delantero transversal"
     ],
-    "correct_index": 0,
+    "correct_index": 2,
     "lore": "La disposición trasera del motor otorga al 911 una tracción inigualable al salir de curvas lentas, una característica fundacional del modelo."
   },
   {
@@ -481,12 +481,12 @@
     "difficulty": "MEDIA",
     "question": "¿Qué bólido le dio a Porsche su primera victoria absoluta en las 24 Horas de Le Mans en 1970?",
     "options": [
-      "Porsche 917K",
       "Porsche 956",
       "Porsche 911 GT1",
+      "Porsche 917K",
       "Porsche 935 'Moby Dick'"
     ],
-    "correct_index": 0,
+    "correct_index": 2,
     "lore": "El 917K con motor de 12 cilindros bóxer refrigerado por aire alcanzaba casi 400 km/h en la recta de Les Hunaudières sin chicanas."
   },
   {
@@ -495,12 +495,12 @@
     "difficulty": "DIFÍCIL",
     "question": "¿Cuál fue la última generación del Porsche 911 que utilizó motores refrigerados exclusivamente por aire (Air-Cooled)?",
     "options": [
-      "Generación 993",
       "Generación 964",
       "Generación 996",
-      "Generación G-Series"
+      "Generación G-Series",
+      "Generación 993"
     ],
-    "correct_index": 0,
+    "correct_index": 3,
     "lore": "El 993 (fabricado entre 1993 y 1998) es el último y más codiciado 911 'air-cooled', marcando la transición histórica al agua con el 996."
   },
   {
@@ -509,12 +509,12 @@
     "difficulty": "FÁCIL",
     "question": "¿Qué denominación llevan los modelos de Porsche más radicales diseñados para circuito y homologados para calle?",
     "options": [
-      "GT3 / GT3 RS / GT2 RS",
       "GTS Plus",
+      "GT3 / GT3 RS / GT2 RS",
       "Turbo Track",
       "Rallye Sport Concept"
     ],
-    "correct_index": 0,
+    "correct_index": 1,
     "lore": "La división Motorsport en Flacht diseña los GT3 sin asientos traseros, con ventanillas aligeradas y aerodinámica nacida en las copas monomarca."
   },
   {
@@ -524,8 +524,8 @@
     "question": "¿Qué superdeportivo de 1986 contó con tracción total inteligente, carrocería de kevlar y venció en el Rally París-Dakar?",
     "options": [
       "Porsche 959",
-      "Porsche Carrera GT",
       "Porsche 911 Dakar",
+      "Porsche Carrera GT",
       "Porsche 914/6"
     ],
     "correct_index": 0,
@@ -537,12 +537,12 @@
     "difficulty": "DIFÍCIL",
     "question": "¿Qué motor V10 atmosférico con aullido inconfundible impulsaba al Carrera GT presentado en 2003?",
     "options": [
-      "V10 de 5.7 litros derivado de un proyecto cancelado de F1",
       "V10 de 5.2 litros Audi Sport",
-      "V10 Biturbo desarrollado con Cosworth",
-      "V10 Bóxer de competición"
+      "V10 de 5.7 litros derivado de un proyecto cancelado de F1",
+      "V10 Bóxer de competición",
+      "V10 Biturbo desarrollado con Cosworth"
     ],
-    "correct_index": 0,
+    "correct_index": 1,
     "lore": "El motor de 612 CV del Carrera GT había sido diseñado originalmente por Porsche para la escudería Footwork de F1 a comienzos de los 90."
   },
   {
@@ -551,12 +551,12 @@
     "difficulty": "FÁCIL",
     "question": "¿En qué lado del volante se encuentra tradicionalmente la llave de encendido en los autos de carreras Porsche?",
     "options": [
-      "A la izquierda del volante",
+      "En el techo de la cabina",
       "A la derecha de la columna",
       "En el túnel central",
-      "En el techo de la cabina"
+      "A la izquierda del volante"
     ],
-    "correct_index": 0,
+    "correct_index": 3,
     "lore": "En la salida clásica de Le Mans, los pilotos corrían hacia el auto: ponían contacto con la mano izquierda mientras metían primera con la derecha."
   },
   {
@@ -565,12 +565,12 @@
     "difficulty": "MEDIA",
     "question": "¿Qué hiperdeportivo híbrido con tracción total formó parte de la 'Santísima Trinidad' en 2013 junto a LaFerrari y el McLaren P1?",
     "options": [
-      "Porsche 918 Spyder",
+      "Porsche 919 Street",
       "Porsche Carrera GT2",
-      "Porsche Mission X",
-      "Porsche 919 Street"
+      "Porsche 918 Spyder",
+      "Porsche Mission X"
     ],
-    "correct_index": 0,
+    "correct_index": 2,
     "lore": "El 918 Spyder fue el primer vehículo de calle de producción en romper la barrera de los 7 minutos en Nürburgring (6:57)."
   },
   {
@@ -579,12 +579,12 @@
     "difficulty": "DIFÍCIL",
     "question": "¿Qué alerón trasero característico estrenó el Porsche 911 Carrera RS 2.7 en 1973?",
     "options": [
-      "Cola de pato (Ducktail)",
-      "Cola de ballena (Whaletail)",
       "Alerón de cuello de cisne (Swan-Neck)",
+      "Cola de ballena (Whaletail)",
+      "Cola de pato (Ducktail)",
       "Alerón retráctil activo"
     ],
-    "correct_index": 0,
+    "correct_index": 2,
     "lore": "El 'Entenbürzel' (cola de pato) estabilizaba la parte trasera a más de 200 km/h sin penalizar la velocidad máxima en línea recta."
   },
   {
@@ -593,12 +593,12 @@
     "difficulty": "MEDIA",
     "question": "¿Qué bólido de la categoría GT1 logró un histórico doblete 1-2 para Porsche en las 24 Horas de Le Mans de 1998?",
     "options": [
-      "Porsche 911 GT1-98",
+      "Nissan R390 GT1",
       "McLaren F1 GTR",
       "Mercedes-Benz CLK GTR",
-      "Nissan R390 GT1"
+      "Porsche 911 GT1-98"
     ],
-    "correct_index": 0,
+    "correct_index": 3,
     "lore": "A diferencia de sus predecesores con chasis de acero del 911, el 911 GT1-98 tenía un monocasco completo de fibra de carbono."
   },
   {
@@ -607,12 +607,12 @@
     "difficulty": "FÁCIL",
     "question": "¿Cuál es la ciudad alemana sede de la casa matriz y fábrica principal de Porsche?",
     "options": [
+      "Wolfsburgo",
       "Stuttgart (Zuffenhausen)",
-      "Múnich",
       "Ingolstadt",
-      "Wolfsburgo"
+      "Múnich"
     ],
-    "correct_index": 0,
+    "correct_index": 1,
     "lore": "El escudo de Porsche incorpora el caballo encabritado del escudo oficial de la ciudad de Stuttgart y las astas de ciervo de Württemberg."
   },
   {
@@ -621,12 +621,12 @@
     "difficulty": "FÁCIL",
     "question": "¿Qué apodo legendario recibía el fundador Enzo Ferrari en el paddock de las carreras?",
     "options": [
-      "Il Commendatore",
       "Il Padrino",
-      "El Ingeniero Mágico",
-      "Il Leone"
+      "Il Commendatore",
+      "Il Leone",
+      "El Ingeniero Mágico"
     ],
-    "correct_index": 0,
+    "correct_index": 1,
     "lore": "Enzo Ferrari fundó la Scuderia en 1929 con el único objetivo de competir en carreras de autos, financiándose luego con los autos de calle."
   },
   {
@@ -635,12 +635,12 @@
     "difficulty": "MEDIA",
     "question": "¿Qué superdeportivo turboalimentado de 1987 fue el último aprobado personalmente por Enzo Ferrari antes de su fallecimiento?",
     "options": [
-      "Ferrari F40",
-      "Ferrari 288 GTO",
       "Ferrari Testarossa",
-      "Ferrari F50"
+      "Ferrari F40",
+      "Ferrari F50",
+      "Ferrari 288 GTO"
     ],
-    "correct_index": 0,
+    "correct_index": 1,
     "lore": "Construido para celebrar el 40° aniversario de la fábrica, el F40 fue el primer vehículo de serie legal para calle en superar las 200 mph (324 km/h)."
   },
   {
@@ -649,12 +649,12 @@
     "difficulty": "FÁCIL",
     "question": "¿Cuál es el color tradicional con el que siempre han corrido los vehículos de la Scuderia Ferrari?",
     "options": [
-      "Rosso Corsa (Rojo de Carreras)",
+      "Blu Pozzi",
       "Giallo Modena (Amarillo)",
       "Nero Carbon",
-      "Blu Pozzi"
+      "Rosso Corsa (Rojo de Carreras)"
     ],
-    "correct_index": 0,
+    "correct_index": 3,
     "lore": "El 'Rosso Corsa' era el color nacional asignado por la federación internacional a todos los constructores italianos desde los años 20."
   },
   {
@@ -663,12 +663,12 @@
     "difficulty": "DIFÍCIL",
     "question": "¿Qué piloto argentino le dio a Ferrari su primera victoria histórica en la Fórmula 1 en el GP de Gran Bretaña de 1951 en Silverstone?",
     "options": [
-      "José Froilán González",
       "Juan Manuel Fangio",
       "Carlos Reutemann",
+      "José Froilán González",
       "Onofre Marimón"
     ],
-    "correct_index": 0,
+    "correct_index": 2,
     "lore": "'El Cabezón' Froilán González batió a los imbatibles Alfa Romeo con su Ferrari 375 F1 con motor V12 de 4.5 litros atmosférico."
   },
   {
@@ -677,12 +677,12 @@
     "difficulty": "MEDIA",
     "question": "¿Qué emblemático modelo de los 80 con estrías laterales de refrigeración fue un fenómeno cultural mundial?",
     "options": [
+      "Ferrari Mondial",
       "Ferrari Testarossa",
       "Ferrari 308 GTB",
-      "Ferrari 348 TB",
-      "Ferrari Mondial"
+      "Ferrari 348 TB"
     ],
-    "correct_index": 0,
+    "correct_index": 1,
     "lore": "El nombre 'Testarossa' (cabeza roja) rinde homenaje a las tapas de válvulas pintadas de rojo de los célebres 250 Testa Rossa de los 50."
   },
   {
@@ -691,12 +691,12 @@
     "difficulty": "DIFÍCIL",
     "question": "¿En honor a qué condecorado aviador italiano de la Primera Guerra Mundial adoptó Ferrari el 'Cavallino Rampante'?",
     "options": [
-      "Francesco Baracca",
       "Gabriele D'Annunzio",
       "Italo Balbo",
-      "Tazio Nuvolari"
+      "Tazio Nuvolari",
+      "Francesco Baracca"
     ],
-    "correct_index": 0,
+    "correct_index": 3,
     "lore": "La condesa Paolina, madre del héroe Francesco Baracca, le dijo a Enzo en 1923: 'Ponga el caballo de mi hijo en sus autos, le traerá suerte'."
   },
   {
@@ -705,12 +705,12 @@
     "difficulty": "FÁCIL",
     "question": "¿Qué piloto alemán conquistó cinco campeonatos mundiales consecutivos con Ferrari entre los años 2000 y 2004?",
     "options": [
-      "Michael Schumacher",
+      "Kimi Räikkönen",
       "Sebastian Vettel",
       "Niki Lauda",
-      "Kimi Räikkönen"
+      "Michael Schumacher"
     ],
-    "correct_index": 0,
+    "correct_index": 3,
     "lore": "Michael Schumacher y Jean Todt devolvieron a Ferrari a la gloria máxima tras una sequía de 21 años sin títulos de pilotos."
   },
   {
@@ -719,12 +719,12 @@
     "difficulty": "MEDIA",
     "question": "¿Qué hiperdeportivo de edición limitada a 400 unidades lanzado en 2002 llevaba el nombre del propio fundador de la marca?",
     "options": [
-      "Ferrari Enzo",
       "Ferrari LaFerrari",
+      "Ferrari FXX",
       "Ferrari Monza SP1",
-      "Ferrari FXX"
+      "Ferrari Enzo"
     ],
-    "correct_index": 0,
+    "correct_index": 3,
     "lore": "El Ferrari Enzo montaba un chasis de carbono, frenos carbono-cerámicos y un V12 de 660 CV directamente derivado de la telemetría de la F1."
   },
   {
@@ -734,9 +734,9 @@
     "question": "¿Qué circuito privado de pruebas en Maranello utiliza la Scuderia para desarrollar y poner a punto sus monoplazas?",
     "options": [
       "Circuito de Fiorano",
-      "Autodromo Enzo e Dino Ferrari (Imola)",
+      "Mugello Circuit",
       "Monza Paddock",
-      "Mugello Circuit"
+      "Autodromo Enzo e Dino Ferrari (Imola)"
     ],
     "correct_index": 0,
     "lore": "Fiorano fue inaugurado en 1972 con 3.021 metros y curvas inspiradas en circuitos históricos europeos para probar cada componente al límite."
@@ -748,9 +748,9 @@
     "question": "¿Qué futbolista argentino legendario encargó una Ferrari Testarossa en color negro en 1987 rompiendo con el rojo tradicional?",
     "options": [
       "Diego Armando Maradona",
-      "Lionel Messi",
       "Gabriel Batistuta",
-      "Mario Alberto Kempes"
+      "Mario Alberto Kempes",
+      "Lionel Messi"
     ],
     "correct_index": 0,
     "lore": "Maradona pidió una Testarossa negra a su representante Guillermo Coppola; al recibirla, Diego protestó porque no traía estéreo ni aire."
@@ -761,12 +761,12 @@
     "difficulty": "MEDIA",
     "question": "¿Qué superdeportivo moderno de Ferrari introdujo por primera vez una mecánica V6 híbrida enchufable en 2021?",
     "options": [
+      "Ferrari 812 Superfast",
       "Ferrari 296 GTB",
-      "Ferrari SF90 Stradale",
       "Ferrari Roma",
-      "Ferrari 812 Superfast"
+      "Ferrari SF90 Stradale"
     ],
-    "correct_index": 0,
+    "correct_index": 1,
     "lore": "El motor V6 a 120° del 296 GTB con turbos ubicados en el centro de la 'V' (hot-V) rinde 830 CV combinados, apodado el 'piccolo V12'."
   },
   {
@@ -776,9 +776,9 @@
     "question": "¿Qué célebre piloto brasileño tricampeón mundial fue el rey indiscutido de las poles y el circuito de Mónaco?",
     "options": [
       "Ayrton Senna",
+      "Rubens Barrichello",
       "Nelson Piquet",
-      "Emerson Fittipaldi",
-      "Rubens Barrichello"
+      "Emerson Fittipaldi"
     ],
     "correct_index": 0,
     "lore": "Ayrton Senna ganó 6 veces el Gran Premio de Mónaco, incluyendo cinco victorias consecutivas entre 1989 y 1993."
@@ -803,12 +803,12 @@
     "difficulty": "MEDIA",
     "question": "¿Qué apodo mítico recibían los monoplazas Mercedes-Benz W196 que dominaron la F1 en 1954 y 1955?",
     "options": [
-      "Las Flechas de Plata (Silberpfeile)",
       "El Monstruo de Stuttgart",
       "Los Diablos Teutones",
-      "El Tiburón Plateado"
+      "El Tiburón Plateado",
+      "Las Flechas de Plata (Silberpfeile)"
     ],
-    "correct_index": 0,
+    "correct_index": 3,
     "lore": "Para reducir peso en Nürburgring en 1934, lijaron la pintura blanca original dejando el aluminio plateado al descubierto."
   },
   {
@@ -817,12 +817,12 @@
     "difficulty": "DIFÍCIL",
     "question": "¿Qué diseñador e ingeniero británico creó los monoplazas campeones de Williams, McLaren y Red Bull Racing?",
     "options": [
-      "Adrian Newey",
-      "Colin Chapman",
       "Gordon Murray",
-      "Rory Byrne"
+      "Rory Byrne",
+      "Colin Chapman",
+      "Adrian Newey"
     ],
-    "correct_index": 0,
+    "correct_index": 3,
     "lore": "Adrian Newey es el único diseñador de F1 en ganar campeonatos de constructores con tres escuderías distintas mediante su genio aerodinámico."
   },
   {
@@ -831,12 +831,12 @@
     "difficulty": "MEDIA",
     "question": "¿Qué piloto austríaco tricampeón del mundo regresó milagrosamente a correr solo seis semanas después de su casi fatal accidente en Nürburgring?",
     "options": [
+      "Helmut Marko",
       "Niki Lauda",
-      "Jochen Rindt",
       "Gerhard Berger",
-      "Helmut Marko"
+      "Jochen Rindt"
     ],
-    "correct_index": 0,
+    "correct_index": 1,
     "lore": "Lauda corrió el GP de Italia 1976 con vendajes sangrantes y quemaduras de tercer grado, finalizando heroicamente en cuarta posición."
   },
   {
@@ -845,12 +845,12 @@
     "difficulty": "FÁCIL",
     "question": "¿Qué piloto español venció a Michael Schumacher y ganó dos títulos mundiales consecutivos con Renault en 2005 y 2006?",
     "options": [
-      "Fernando Alonso",
       "Carlos Sainz Jr.",
       "Pedro de la Rosa",
-      "Marc Gené"
+      "Marc Gené",
+      "Fernando Alonso"
     ],
-    "correct_index": 0,
+    "correct_index": 3,
     "lore": "Fernando Alonso terminó con el reinado de cinco años de Ferrari gracias al motor V10 y V8 de Renault y el revolucionario 'mass damper'."
   },
   {
@@ -859,12 +859,12 @@
     "difficulty": "DIFÍCIL",
     "question": "¿Qué innovación aerodinámica revolucionaria introdujo Colin Chapman en el Lotus 78 y 79 a finales de los años 70?",
     "options": [
-      "El efecto suelo (Ground Effect) con faldones laterales",
-      "El alerón delantero de ala delta",
+      "La suspensión activa telemétrica",
       "Los frenos de disco de carbono",
-      "La suspensión activa telemétrica"
+      "El efecto suelo (Ground Effect) con faldones laterales",
+      "El alerón delantero de ala delta"
     ],
-    "correct_index": 0,
+    "correct_index": 2,
     "lore": "Al crear un perfil de ala de avión invertido en los pontones y sellar los laterales con faldillas móviles, el auto se pegaba al asfalto como una lapa."
   },
   {
@@ -873,12 +873,12 @@
     "difficulty": "FÁCIL",
     "question": "¿Qué piloto argentino apodado 'Lole' fue subcampeón mundial en 1981 con Williams y ganó en Mónaco con Ferrari?",
     "options": [
-      "Carlos Reutemann",
       "Froilán González",
-      "Oscar Larrauri",
-      "Norberto Fontana"
+      "Norberto Fontana",
+      "Carlos Reutemann",
+      "Oscar Larrauri"
     ],
-    "correct_index": 0,
+    "correct_index": 2,
     "lore": "Carlos Reutemann ganó 12 Grandes Premios puntuables de F1 y subió a 45 podios, siendo uno de los pilotos más técnicos y respetados de su época."
   },
   {
@@ -889,8 +889,8 @@
     "options": [
       "Honda RA168E V6 1.5 Litros Turbo",
       "Porsche TAG V6 Turbo",
-      "Renault V10 Atmosférico",
-      "Ferrari V12 3.5 Litros"
+      "Ferrari V12 3.5 Litros",
+      "Renault V10 Atmosférico"
     ],
     "correct_index": 0,
     "lore": "El MP4/4 diseñado por Steve Nichols y Gordon Murray es el monoplaza de F1 con mayor porcentaje de victorias de la historia (93.75%)."
@@ -901,12 +901,12 @@
     "difficulty": "DIFÍCIL",
     "question": "¿Cuántas ruedas tenía el revolucionario monoplaza Tyrrell P34 diseñado por Derek Gardner en 1976?",
     "options": [
+      "5 ruedas asimétricas",
       "6 ruedas (4 delanteras de 10 pulgadas y 2 traseras normales)",
-      "8 ruedas",
       "4 ruedas gemelas traseras",
-      "5 ruedas asimétricas"
+      "8 ruedas"
     ],
-    "correct_index": 0,
+    "correct_index": 1,
     "lore": "Las cuatro pequeñas ruedas delanteras quedaban ocultas detrás del morro, reduciendo la resistencia aerodinámica y aumentando la huella de frenado."
   },
   {
@@ -915,12 +915,12 @@
     "difficulty": "MEDIA",
     "question": "¿En qué Gran Premio histórico los pilotos corren en sentido contrario a las agujas del reloj por las famosas curvas de Tamburello y Tosa?",
     "options": [
-      "Gran Premio de San Marino en Imola",
-      "Monza",
       "Spa-Francorchamps",
+      "Monza",
+      "Gran Premio de San Marino en Imola",
       "Silverstone"
     ],
-    "correct_index": 0,
+    "correct_index": 2,
     "lore": "El Autodromo Internazionale Enzo e Dino Ferrari de Imola es uno de los pocos circuitos clásicos europeos que gira en sentido antihorario."
   },
   {
@@ -929,12 +929,12 @@
     "difficulty": "FÁCIL",
     "question": "¿Qué dos colores emblemáticos identifican a la librea oficial del equipo de carreras Spoon Sports?",
     "options": [
-      "Amarillo brillante y Azul celeste",
       "Rojo y Blanco",
       "Negro y Verde fosforescente",
+      "Amarillo brillante y Azul celeste",
       "Naranja y Gris plomo"
     ],
-    "correct_index": 0,
+    "correct_index": 2,
     "lore": "La combinación azul y amarilla de Spoon es mundialmente célebre en eventos de resistencia como las 25 Horas de Thunderhill y Tsukuba."
   },
   {
@@ -943,12 +943,12 @@
     "difficulty": "MEDIA",
     "question": "¿Quién es el legendario fundador y piloto de pruebas de Spoon Sports y Rigid Co.?",
     "options": [
-      "Tatsuru Ichishima",
+      "Kazutoshi Mizuno",
       "Keiichi Tsuchiya",
       "Smokey Nagata",
-      "Kazutoshi Mizuno"
+      "Tatsuru Ichishima"
     ],
-    "correct_index": 0,
+    "correct_index": 3,
     "lore": "Ichishima fundó Spoon en 1988 con una filosofía clara: mejorar los componentes Honda al milímetro sin alterar la armonía del chasis."
   },
   {
@@ -958,9 +958,9 @@
     "question": "¿Qué marca japonesa de automóviles es la única que prepara y compite oficialmente Spoon Sports?",
     "options": [
       "Honda / Acura",
+      "Subaru",
       "Nissan",
-      "Toyota",
-      "Subaru"
+      "Toyota"
     ],
     "correct_index": 0,
     "lore": "Spoon es el preparador 'tuner' de referencia para Honda, desarrollando piezas para Civic, Integra, S2000 y el superdeportivo NSX."
@@ -971,12 +971,12 @@
     "difficulty": "MEDIA",
     "question": "¿Qué sistema de distribución variable patentado por Honda es el corazón de los motores preparados por Spoon?",
     "options": [
-      "VTEC (Variable Valve Timing and Lift Electronic Control)",
       "MIVEC",
+      "VTEC (Variable Valve Timing and Lift Electronic Control)",
       "VANOS",
       "VVT-i"
     ],
-    "correct_index": 0,
+    "correct_index": 1,
     "lore": "El VTEC cambia a levas de mayor alzada a altas RPM, produciendo el característico cambio agudo de sonido y empuje instantáneo."
   },
   {
@@ -985,12 +985,12 @@
     "difficulty": "DIFÍCIL",
     "question": "¿A cuánto reduce Spoon la tolerancia de peso entre pistones y bielas en sus motores 'Balanceados a Mano'?",
     "options": [
-      "A menos de 0.01 gramos por pistón",
-      "A 2.5 gramos",
       "A 5 gramos",
-      "A 10 gramos"
+      "A 2.5 gramos",
+      "A 10 gramos",
+      "A menos de 0.01 gramos por pistón"
     ],
-    "correct_index": 0,
+    "correct_index": 3,
     "lore": "Mientras las fábricas admiten desvíos de varios gramos, Spoon pesa cada pieza al miligramo para que el motor gire suave como una turbina a 10.000 RPM."
   },
   {
@@ -999,12 +999,12 @@
     "difficulty": "MEDIA",
     "question": "¿Qué legendario roadster biplaza de Honda con reparto de pesos 50:50 y motor F20C preparó Spoon para resistencia?",
     "options": [
-      "Honda S2000 (AP1/AP2)",
       "Honda Beat",
-      "Honda CR-Z",
-      "Honda Prelude Type SH"
+      "Honda Prelude Type SH",
+      "Honda S2000 (AP1/AP2)",
+      "Honda CR-Z"
     ],
-    "correct_index": 0,
+    "correct_index": 2,
     "lore": "El S2000 de serie ya entregaba 120 CV por litro de cilindrada sin turbo, una marca que se mantuvo vigente hasta la llegada del Ferrari 458."
   },
   {
@@ -1013,12 +1013,12 @@
     "difficulty": "FÁCIL",
     "question": "¿Qué modelo Hot-Hatch de Honda con código EK9 fue el primer Civic en llevar la mítica insignia 'Type R'?",
     "options": [
-      "Civic Type R EK9",
-      "Civic Si EF9",
       "Civic Sir EG6",
-      "Civic Type R EP3"
+      "Civic Type R EP3",
+      "Civic Type R EK9",
+      "Civic Si EF9"
     ],
-    "correct_index": 0,
+    "correct_index": 2,
     "lore": "Lanzado en 1997, el EK9 tenía chasis monocasco soldado por puntos extra, butacas Recaro rojas y un motor B16B de 185 CV."
   },
   {
@@ -1027,12 +1027,12 @@
     "difficulty": "DIFÍCIL",
     "question": "¿Qué pieza característica y ligera de fibra de carbono sustituye la luneta trasera en los Civic EG6 y EK9 preparados por Spoon?",
     "options": [
-      "Portón trasero de carbono aligerado con ventanilla de policarbonato",
-      "Techo targa desmontable",
       "Alerón tipo persiana de aluminio",
-      "Difusor de suelo de titanio"
+      "Portón trasero de carbono aligerado con ventanilla de policarbonato",
+      "Difusor de suelo de titanio",
+      "Techo targa desmontable"
     ],
-    "correct_index": 0,
+    "correct_index": 1,
     "lore": "Aligerar el portón y luneta trasera elimina masa por encima del centro de gravedad, mejorando notablemente el paso por curva."
   },
   {
@@ -1041,12 +1041,12 @@
     "difficulty": "MEDIA",
     "question": "¿Qué famoso superdeportivo con chasis de aluminio desarrollado con la ayuda de Ayrton Senna preparó Spoon Sports?",
     "options": [
+      "Mazda Cosmo Sport",
       "Honda NSX-R (NA1 / NA2)",
       "Toyota 2000GT",
-      "Nissan R390",
-      "Mazda Cosmo Sport"
+      "Nissan R390"
     ],
-    "correct_index": 0,
+    "correct_index": 1,
     "lore": "Spoon compitió en las 24 Horas de Nürburgring con el NSX-R, demostrando la durabilidad inquebrantable de la mecánica V6 VTEC."
   },
   {
@@ -1055,12 +1055,12 @@
     "difficulty": "FÁCIL",
     "question": "¿Qué célebre piloto y presentador de 'Best Motoring' apodado el 'Drift King' suele probar los autos Spoon en circuito?",
     "options": [
-      "Keiichi Tsuchiya",
-      "Ken Block",
       "Max Verstappen",
-      "Travis Pastrana"
+      "Travis Pastrana",
+      "Ken Block",
+      "Keiichi Tsuchiya"
     ],
-    "correct_index": 0,
+    "correct_index": 3,
     "lore": "Tsuchiya siempre destacó que los autos de Spoon no tienen sobrepotencia exagerada, sino una respuesta al acelerador que enamora al piloto."
   },
   {
@@ -1069,12 +1069,12 @@
     "difficulty": "DIFÍCIL",
     "question": "¿Qué elemento de precisión patentado por Spoon llamado 'Rigid Collar' elimina la holgura entre el subchasis y el chasis del auto?",
     "options": [
-      "Rigid Collar (arandelas troncocónicas de aleación especial)",
       "Silentblocks de poliuretano",
+      "Rotulas uniball de competición",
       "Barras de torretas de magnesio",
-      "Rotulas uniball de competición"
+      "Rigid Collar (arandelas troncocónicas de aleación especial)"
     ],
-    "correct_index": 0,
+    "correct_index": 3,
     "lore": "Los Rigid Collars rellenan el espacio milimétrico entre los pernos de fábrica y el orificio del chasis, aportando rigidez torsional pura."
   },
   {
@@ -1083,12 +1083,12 @@
     "difficulty": "FÁCIL",
     "question": "¿Qué muscle car negro con supercargador que pertenecía a su padre conduce Dominic Toretto en la primera película?",
     "options": [
-      "Dodge Charger R/T 1970",
       "Chevrolet Chevelle SS",
       "Pontiac GTO 1969",
-      "Plymouth Road Runner"
+      "Plymouth Road Runner",
+      "Dodge Charger R/T 1970"
     ],
-    "correct_index": 0,
+    "correct_index": 3,
     "lore": "El Charger de 900 CV con blower BDS era tan intimidante que Dom admitía en la trama: 'Me da un miedo de muerte'."
   },
   {
@@ -1098,8 +1098,8 @@
     "question": "¿Qué emblemático deportivo japonés verde lima conduce Brian O'Conner en la carrera callejera inicial de 2001?",
     "options": [
       "Mitsubishi Eclipse GS 1995",
-      "Toyota Supra MK4",
       "Nissan Skyline R34",
+      "Toyota Supra MK4",
       "Mazda RX-7 FD"
     ],
     "correct_index": 0,
@@ -1111,12 +1111,12 @@
     "difficulty": "MEDIA",
     "question": "¿Qué legendario motor de 6 cilindros en línea biturbo escondía el Toyota Supra naranja que Brian y Dom restauran en el garaje?",
     "options": [
-      "2JZ-GTE",
-      "RB26DETT",
       "1JZ-GTE",
-      "SR20DET"
+      "2JZ-GTE",
+      "SR20DET",
+      "RB26DETT"
     ],
-    "correct_index": 0,
+    "correct_index": 1,
     "lore": "El bloque de hierro fundido del 2JZ-GTE de Toyota es legendario por soportar más de 800 CV con componentes internos originales de serie."
   },
   {
@@ -1125,12 +1125,12 @@
     "difficulty": "FÁCIL",
     "question": "¿Qué vehículo con franjas azules conduce Brian al inicio de '2 Fast 2 Furious' saltando un puente levadizo?",
     "options": [
-      "Nissan Skyline GT-R R34",
-      "Honda S2000 rosa",
       "Mazda RX-8",
-      "Acura NSX"
+      "Nissan Skyline GT-R R34",
+      "Acura NSX",
+      "Honda S2000 rosa"
     ],
-    "correct_index": 0,
+    "correct_index": 1,
     "lore": "El Skyline plateado con franjas azules era propiedad del propio Paul Walker, quien era un auténtico fanático del automovilismo y los autos JDM."
   },
   {
@@ -1140,8 +1140,8 @@
     "question": "¿Qué frase célebre le dice Dominic Toretto a Brian tras ganar la primera carrera del 1/4 de milla?",
     "options": [
       "'No importa si ganas por un centímetro o por un kilómetro, ganar es ganar.'",
-      "'El dinero va y viene, los fierros quedan.'",
       "'Un verdadero piloto nunca frena en curva.'",
+      "'El dinero va y viene, los fierros quedan.'",
       "'Si controlas el turbo, controlas la calle.'"
     ],
     "correct_index": 0,
@@ -1154,9 +1154,9 @@
     "question": "¿Qué sedán alemán blanco conducía Jesse en 'Race Wars' antes de perder los papeles del auto contra Johnny Tran?",
     "options": [
       "Volkswagen Jetta MK3 (Vento)",
+      "Audi 80 Quattro",
       "Volkswagen Golf MK3 GTI",
-      "BMW M3 E36",
-      "Audi 80 Quattro"
+      "BMW M3 E36"
     ],
     "correct_index": 0,
     "lore": "El Jetta no llevaba pinzas de freno traseras en varias tomas de la película, un curioso gazapo de producción que hoy es objeto de culto."
@@ -1167,12 +1167,12 @@
     "difficulty": "FÁCIL",
     "question": "¿Qué sustancia química inyectaban los pilotos en las admisiones para obtener un empuje salvaje en las rectas?",
     "options": [
-      "NOS (Oxido Nitroso / Nitrous Oxide)",
-      "Metanol puro de competición",
       "Etanol E85",
-      "Combustible de aviación"
+      "Combustible de aviación",
+      "NOS (Oxido Nitroso / Nitrous Oxide)",
+      "Metanol puro de competición"
     ],
-    "correct_index": 0,
+    "correct_index": 2,
     "lore": "El óxido nitroso aporta una cantidad masiva de oxígeno a la combustión al descomponerse por calor, multiplicando la potencia al instante."
   },
   {
@@ -1181,12 +1181,12 @@
     "difficulty": "MEDIA",
     "question": "¿Qué deportivo con motor rotativo y kit de ensanche VeilSide conducía Han Lue en Tokio en 'Tokyo Drift'?",
     "options": [
-      "Mazda RX-7 FD3S VeilSide Fortune",
-      "Nissan 350Z Nismo",
+      "Toyota Chaser",
       "Mitsubishi Evo IX",
-      "Toyota Chaser"
+      "Mazda RX-7 FD3S VeilSide Fortune",
+      "Nissan 350Z Nismo"
     ],
-    "correct_index": 0,
+    "correct_index": 2,
     "lore": "El kit VeilSide ensanchaba tanto el auto que muchos espectadores creyeron erróneamente que se trataba de un superdeportivo europeo."
   },
   {
@@ -1195,12 +1195,12 @@
     "difficulty": "DIFÍCIL",
     "question": "¿Qué motor tenía instalado el Ford Mustang clásico de 1967 que utiliza Sean Boswell para el descenso final en 'Tokyo Drift'?",
     "options": [
-      "Nissan RB26DETT Twin Turbo",
       "Ford 302 Windsor V8",
-      "Toyota 2JZ-GTE",
-      "General Motors LS3 V8"
+      "General Motors LS3 V8",
+      "Nissan RB26DETT Twin Turbo",
+      "Toyota 2JZ-GTE"
     ],
-    "correct_index": 0,
+    "correct_index": 2,
     "lore": "El trasplante de un motor RB26 de Skyline en un Mustang clásico causó sensación entre los entusiastas de todo el mundo."
   },
   {
@@ -1209,12 +1209,12 @@
     "difficulty": "MEDIA",
     "question": "¿Qué vehículo todoterreno acorazado conducía el agente especial Luke Hobbs (Dwayne Johnson) en Río de Janeiro?",
     "options": [
-      "Gurkha LAPV",
       "Hummer H1 Alpha",
+      "Gurkha LAPV",
       "Marauder",
       "Ford F-550 Super Duty"
     ],
-    "correct_index": 0,
+    "correct_index": 1,
     "lore": "El Terradyne Gurkha blindado pesa más de 6 toneladas y fue utilizado en 'Fast Five' para embestir muros en las favelas."
   },
   {
@@ -1223,12 +1223,12 @@
     "difficulty": "FÁCIL",
     "question": "¿Qué auto blanco conduce Brian en la emotiva escena de despedida 'See You Again' junto al Charger de Dom?",
     "options": [
-      "Toyota Supra MK4 blanco personal de Paul Walker",
       "Nissan Skyline R34 blanco",
+      "Subaru WRX STI",
       "Porsche 911 GT3 RS",
-      "Subaru WRX STI"
+      "Toyota Supra MK4 blanco personal de Paul Walker"
     ],
-    "correct_index": 0,
+    "correct_index": 3,
     "lore": "El Supra blanco que aparece al final de Furious 7 era propiedad personal de Paul Walker, un tributo auténtico de la producción a su memoria."
   },
   {
@@ -1237,12 +1237,12 @@
     "difficulty": "FÁCIL",
     "question": "¿A qué distancia exacta en metros equivale la célebre prueba de aceleración del 'Cuarto de Milla'?",
     "options": [
-      "402 metros",
-      "201 metros",
+      "1.000 metros",
       "500 metros",
-      "1.000 metros"
+      "402 metros",
+      "201 metros"
     ],
-    "correct_index": 0,
+    "correct_index": 2,
     "lore": "Exactamente 402,33 metros (1/4 de milla terrestre o 1.320 pies), el estándar mundial de drag racing nacido en las pistas de EE.UU."
   },
   {
@@ -1251,12 +1251,12 @@
     "difficulty": "MEDIA",
     "question": "¿Cómo se denomina el semáforo vertical oficial de largada con luces amarillas, verdes y rojas en las picadas?",
     "options": [
-      "El Arbol de Navidad (Christmas Tree)",
-      "La Torre de Boxes",
       "El Poste de Salida FIA",
-      "La Columna de Tiempo"
+      "El Arbol de Navidad (Christmas Tree)",
+      "La Columna de Tiempo",
+      "La Torre de Boxes"
     ],
-    "correct_index": 0,
+    "correct_index": 1,
     "lore": "El 'Christmas Tree' cuenta con fotocélulas de Pre-Stage, Stage y tres luces amarillas descendentes antes del verde de largada."
   },
   {
@@ -1265,12 +1265,12 @@
     "difficulty": "FÁCIL",
     "question": "¿Qué legendario motor 1.8 Turbo de 20 válvulas del Grupo Volkswagen es un ícono indiscutido de las picadas en Argentina?",
     "options": [
+      "2.8 VR6 12V",
       "1.8T 20V (Bora / Golf / Audi A3)",
-      "2.0 TSI EA888",
       "1.6 8V EA111",
-      "2.8 VR6 12V"
+      "2.0 TSI EA888"
     ],
-    "correct_index": 0,
+    "correct_index": 1,
     "lore": "El Bora 1.8T con turbos K04 o Garrett y reprogramaciones a medida es uno de los autos más populares en las pistas del Autódromo de Buenos Aires."
   },
   {
@@ -1279,12 +1279,12 @@
     "difficulty": "MEDIA",
     "question": "¿Qué objetivo tiene realizar un 'Burnout' (calentamiento de gomas en la zona de agua) antes de alistarse en la gatera?",
     "options": [
-      "Elevar la temperatura del compuesto para lograr máxima adherencia en la tirada",
-      "Limpiar el aceite del piso de boxes",
+      "Probar el sistema de frenos delanteros",
       "Enfriar la temperatura del diferencial",
-      "Probar el sistema de frenos delanteros"
+      "Limpiar el aceite del piso de boxes",
+      "Elevar la temperatura del compuesto para lograr máxima adherencia en la tirada"
     ],
-    "correct_index": 0,
+    "correct_index": 3,
     "lore": "Al patinar los neumáticos 'slick' de drag, la goma alcanza su temperatura óptima de trabajo y se vuelve blanda y pegajosa sobre el asfalto."
   },
   {
@@ -1293,12 +1293,12 @@
     "difficulty": "DIFÍCIL",
     "question": "¿Qué dispositivo electrónico limita las RPM en la largada y genera detonaciones para precargar presión en el turbo?",
     "options": [
-      "Two-Step / Launch Control",
+      "Booster Manual",
       "Shift Light",
-      "Wideband Lambda",
-      "Booster Manual"
+      "Two-Step / Launch Control",
+      "Wideband Lambda"
     ],
-    "correct_index": 0,
+    "correct_index": 2,
     "lore": "El Two-Step corta el encendido manteniendo la mariposa abierta; el combustible no quemado explota en el escape impulsando la turbina en parado."
   },
   {
@@ -1308,9 +1308,9 @@
     "question": "¿En qué histórico predio se realizan tradicionalmente las jornadas nocturnas de 'El Árbol de Picadas' en Buenos Aires?",
     "options": [
       "Autódromo Oscar y Juan Gálvez de Buenos Aires",
-      "Autódromo de La Plata",
       "Pista de San Jorge",
-      "Autódromo de Rosario"
+      "Autódromo de Rosario",
+      "Autódromo de La Plata"
     ],
     "correct_index": 0,
     "lore": "La recta principal del Autódromo porteño congrega cada viernes a miles de amantes de los fierros y la aceleración pura."
@@ -1322,9 +1322,9 @@
     "question": "¿Cómo se denominan las barras metálicas con rueditas colocadas en la cola de los autos más potentes para no volcar hacia atrás?",
     "options": [
       "Wheelie Bars",
-      "Barras Panhard",
+      "Camber Plates",
       "Sway Bars",
-      "Camber Plates"
+      "Barras Panhard"
     ],
     "correct_index": 0,
     "lore": "Al largar con gomas arrugadas ('wrinkle wall'), el torque es tan inmenso que levantaría las ruedas delanteras perdiendo dirección y tiempo."
@@ -1335,12 +1335,12 @@
     "difficulty": "DIFÍCIL",
     "question": "¿Qué tipo de combustible especial de dragsters y vehículos de clase libre contiene un aporte propio de oxígeno en su molécula?",
     "options": [
+      "Queroseno militar",
       "Nitrometano (CH3NO2)",
       "Nafta súper de 95 octanos",
-      "Queroseno militar",
       "Gas licuado de petróleo"
     ],
-    "correct_index": 0,
+    "correct_index": 1,
     "lore": "El nitrometano quema con muy poco aire exterior comparado con la nafta común, permitiendo quemar hasta 8 veces más combustible por cilindrada."
   },
   {
@@ -1349,12 +1349,12 @@
     "difficulty": "FÁCIL",
     "question": "¿Qué significa hacer 'Luz Roja' (Red Light) en la gatera de largada de una picada?",
     "options": [
-      "Largar antes de que el semáforo se ponga en verde (descalificación inmediata)",
-      "Tener poca presión de aceite en el motor",
       "Falla en los frenos traseros",
-      "Superar el tiempo límite de la categoría"
+      "Superar el tiempo límite de la categoría",
+      "Tener poca presión de aceite en el motor",
+      "Largar antes de que el semáforo se ponga en verde (descalificación inmediata)"
     ],
-    "correct_index": 0,
+    "correct_index": 3,
     "lore": "Si el neumático delantero abandona el haz de luz del sensor 'Stage' una milésima antes del verde, el sistema enciende la luz roja automáticamente."
   },
   {
@@ -1363,12 +1363,12 @@
     "difficulty": "MEDIA",
     "question": "¿Cómo se le llama en la jerga fierrera argentina cuando un vehículo clava el mejor tiempo exacto de su categoría?",
     "options": [
-      "Hacer el 'Tiempo Clavado' o 'Caerse de la clase'",
       "Tirar el ancla",
+      "Hacer corte ciego",
       "Patinar en vacío",
-      "Hacer corte ciego"
+      "Hacer el 'Tiempo Clavado' o 'Caerse de la clase'"
     ],
-    "correct_index": 0,
+    "correct_index": 3,
     "lore": "En las categorías por tiempo, si un piloto acelera más rápido del tiempo tope fijado (por ej. menos de 11.00s), queda descalificado por 'caída'."
   },
   {
@@ -1377,12 +1377,12 @@
     "difficulty": "MEDIA",
     "question": "¿Qué dispositivo de seguridad obligatorio frena a los bólidos que superan los 250 km/h al final de la recta de picadas?",
     "options": [
-      "Paracaídas de frenado trasero",
+      "Red de contención elástica",
       "Frenos de disco ventilados con ABS",
-      "Cama de leca de circuito",
-      "Red de contención elástica"
+      "Paracaídas de frenado trasero",
+      "Cama de leca de circuito"
     ],
-    "correct_index": 0,
+    "correct_index": 2,
     "lore": "El paracaídas eyectable estabiliza el auto a alta velocidad y reduce drásticamente la distancia de detención antes del fin de la recta de escape."
   }
 ]
