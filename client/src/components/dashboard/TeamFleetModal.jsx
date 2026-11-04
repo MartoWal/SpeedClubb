@@ -244,6 +244,7 @@ export default function TeamFleetModal() {
       const inventoryCount = invMap.get(v.id) || 0;
       const totalCount = (isPasted ? 1 : 0) + inventoryCount;
       const isUnlocked = totalCount > 0;
+      const isFavorite = favorites.includes(v.id);
 
       if (isUnlocked) totalUnlocked++;
       totalCopies += totalCount;
@@ -254,20 +255,34 @@ export default function TeamFleetModal() {
         inventoryCount,
         totalCount,
         isUnlocked,
+        isFavorite,
       };
     });
+
+    const totalFavorites = vehicles.filter(v => v.isFavorite).length;
 
     return {
       vehicles,
       totalUnlocked,
       totalLocked: catalog.length - totalUnlocked,
       totalCopies,
+      totalFavorites,
     };
-  }, [catalog, pastedVehicles, inventory]);
+  }, [catalog, pastedVehicles, inventory, favorites]);
+
+  // Filtered favorite vehicles matching active quality tier
+  const favoriteVehicles = useMemo(() => {
+    return fleetData.vehicles.filter(v => {
+      if (!v.isFavorite) return false;
+      if (tierFilter !== 'ALL' && v.tier !== tierFilter) return false;
+      return true;
+    });
+  }, [fleetData.vehicles, tierFilter]);
 
   // Compute tier counts dynamically for the active view mode
   const tierCounts = useMemo(() => {
     const baseList = fleetData.vehicles.filter(v => {
+      if (viewMode === 'FAVORITES') return v.isFavorite;
       if (viewMode === 'UNLOCKED') return v.isUnlocked;
       if (viewMode === 'LOCKED') return !v.isUnlocked;
       return true;
@@ -414,6 +429,18 @@ export default function TeamFleetModal() {
               </button>
 
               <button
+                onClick={() => { sound.playSelect(); setViewMode('FAVORITES'); }}
+                className={`px-3 py-1.5 rounded-lg transition-colors cursor-pointer whitespace-nowrap flex items-center gap-1.5 ${
+                  viewMode === 'FAVORITES'
+                    ? 'bg-gradient-to-r from-amber-500 to-yellow-400 text-black font-black shadow-md'
+                    : 'text-amber-400 hover:text-amber-300'
+                }`}
+              >
+                <Star className={`w-3.5 h-3.5 ${viewMode === 'FAVORITES' ? 'fill-black text-black' : 'fill-amber-400 text-amber-400'}`} />
+                <span>FAVORITOS ({fleetData.totalFavorites})</span>
+              </button>
+
+              <button
                 onClick={() => { sound.playSelect(); setViewMode('ALL'); }}
                 className={`px-3 py-1.5 rounded-lg transition-colors cursor-pointer whitespace-nowrap flex items-center gap-1.5 ${
                   viewMode === 'ALL'
@@ -509,6 +536,15 @@ export default function TeamFleetModal() {
           {/* Quick Thematic Jump Navigation Strip */}
           <div className="flex items-center gap-1 overflow-x-auto pb-1 scrollbar-none text-[10px] font-mono border-t border-zinc-800/60 pt-1.5">
             <span className="text-zinc-500 font-bold uppercase text-[9px] mr-1 hidden md:inline">IR A TEMÁTICA:</span>
+            {fleetData.totalFavorites > 0 && (
+              <button
+                onClick={() => scrollToTheme('favorites')}
+                className="px-2 py-0.5 rounded bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/50 hover:border-amber-400 text-amber-300 transition-colors cursor-pointer whitespace-nowrap flex items-center gap-1 font-bold"
+              >
+                <Star className="w-2.5 h-2.5 fill-amber-400 text-amber-400" />
+                <span>★ FAVORITOS ({fleetData.totalFavorites})</span>
+              </button>
+            )}
             {THEME_SECTIONS.map(theme => (
               <button
                 key={theme.id}
@@ -526,7 +562,162 @@ export default function TeamFleetModal() {
         {/* ======================================================== */}
         <div className="relative z-10 flex-1 overflow-y-auto px-1 sm:px-2 py-3 space-y-6 scrollbar-thin scrollbar-thumb-zinc-700 scrollbar-track-zinc-950">
           
-          {THEME_SECTIONS.map(theme => {
+          {/* ======================================================== */}
+          {/* DEDICATED FAVORITES SECTION: PINNED OR FILTER ACTIVE     */}
+          {/* ======================================================== */}
+          {(viewMode === 'FAVORITES' || (fleetData.totalFavorites > 0 && viewMode !== 'LOCKED')) && (
+            <section
+              id="theme-section-favorites"
+              className="rounded-2xl bg-zinc-950/90 border border-amber-500/40 p-3 sm:p-4 shadow-[0_0_30px_rgba(245,158,11,0.08)]"
+            >
+              {/* Thematic Header Plaque: Favorites VIP */}
+              <div className="p-3 rounded-xl bg-gradient-to-r from-amber-950/50 via-zinc-950 to-zinc-950 border border-amber-500/60 mb-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 shadow-md">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-8 h-8 rounded-lg bg-black/70 border border-amber-500/60 flex items-center justify-center text-amber-400 shadow">
+                    <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
+                  </div>
+                  <div className="flex flex-col text-left">
+                    <div className="flex items-center gap-2">
+                      <h3 className="font-racing text-base sm:text-lg text-white italic font-black uppercase tracking-wider leading-none">
+                        MIS FAVORITOS // <span className="text-amber-400">ESCUDERÍA DESTACADA</span>
+                      </h3>
+                      <span className="text-[9px] font-mono font-bold px-1.5 py-0.2 rounded border bg-amber-950 text-amber-300 border-amber-600/70">
+                        ★ PILOT SELECTION
+                      </span>
+                    </div>
+                    <span className="text-[10px] font-mono text-zinc-400 mt-0.5">
+                      Selección personal de vehículos destacados en tu flota de competición
+                    </span>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2 text-[10px] font-mono self-end sm:self-auto">
+                  <span className="text-zinc-400">FAVORITOS MOSTRADOS:</span>
+                  <span className="font-racing text-sm text-amber-300 font-bold italic bg-black/60 px-2 py-0.5 rounded border border-amber-500/40">
+                    {favoriteVehicles.length} / {fleetData.totalFavorites}
+                  </span>
+                </div>
+              </div>
+
+              {/* Empty state within favorites filter if quality tier matched 0 */}
+              {favoriteVehicles.length === 0 ? (
+                <div className="py-8 text-center flex flex-col items-center justify-center bg-zinc-900/40 rounded-xl border border-zinc-900">
+                  <Star className="w-8 h-8 text-zinc-600 mb-2" />
+                  <p className="text-zinc-400 font-mono text-xs italic">
+                    {fleetData.totalFavorites === 0
+                      ? 'No posees figuritas marcadas en favoritos aún.'
+                      : `No hay figuritas favoritas con la calidad seleccionada (${tierFilter}).`}
+                  </p>
+                  {fleetData.totalFavorites === 0 && (
+                    <button
+                      onClick={() => { sound.playSelect(); setViewMode('UNLOCKED'); }}
+                      className="mt-3 px-4 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-amber-300 border border-zinc-700 text-xs font-racing italic"
+                    >
+                      Explorar Desbloqueadas
+                    </button>
+                  )}
+                </div>
+              ) : (
+                /* Favorite Vehicles Grid */
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
+                  {favoriteVehicles.map(vehicle => {
+                    const tierStyle = tierBadgeStyles[vehicle.tier] || tierBadgeStyles.C;
+                    return (
+                      <motion.div
+                        key={`fav-${vehicle.id}`}
+                        whileHover={{ scale: 1.02, y: -3 }}
+                        onClick={() => {
+                          sound.playSelect();
+                          setSelectedVehicle(vehicle);
+                        }}
+                        title="Haz clic para ver en primer plano"
+                        className="rounded-xl bg-zinc-900/95 border border-amber-500/40 hover:border-amber-400 p-3 flex flex-col justify-between shadow-metallic transition-all cursor-pointer group relative overflow-hidden"
+                      >
+                        <div className="absolute inset-0 carbon-pattern opacity-30 pointer-events-none" />
+
+                        {/* Top Card Header */}
+                        <div className="relative z-10 flex items-center justify-between text-[10px] font-mono mb-2">
+                          <div className="flex items-center gap-1.5">
+                            <span className="font-bold text-zinc-300 bg-black/70 px-2 py-0.5 rounded border border-zinc-800">
+                              BAY #{String(vehicle.id).padStart(2, '0')}
+                            </span>
+                            <span className="p-0.5 rounded bg-amber-500/20 border border-amber-500/50 text-amber-400 shadow-sm" title="Favorito">
+                              <Star className="w-3 h-3 fill-amber-400 text-amber-400" />
+                            </span>
+                          </div>
+                          <span className={`px-2 py-0.5 rounded font-racing text-[10px] italic border ${tierStyle.bg}`}>
+                            {tierStyle.label} // {tierStyle.desc}
+                          </span>
+                        </div>
+
+                        {/* Photo */}
+                        <div className="relative z-10 w-full h-36 sm:h-40 rounded-lg overflow-hidden bg-black/80 border border-zinc-800 flex items-center justify-center my-1 group-hover:border-zinc-600 transition-colors">
+                          <img
+                            src={vehicle.image || vehicle.image_url}
+                            alt={vehicle.name}
+                            className="w-full h-full object-cover group-hover:scale-106 transition-transform duration-500"
+                            onError={(e) => {
+                              e.target.style.display = 'none';
+                              e.target.nextSibling.style.display = 'flex';
+                            }}
+                          />
+                          <div className="hidden absolute inset-0 flex flex-col items-center justify-center bg-zinc-900 text-zinc-400 p-2 text-center">
+                            <Car className="w-10 h-10 text-racing-red mb-1" />
+                            <span className="text-xs font-racing italic">{vehicle.name}</span>
+                          </div>
+
+                          <div className="absolute top-2 right-2 flex flex-col items-end gap-1 pointer-events-none">
+                            {vehicle.isPasted && (
+                              <span className="px-2 py-0.5 rounded bg-emerald-600 text-white font-racing text-[9px] italic font-black shadow-md flex items-center gap-1 border border-emerald-400/50">
+                                <CheckCircle2 className="w-3 h-3 stroke-[2.5]" />
+                                <span>PEGADA EN ÁLBUM</span>
+                              </span>
+                            )}
+                            {vehicle.inventoryCount > 0 && (
+                              <span className="px-2 py-0.5 rounded bg-amber-500 text-black font-racing text-[9px] italic font-black shadow-md border border-amber-300">
+                                +{vehicle.inventoryCount} EN SOBRES
+                              </span>
+                            )}
+                          </div>
+                        </div>
+
+                        {/* Info */}
+                        <div className="relative z-10 flex flex-col text-left mt-2">
+                          <h4 className="font-racing text-sm sm:text-base text-white italic font-black leading-tight group-hover:text-amber-300 transition-colors">
+                            {vehicle.name}
+                          </h4>
+                          <span className="text-[10px] font-mono text-zinc-400 mt-0.5">
+                            {vehicle.category}
+                          </span>
+                        </div>
+
+                        {/* Specs */}
+                        <div className="relative z-10 pt-2 mt-2 border-t border-zinc-800 grid grid-cols-2 gap-1 text-[10px] font-mono text-zinc-300">
+                          <div className="flex items-center gap-1.5">
+                            <Zap className="w-3 h-3 text-amber-400" />
+                            <span>{vehicle.hp} HP</span>
+                          </div>
+                          <div className="flex items-center gap-1.5 justify-end">
+                            <Gauge className="w-3 h-3 text-red-400" />
+                            <span>{vehicle.topSpeed} KM/H</span>
+                          </div>
+                          {vehicle.color && (
+                            <div className="col-span-2 flex items-center gap-1 text-zinc-400 text-[9px] truncate pt-0.5">
+                              <Palette className="w-2.5 h-2.5 text-zinc-500" />
+                              <span className="truncate">{vehicle.color}</span>
+                            </div>
+                          )}
+                        </div>
+                      </motion.div>
+                    );
+                  })}
+                </div>
+              )}
+            </section>
+          )}
+
+          {/* Regular Thematic Sections (only shown if not in exclusive FAVORITES mode) */}
+          {viewMode !== 'FAVORITES' && THEME_SECTIONS.map(theme => {
             // Filter vehicles for this specific theme
             const themeVehicles = fleetData.vehicles.filter(v => {
               if (v.category !== theme.categoryName) return false;
@@ -609,11 +800,18 @@ export default function TeamFleetModal() {
                             {/* Subtle Carbon Pattern */}
                             <div className="absolute inset-0 carbon-pattern opacity-30 pointer-events-none" />
 
-                            {/* Top Card Header: Bay # + Tier Badge */}
+                            {/* Top Card Header: Bay # + Tier Badge + Favorite Star */}
                             <div className="relative z-10 flex items-center justify-between text-[10px] font-mono mb-2">
-                              <span className="font-bold text-zinc-300 bg-black/70 px-2 py-0.5 rounded border border-zinc-800">
-                                BAY #{String(vehicle.id).padStart(2, '0')}
-                              </span>
+                              <div className="flex items-center gap-1.5">
+                                <span className="font-bold text-zinc-300 bg-black/70 px-2 py-0.5 rounded border border-zinc-800">
+                                  BAY #{String(vehicle.id).padStart(2, '0')}
+                                </span>
+                                {vehicle.isFavorite && (
+                                  <span className="p-0.5 rounded bg-amber-500/20 border border-amber-500/50 text-amber-400 shadow-sm" title="Marcado como Favorito">
+                                    <Star className="w-3 h-3 fill-amber-400 text-amber-400" />
+                                  </span>
+                                )}
+                              </div>
                               <span className={`px-2 py-0.5 rounded font-racing text-[10px] italic border ${tierStyle.bg}`}>
                                 {tierStyle.label} // {tierStyle.desc}
                               </span>
