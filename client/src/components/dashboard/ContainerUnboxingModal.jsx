@@ -457,7 +457,7 @@ export default function ContainerUnboxingModal() {
             </AnimatePresence>
 
             {/* Central 3D Container Display with Explosive Cinematic FX */}
-            <div className="relative w-full max-w-sm h-56 sm:h-60 rounded-2xl bg-black/80 border border-zinc-800 flex items-center justify-center p-4 my-1 overflow-hidden shadow-2xl">
+            <div className="relative w-full max-w-sm h-56 sm:h-60 rounded-2xl bg-black/90 border border-zinc-800 flex items-center justify-center p-0 my-1 overflow-hidden shadow-2xl">
               <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/40 pointer-events-none" />
 
               {/* Glowing Background Radial Beam during Charge-Up */}
@@ -497,7 +497,7 @@ export default function ContainerUnboxingModal() {
                 </>
               )}
 
-              {/* Container Image with Violent Shake and Disintegration */}
+              {/* Container Image - Fills entire container box with smooth explosion (no rotation shake) */}
               <motion.img
                 key={selectedType}
                 src={
@@ -509,19 +509,17 @@ export default function ContainerUnboxingModal() {
                 animate={
                   openingStage === 'charging'
                     ? {
-                        rotate: [-6, 6, -8, 8, -10, 10, -7, 7, 0],
-                        scale: [1, 1.05, 1.02, 1.12, 1.08, 1.16],
-                        filter: ['brightness(1)', 'brightness(1.3)', 'brightness(1.6)', 'brightness(2)'],
+                        scale: [1, 1.03, 1.06, 1.1],
+                        filter: ['brightness(1)', 'brightness(1.25)', 'brightness(1.5)', 'brightness(1.8)'],
                       }
                     : openingStage === 'exploding'
                     ? {
-                        scale: [1.16, 2.4],
+                        scale: [1.1, 2.2],
                         opacity: [1, 0],
-                        filter: 'blur(20px) brightness(3)',
+                        filter: 'blur(16px) brightness(2.5)',
                       }
                     : {
-                        y: [0, -6, 0],
-                        rotate: 0,
+                        y: [0, -4, 0],
                         scale: 1,
                         filter: 'brightness(1)',
                         opacity: 1,
@@ -534,7 +532,7 @@ export default function ContainerUnboxingModal() {
                     ? { duration: 0.55, ease: 'easeOut' }
                     : { duration: 3.5, repeat: Infinity, ease: 'easeInOut' }
                 }
-                className="max-h-44 sm:max-h-48 object-contain drop-shadow-2xl z-10"
+                className="w-full h-full object-cover z-10"
               />
 
               {/* Tactical Status Overlay during Charge-Up */}
