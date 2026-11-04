@@ -19,8 +19,6 @@ import {
   ShieldCheck, 
   Coins, 
   Activity, 
-  Flame, 
-  Gauge,
   CheckCircle2,
   X
 } from 'lucide-react';
@@ -113,10 +111,7 @@ export default function SpeedClubTvScreen() {
   const [newCommentText, setNewCommentText] = useState('');
   const [isPostingComment, setIsPostingComment] = useState(false);
 
-  // Simulated telemetry dials state
-  const [telemetryRpm, setTelemetryRpm] = useState(4200);
-  const [telemetryThrottle, setTelemetryThrottle] = useState(85);
-  const [telemetryGForce, setTelemetryGForce] = useState(1.15);
+
 
   const channels = useMemo(() => {
     if (tvSponsorStatus?.channels && tvSponsorStatus.channels.length > 0) {
@@ -162,17 +157,7 @@ export default function SpeedClubTvScreen() {
     return () => clearInterval(interval);
   }, [cooldownCountdown, fetchSponsorStatus]);
 
-  // Telemetry needle simulator while playing
-  useEffect(() => {
-    if (!isTvPlaying) return;
-    const interval = setInterval(() => {
-      const baseRpm = 5200 + Math.sin(Date.now() / 380) * 2900 + Math.random() * 500;
-      setTelemetryRpm(Math.round(Math.min(9200, Math.max(3200, baseRpm))));
-      setTelemetryThrottle(Math.round(75 + Math.sin(Date.now() / 500) * 20 + Math.random() * 5));
-      setTelemetryGForce(+(1.05 + Math.abs(Math.sin(Date.now() / 700) * 0.5)).toFixed(2));
-    }, 120);
-    return () => clearInterval(interval);
-  }, [isTvPlaying]);
+
 
   // Handle video timeupdate
   const handleTimeUpdate = () => {
@@ -524,32 +509,7 @@ export default function SpeedClubTvScreen() {
                 </div>
               )}
 
-              {/* Dynamic Live Telemetry Instruments Overlay */}
-              {isTvPlaying && (
-                <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between bg-zinc-950/90 px-3.5 py-1.5 rounded-lg border border-zinc-700 text-xs font-mono pointer-events-none z-10">
-                  <div className="flex items-center gap-4">
-                    <div className="flex items-center gap-1.5">
-                      <Gauge className="w-3.5 h-3.5 text-red-500" />
-                      <span className="text-zinc-400">RPM:</span>
-                      <span className="text-white font-bold">{telemetryRpm}</span>
-                    </div>
-                    <div className="hidden sm:flex items-center gap-1.5">
-                      <Flame className="w-3.5 h-3.5 text-amber-500" />
-                      <span className="text-zinc-400">ACELERADOR:</span>
-                      <span className="text-white font-bold">{telemetryThrottle}%</span>
-                    </div>
-                    <div className="hidden sm:flex items-center gap-1.5">
-                      <Activity className="w-3.5 h-3.5 text-blue-400" />
-                      <span className="text-zinc-400">G-LAT:</span>
-                      <span className="text-white font-bold">{telemetryGForce} G</span>
-                    </div>
-                  </div>
-                  <div className="text-emerald-400 font-bold flex items-center gap-1.5">
-                    <span className="w-2 h-2 rounded-full bg-emerald-500 inline-block" />
-                    <span>EN TRANSMISIÓN</span>
-                  </div>
-                </div>
-              )}
+
             </div>
 
             {/* Video Controls & Progress Bar */}
