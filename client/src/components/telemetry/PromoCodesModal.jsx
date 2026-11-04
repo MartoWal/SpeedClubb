@@ -59,16 +59,37 @@ export default function PromoCodesModal() {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/85 backdrop-blur-md overflow-hidden select-none">
-      {/* Background Ambience Layer */}
-      <div className="absolute inset-0 carbon-pattern opacity-25 pointer-events-none" />
+      {/* Themed Atmospheric Background (SpeedClub Brand Pattern) */}
+      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+        <motion.img
+          src="/assets/backgrounds/fondo_codigos.jpg"
+          alt="Fondo Códigos SpeedClub"
+          initial={{ opacity: 0, scale: 1.05 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5, ease: 'easeOut' }}
+          className="w-full h-full object-cover object-center filter brightness-[0.70] contrast-[1.12]"
+        />
+        {/* Shading & Vignette Overlays for Maximum Contrast */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/45 to-black/80" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-transparent to-black/60" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_20%,rgba(0,0,0,0.85)_100%)]" />
+      </div>
 
       {/* Main Container Window */}
       <motion.div
         initial={{ opacity: 0, scale: 0.94, y: 15 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.94 }}
-        className="relative z-10 w-full max-w-lg bg-zinc-950 border-2 border-zinc-700/80 rounded-2xl shadow-2xl flex flex-col overflow-hidden text-zinc-100"
+        className="relative z-10 w-full max-w-lg bg-zinc-950/90 backdrop-blur-xl border-2 border-amber-500/60 rounded-2xl shadow-[0_0_50px_rgba(0,0,0,0.9)] flex flex-col overflow-hidden text-zinc-100"
       >
+        {/* Interior Background Texture Underlay */}
+        <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden opacity-10">
+          <img
+            src="/assets/backgrounds/fondo_codigos.jpg"
+            alt=""
+            className="w-full h-full object-cover object-center filter contrast-125"
+          />
+        </div>
         {/* Top Header */}
         <div className="px-4 py-3 bg-zinc-900 border-b border-zinc-800 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
