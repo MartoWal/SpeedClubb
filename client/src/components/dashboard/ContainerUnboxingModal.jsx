@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useGarageStore } from '../../store/useGarageStore';
+import confetti from 'canvas-confetti';
 import { 
   Box, 
   Sparkles, 
@@ -14,9 +15,17 @@ import {
   RotateCcw,
   BookOpen,
   Plus,
-  AlertTriangle
+  AlertTriangle,
+  Zap
 } from 'lucide-react';
 import { sound } from '../../utils/soundEffects';
+
+const tierCardAuras = {
+  C: 'border-emerald-600/60 shadow-[0_0_20px_rgba(16,185,129,0.15)] hover:border-emerald-500',
+  B: 'border-blue-600/70 shadow-[0_0_25px_rgba(59,130,246,0.25)] hover:border-blue-400',
+  A: 'border-red-600 shadow-[0_0_30px_rgba(239,68,68,0.35)] hover:border-red-400 ring-1 ring-red-500/50',
+  S: 'border-amber-400 shadow-[0_0_40px_rgba(245,158,11,0.5)] hover:border-yellow-300 ring-2 ring-amber-400/80',
+};
 
 const tierBadgeStyles = {
   C: { bg: 'bg-zinc-800 text-zinc-200 border-zinc-600', label: 'TIER C' },
@@ -41,7 +50,8 @@ export default function ContainerUnboxingModal() {
   } = useGarageStore();
 
   const [selectedType, setSelectedType] = useState('standard');
-  const [isOpening, setIsOpening] = useState(false);
+  const [openingStage, setOpeningStage] = useState('idle'); // 'idle' | 'charging' | 'exploding'
+  const isOpening = openingStage !== 'idle';
   const [isBuying, setIsBuying] = useState(false);
   const [revealedCards, setRevealedCards] = useState(null);
   const [openedContainerType, setOpenedContainerType] = useState('standard');
@@ -61,23 +71,67 @@ export default function ContainerUnboxingModal() {
   const hasCredits = (racingCredits || 0) >= cost;
   const pastedIds = new Set((pastedVehicles || []).map((v) => v.id));
 
-  const handleStartOpen = () => {
-    if (currentAvailable <= 0) {
+  const handleStartOpen = async () => {
+    if (currentAvailable <= 0 || isOpening) {
       sound.playSelect();
       return;
     }
 
     sound.playSelect();
-    setIsOpening(true);
+    setOpeningStage('charging');
 
+    // Call backend in background
+    const resPromise = openContainer(selectedType);
+
+    // After 1.25s of violent shaking & charge-up, trigger explosive detonation
     setTimeout(async () => {
-      const res = await openContainer(selectedType);
-      if (res.success) {
-        setOpenedContainerType(res.containerType);
-        setRevealedCards(res.droppedVehicles);
-      }
-      setIsOpening(false);
-    }, 1200);
+      setOpeningStage('exploding');
+      sound.playExplosion();
+
+      // Launch energetic confetti fireworks
+      const isGold = selectedType === 'premium';
+      try {
+        confetti({
+          particleCount: isGold ? 110 : 80,
+          spread: 100,
+          origin: { y: 0.52 },
+          colors: isGold
+            ? ['#f59e0b', '#fbbf24', '#ffffff', '#d97706', '#fef08a', '#e11d48']
+            : ['#dc2626', '#ef4444', '#f59e0b', '#ffffff', '#7f1d1d', '#f97316'],
+          ticks: 220,
+          gravity: 1.15,
+          scalar: 1.25,
+        });
+      } catch (e) {}
+
+      const res = await resPromise;
+
+      // Reveal cards after explosion flash
+      setTimeout(() => {
+        if (res && res.success) {
+          setOpenedContainerType(res.containerType);
+          setRevealedCards(res.droppedVehicles);
+          sound.playReward();
+
+          // Extra golden burst if dropped an S or A tier!
+          const hasEpicOrLegendary = res.droppedVehicles?.some((v) => v.tier === 'S' || v.tier === 'A');
+          if (hasEpicOrLegendary) {
+            setTimeout(() => {
+              try {
+                confetti({
+                  particleCount: 75,
+                  spread: 120,
+                  origin: { y: 0.35 },
+                  colors: ['#f59e0b', '#fbbf24', '#ffffff', '#ef4444'],
+                  ticks: 180,
+                });
+              } catch (e) {}
+            }, 300);
+          }
+        }
+        setOpeningStage('idle');
+      }, 650);
+    }, 1250);
   };
 
   // Return to containers station (View 2) regardless of whether stock is > 0 or == 0
@@ -129,7 +183,7 @@ export default function ContainerUnboxingModal() {
         initial={{ opacity: 0, scale: 0.95, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.95, y: 20 }}
-        className="relative w-full max-w-2xl rounded-2xl bg-zinc-950 border-2 border-zinc-700/80 p-4 sm:p-6 shadow-2xl flex flex-col justify-between overflow-hidden"
+        className={`relative w-full ${revealedCards ? 'max-w-3xl' : 'max-w-2xl'} rounded-2xl bg-zinc-950 border-2 border-zinc-700/80 p-4 sm:p-6 shadow-2xl flex flex-col justify-between overflow-hidden transition-all duration-300`}
       >
         {/* Real Container Port Background with matte contrast overlay */}
         <div 
@@ -199,8 +253,8 @@ export default function ContainerUnboxingModal() {
               </p>
             </div>
 
-            {/* Revealed Cards Fan / Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 w-full my-2 max-h-[360px] overflow-y-auto px-1">
+            {/* Revealed Cards Fan / Grid - Spacious Responsive 3-Columns Layout */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3.5 w-full my-2 max-h-[430px] overflow-y-auto px-1 scrollbar-thin scrollbar-thumb-zinc-700">
               {revealedCards.map((v, idx) => {
                 const tierStyle = tierBadgeStyles[v.tier] || tierBadgeStyles.C;
                 const isAlreadyPasted = pastedIds.has(v.id);
@@ -210,27 +264,32 @@ export default function ContainerUnboxingModal() {
                 return (
                   <motion.div
                     key={`${v.id}-${idx}`}
-                    initial={{ opacity: 0, y: 30, scale: 0.9 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    transition={{ delay: idx * 0.12 }}
-                    className="rounded-xl bg-zinc-900/95 border border-zinc-700/80 p-2.5 flex flex-col justify-between shadow-metallic hover:border-zinc-500 transition-colors"
+                    initial={{ opacity: 0, y: 40, scale: 0.6, rotateY: 45 }}
+                    animate={{ opacity: 1, y: 0, scale: 1, rotateY: 0 }}
+                    transition={{ delay: idx * 0.14, type: 'spring', damping: 20, stiffness: 250 }}
+                    className={`rounded-xl bg-zinc-900/95 border p-3 flex flex-col justify-between shadow-metallic transition-all relative overflow-hidden group/card ${
+                      tierCardAuras[v.tier] || tierCardAuras.C
+                    }`}
                   >
+                    {/* Subtle metallic shine sweep across card */}
+                    <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent pointer-events-none opacity-40 group-hover/card:opacity-80 transition-opacity" />
+                    
                     {/* Card Top: Number + Tier */}
-                    <div className="flex items-center justify-between text-[9px] font-mono mb-1.5">
-                      <span className="bg-black/60 px-1.5 py-0.2 rounded text-zinc-400 border border-zinc-800">
-                        #{String(v.id).padStart(2, '0')}
+                    <div className="flex items-center justify-between text-[10px] font-mono mb-2">
+                      <span className="bg-black/70 px-2 py-0.5 rounded text-zinc-300 border border-zinc-800 font-bold">
+                        BAY #{String(v.id).padStart(2, '0')}
                       </span>
-                      <span className={`px-1.5 py-0.2 rounded font-racing text-[9px] italic border ${tierStyle.bg}`}>
+                      <span className={`px-2 py-0.5 rounded font-racing text-[10px] italic border ${tierStyle.bg}`}>
                         {tierStyle.label}
                       </span>
                     </div>
 
-                    {/* Figurine Photo */}
-                    <div className="w-full h-28 rounded-lg bg-black/60 overflow-hidden flex items-center justify-center border border-zinc-800 relative">
+                    {/* Figurine Photo (Spacious & Clean) */}
+                    <div className="w-full h-32 sm:h-36 rounded-lg bg-black/70 overflow-hidden flex items-center justify-center border border-zinc-800 relative">
                       <img
                         src={imgSrc}
                         alt={v.name}
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-cover group-hover/card:scale-105 transition-transform duration-500"
                         onError={(e) => {
                           if (catItem?.image && e.target.src !== window.location.origin + catItem.image) {
                             e.target.src = catItem.image;
@@ -240,24 +299,24 @@ export default function ContainerUnboxingModal() {
                         }}
                       />
                       {isAlreadyPasted ? (
-                        <span className="absolute bottom-1 right-1 bg-amber-500 text-black text-[8px] font-racing font-bold italic px-1.5 py-0.2 rounded shadow">
+                        <span className="absolute bottom-1.5 right-1.5 bg-amber-500 text-black text-[9px] font-racing font-black italic px-2 py-0.5 rounded shadow border border-amber-300">
                           REPETIDA
                         </span>
                       ) : (
-                        <span className="absolute bottom-1 right-1 bg-emerald-600 text-white text-[8px] font-racing font-bold italic px-1.5 py-0.2 rounded shadow">
+                        <span className="absolute bottom-1.5 right-1.5 bg-emerald-600 text-white text-[9px] font-racing font-black italic px-2 py-0.5 rounded shadow border border-emerald-400">
                           ¡NUEVA!
                         </span>
                       )}
                     </div>
 
-                    {/* Card Details */}
-                    <div className="mt-2 text-left">
-                      <h4 className="font-racing text-xs text-white italic font-bold truncate">
+                    {/* Card Details: Full Name & Tech Specs */}
+                    <div className="mt-2.5 text-left">
+                      <h4 className="font-racing text-xs sm:text-sm text-white italic font-bold leading-snug line-clamp-2">
                         {v.name}
                       </h4>
-                      <div className="flex items-center justify-between text-[9px] font-mono text-zinc-400 mt-0.5">
-                        <span className="truncate">{v.category}</span>
-                        <span className="text-zinc-300 font-bold">{v.hp} HP</span>
+                      <div className="flex items-center justify-between text-[10px] font-mono text-zinc-400 mt-1 pt-1 border-t border-zinc-800/60">
+                        <span className="truncate pr-1 text-zinc-400">{v.category}</span>
+                        <span className="text-amber-400 font-bold shrink-0">{v.hp} HP</span>
                       </div>
                     </div>
                   </motion.div>
@@ -397,10 +456,48 @@ export default function ContainerUnboxingModal() {
               )}
             </AnimatePresence>
 
-            {/* Central 3D Container Display */}
-            <div className="relative w-full max-w-sm h-52 sm:h-56 rounded-2xl bg-black/70 border border-zinc-800 flex items-center justify-center p-4 my-1 overflow-hidden shadow-inner">
+            {/* Central 3D Container Display with Explosive Cinematic FX */}
+            <div className="relative w-full max-w-sm h-56 sm:h-60 rounded-2xl bg-black/80 border border-zinc-800 flex items-center justify-center p-4 my-1 overflow-hidden shadow-2xl">
               <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/40 pointer-events-none" />
 
+              {/* Glowing Background Radial Beam during Charge-Up */}
+              {openingStage === 'charging' && (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.5 }}
+                  animate={{
+                    opacity: [0.3, 0.8, 0.4, 0.9],
+                    scale: [0.8, 1.4, 1.1, 1.5],
+                  }}
+                  transition={{ duration: 1.2, repeat: Infinity, ease: 'easeInOut' }}
+                  className={`absolute w-48 h-48 rounded-full blur-2xl pointer-events-none ${
+                    selectedType === 'premium'
+                      ? 'bg-gradient-to-r from-amber-500/60 via-yellow-400/80 to-amber-600/60'
+                      : 'bg-gradient-to-r from-red-600/60 via-orange-500/80 to-red-700/60'
+                  }`}
+                />
+              )}
+
+              {/* White-Hot Explosive Flash & Shockwave Ring during Explosion */}
+              {openingStage === 'exploding' && (
+                <>
+                  <motion.div
+                    initial={{ opacity: 1, scale: 0.8 }}
+                    animate={{ opacity: 0, scale: 2.8 }}
+                    transition={{ duration: 0.6, ease: 'easeOut' }}
+                    className="absolute inset-0 bg-white/90 z-30 pointer-events-none rounded-2xl"
+                  />
+                  <motion.div
+                    initial={{ opacity: 1, scale: 0.4 }}
+                    animate={{ opacity: 0, scale: 3.2 }}
+                    transition={{ duration: 0.65, ease: 'easeOut' }}
+                    className={`absolute w-36 h-36 rounded-full border-4 z-20 pointer-events-none ${
+                      selectedType === 'premium' ? 'border-amber-300 shadow-[0_0_50px_#f59e0b]' : 'border-red-400 shadow-[0_0_50px_#ef4444]'
+                    }`}
+                  />
+                </>
+              )}
+
+              {/* Container Image with Violent Shake and Disintegration */}
               <motion.img
                 key={selectedType}
                 src={
@@ -410,29 +507,54 @@ export default function ContainerUnboxingModal() {
                 }
                 alt="Container SpeedClub"
                 animate={
-                  isOpening
+                  openingStage === 'charging'
                     ? {
-                        rotate: [-3, 3, -4, 4, -2, 2, 0],
-                        scale: [1, 1.08, 1.02, 1.1, 1],
+                        rotate: [-6, 6, -8, 8, -10, 10, -7, 7, 0],
+                        scale: [1, 1.05, 1.02, 1.12, 1.08, 1.16],
+                        filter: ['brightness(1)', 'brightness(1.3)', 'brightness(1.6)', 'brightness(2)'],
+                      }
+                    : openingStage === 'exploding'
+                    ? {
+                        scale: [1.16, 2.4],
+                        opacity: [1, 0],
+                        filter: 'blur(20px) brightness(3)',
                       }
                     : {
                         y: [0, -6, 0],
+                        rotate: 0,
+                        scale: 1,
+                        filter: 'brightness(1)',
+                        opacity: 1,
                       }
                 }
                 transition={
-                  isOpening
-                    ? { duration: 1.2, ease: 'easeInOut' }
+                  openingStage === 'charging'
+                    ? { duration: 1.25, ease: 'easeInOut' }
+                    : openingStage === 'exploding'
+                    ? { duration: 0.55, ease: 'easeOut' }
                     : { duration: 3.5, repeat: Infinity, ease: 'easeInOut' }
                 }
-                className="max-h-44 sm:max-h-48 object-contain drop-shadow-2xl"
+                className="max-h-44 sm:max-h-48 object-contain drop-shadow-2xl z-10"
               />
 
-              {isOpening && (
-                <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-                  <div className="px-4 py-2 rounded-xl bg-black/95 border border-zinc-700 text-amber-300 font-racing text-sm italic font-black uppercase tracking-wider">
-                    DESENCRIPTANDO CONTENIDO...
+              {/* Tactical Status Overlay during Charge-Up */}
+              {openingStage === 'charging' && (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="absolute inset-0 bg-black/55 z-20 flex flex-col items-center justify-center p-3 text-center"
+                >
+                  <div className="flex items-center gap-1.5 text-amber-400 mb-1 animate-pulse">
+                    <Zap className="w-5 h-5 fill-amber-400" />
+                    <span className="font-mono text-[10px] font-bold tracking-widest uppercase text-amber-300">
+                      DESPRESURIZACIÓN CRÍTICA
+                    </span>
+                    <Zap className="w-5 h-5 fill-amber-400" />
                   </div>
-                </div>
+                  <div className="px-4 py-2 rounded-xl bg-black/95 border border-amber-500/80 text-amber-300 font-racing text-sm italic font-black uppercase tracking-wider shadow-[0_0_25px_rgba(245,158,11,0.4)]">
+                    ⚡ SOBRECARGA EN PROCESO...
+                  </div>
+                </motion.div>
               )}
             </div>
 
@@ -454,8 +576,8 @@ export default function ContainerUnboxingModal() {
                     <Box className="w-4 h-4" />
                     <span>
                       {isOpening 
-                        ? 'ABRIENDO...' 
-                        : `ABRIR SOBRE ${selectedType === 'premium' ? 'PREMIUM (5 FIGURITAS)' : 'COMÚN (3 FIGURITAS)'} // ${currentAvailable} DISPONIBLES`}
+                        ? 'DESPRESURIZANDO...' 
+                        : `Abrir container ${selectedType === 'premium' ? 'premium' : 'común'} (${currentAvailable})`}
                     </span>
                   </button>
 

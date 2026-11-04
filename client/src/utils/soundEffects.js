@@ -236,6 +236,60 @@ class SoundFX {
       osc.stop(now + 0.16);
     } catch (e) {}
   }
+
+  /**
+   * Explosive Container Detonation Sound
+   * Deep mechanical sub-bass impact + filtered noise burst.
+   */
+  playExplosion() {
+    if (!this.enabled) return;
+    try {
+      this.init();
+      if (!this.ctx) return;
+      const now = this.ctx.currentTime;
+
+      // Noise blast
+      const bufferSize = Math.floor(this.ctx.sampleRate * 0.45);
+      const buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
+      const data = buffer.getChannelData(0);
+      for (let i = 0; i < bufferSize; i++) {
+        data[i] = (Math.random() * 2 - 1) * 0.7;
+      }
+      const noise = this.ctx.createBufferSource();
+      noise.buffer = buffer;
+
+      const filter = this.ctx.createBiquadFilter();
+      filter.type = 'lowpass';
+      filter.frequency.setValueAtTime(950, now);
+      filter.frequency.exponentialRampToValueAtTime(70, now + 0.42);
+
+      const gain = this.ctx.createGain();
+      gain.gain.setValueAtTime(0.32, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.42);
+
+      noise.connect(filter);
+      filter.connect(gain);
+      gain.connect(this.ctx.destination);
+
+      // Heavy sub-bass impact thump
+      const osc = this.ctx.createOscillator();
+      const oscGain = this.ctx.createGain();
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(180, now);
+      osc.frequency.exponentialRampToValueAtTime(32, now + 0.38);
+
+      oscGain.gain.setValueAtTime(0.28, now);
+      oscGain.gain.exponentialRampToValueAtTime(0.001, now + 0.38);
+
+      osc.connect(oscGain);
+      oscGain.connect(this.ctx.destination);
+
+      noise.start(now);
+      osc.start(now);
+      noise.stop(now + 0.45);
+      osc.stop(now + 0.45);
+    } catch (e) {}
+  }
 }
 
 export const sound = new SoundFX();
