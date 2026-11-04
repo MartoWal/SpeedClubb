@@ -18,8 +18,28 @@ import {
   Award,
   ChevronDown,
   ArrowRight,
-  Palette
+  Palette,
+  Star
 } from 'lucide-react';
+
+const tierGlowStyles = {
+  C: {
+    border: 'border-emerald-500/80',
+    shadow: 'shadow-[0_0_50px_rgba(16,185,129,0.25)]',
+  },
+  B: {
+    border: 'border-blue-500/80',
+    shadow: 'shadow-[0_0_50px_rgba(59,130,246,0.25)]',
+  },
+  A: {
+    border: 'border-red-600/80',
+    shadow: 'shadow-[0_0_50px_rgba(239,68,68,0.25)]',
+  },
+  S: {
+    border: 'border-amber-400/90',
+    shadow: 'shadow-[0_0_60px_rgba(245,158,11,0.35)]',
+  },
+};
 import { sound } from '../../utils/soundEffects';
 
 const tierBadgeStyles = {
@@ -169,6 +189,44 @@ export default function TeamFleetModal() {
   
   // Automatic Quality / Tier Filter: 'ALL' | 'S' | 'A' | 'B' | 'C'
   const [tierFilter, setTierFilter] = useState('ALL');
+
+  // Selected Vehicle for Closeup Spotlight Modal
+  const [selectedVehicle, setSelectedVehicle] = useState(null);
+
+  // Favorites state persisted in localStorage
+  const [favorites, setFavorites] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem('speedclub_favorites') || '[]');
+    } catch {
+      return [];
+    }
+  });
+
+  const toggleFavorite = (vehicleId) => {
+    sound.playSelect();
+    setFavorites(prev => {
+      const next = prev.includes(vehicleId)
+        ? prev.filter(id => id !== vehicleId)
+        : [...prev, vehicleId];
+      try {
+        localStorage.setItem('speedclub_favorites', JSON.stringify(next));
+      } catch (err) {
+        console.error('Error saving favorites:', err);
+      }
+      return next;
+    });
+  };
+
+  // Close spotlight on Escape key
+  React.useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape' && selectedVehicle) {
+        setSelectedVehicle(null);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [selectedVehicle]);
 
   // Compute unlock & copy counts for all 28 vehicles
   const fleetData = useMemo(() => {
@@ -541,7 +599,11 @@ export default function TeamFleetModal() {
                           <motion.div
                             key={vehicle.id}
                             whileHover={{ scale: 1.02, y: -3 }}
-                            onClick={() => sound.playSelect()}
+                            onClick={() => {
+                              sound.playSelect();
+                              setSelectedVehicle(vehicle);
+                            }}
+                            title="Haz clic para ver en primer plano"
                             className="rounded-xl bg-zinc-900/95 border border-zinc-700/80 hover:border-amber-500/80 p-3 flex flex-col justify-between shadow-metallic transition-all cursor-pointer group relative overflow-hidden"
                           >
                             {/* Subtle Carbon Pattern */}
@@ -588,10 +650,7 @@ export default function TeamFleetModal() {
                                 )}
                               </div>
 
-                              {/* Total copies pill on bottom right */}
-                              <div className="absolute bottom-1.5 left-2 bg-black/85 backdrop-blur-sm px-2 py-0.5 rounded text-[9px] font-mono text-amber-300 border border-amber-500/40 font-bold">
-                                TOTAL: x{vehicle.totalCount} {vehicle.totalCount === 1 ? 'COPIA' : 'COPIAS'}
-                              </div>
+
                             </div>
 
                             {/* Vehicle Title & Info */}
@@ -744,6 +803,187 @@ export default function TeamFleetModal() {
         </div>
 
       </motion.div>
+
+      {/* ======================================================== */}
+      {/* SPOTLIGHT / PRIMER PLANO MODAL FOR SELECTED FIGURITA     */}
+      {/* ======================================================== */}
+      <AnimatePresence>
+        {selectedVehicle && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setSelectedVehicle(null)}
+            className="fixed inset-0 z-[60] flex items-center justify-center p-3 sm:p-6 bg-black/85 backdrop-blur-md select-none"
+          >
+            <motion.div
+              initial={{ scale: 0.92, y: 20, opacity: 0 }}
+              animate={{ scale: 1, y: 0, opacity: 1 }}
+              exit={{ scale: 0.92, y: 20, opacity: 0 }}
+              transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+              onClick={(e) => e.stopPropagation()}
+              className={`relative w-full max-w-2xl bg-zinc-950 rounded-2xl p-4 sm:p-6 border-2 ${
+                tierGlowStyles[selectedVehicle.tier]?.border || 'border-zinc-700'
+              } ${
+                tierGlowStyles[selectedVehicle.tier]?.shadow || 'shadow-2xl'
+              } flex flex-col gap-4 overflow-hidden`}
+            >
+              {/* Carbon pattern background in spotlight */}
+              <div className="absolute inset-0 carbon-pattern opacity-40 pointer-events-none" />
+
+              {/* Spotlight Header */}
+              <div className="relative z-10 flex items-center justify-between pb-3 border-b border-zinc-800">
+                <div className="flex items-center gap-2">
+                  <span className="font-bold text-xs font-mono text-zinc-300 bg-black/80 px-2.5 py-1 rounded-lg border border-zinc-700 shadow-sm">
+                    BAY #{String(selectedVehicle.id).padStart(2, '0')}
+                  </span>
+                  <span
+                    className={`px-2.5 py-0.5 rounded-lg font-racing text-xs italic border shadow-sm ${
+                      tierBadgeStyles[selectedVehicle.tier]?.bg || tierBadgeStyles.C.bg
+                    }`}
+                  >
+                    {tierBadgeStyles[selectedVehicle.tier]?.label || 'TIER C'} // {tierBadgeStyles[selectedVehicle.tier]?.desc || 'COMÚN'}
+                  </span>
+                </div>
+
+                <button
+                  onMouseEnter={() => sound.playHover()}
+                  onClick={() => {
+                    sound.playSelect();
+                    setSelectedVehicle(null);
+                  }}
+                  className="w-8 h-8 rounded-full bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 flex items-center justify-center text-zinc-400 hover:text-white transition-colors cursor-pointer"
+                  title="Cerrar vista en primer plano"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+
+              {/* Main Vehicle Image in High Resolution Display with Ambient Glow */}
+              <div className="relative z-10 w-full h-60 sm:h-80 rounded-xl overflow-hidden bg-black/95 border border-zinc-800 flex items-center justify-center shadow-inner group/spotlight">
+                {/* Ambient blur backdrop */}
+                <img
+                  src={selectedVehicle.image || selectedVehicle.image_url}
+                  alt=""
+                  className="absolute inset-0 w-full h-full object-cover blur-xl opacity-35 pointer-events-none scale-110"
+                />
+
+                {/* High quality vehicle display */}
+                <img
+                  src={selectedVehicle.image || selectedVehicle.image_url}
+                  alt={selectedVehicle.name}
+                  className="relative z-10 max-h-full max-w-full object-contain p-2 rounded-lg transition-transform duration-500 group-hover/spotlight:scale-105"
+                  onError={(e) => {
+                    e.target.style.display = 'none';
+                    e.target.nextSibling.style.display = 'flex';
+                  }}
+                />
+                <div className="hidden absolute inset-0 flex flex-col items-center justify-center bg-zinc-900 text-zinc-400 p-4 text-center">
+                  <Car className="w-12 h-12 text-racing-red mb-2" />
+                  <span className="text-sm font-racing italic">{selectedVehicle.name}</span>
+                </div>
+
+                {/* Dynamic Possession Badges */}
+                <div className="absolute top-3 right-3 flex flex-col items-end gap-1.5 pointer-events-none z-20">
+                  {selectedVehicle.isPasted && (
+                    <span className="px-2.5 py-1 rounded-lg bg-emerald-600 text-white font-racing text-[10px] italic font-black shadow-lg flex items-center gap-1.5 border border-emerald-400/50">
+                      <CheckCircle2 className="w-3.5 h-3.5 stroke-[2.5]" />
+                      <span>PEGADA EN ÁLBUM</span>
+                    </span>
+                  )}
+                  {selectedVehicle.inventoryCount > 0 && (
+                    <span className="px-2.5 py-1 rounded-lg bg-amber-500 text-black font-racing text-[10px] italic font-black shadow-lg border border-amber-300">
+                      +{selectedVehicle.inventoryCount} EN SOBRES
+                    </span>
+                  )}
+                </div>
+              </div>
+
+              {/* Vehicle Title & Temática */}
+              <div className="relative z-10 flex flex-col text-left">
+                <h3 className="font-racing text-xl sm:text-2xl text-white italic font-black leading-tight">
+                  {selectedVehicle.name}
+                </h3>
+                <div className="flex items-center gap-2 mt-1">
+                  <span className="text-xs font-mono text-zinc-400">
+                    Temática: <strong className="text-zinc-200">{selectedVehicle.category}</strong>
+                  </span>
+                </div>
+              </div>
+
+              {/* Technical Telemetry Specs */}
+              <div className="relative z-10 grid grid-cols-3 gap-2 text-xs font-mono">
+                <div className="p-2.5 rounded-xl bg-zinc-900/90 border border-zinc-800 flex flex-col items-center justify-center text-center">
+                  <div className="flex items-center gap-1 text-amber-400 mb-0.5">
+                    <Zap className="w-3.5 h-3.5" />
+                    <span className="text-[10px] text-zinc-400">POTENCIA</span>
+                  </div>
+                  <span className="font-racing text-sm sm:text-base text-white font-bold italic">
+                    {selectedVehicle.hp} HP
+                  </span>
+                </div>
+
+                <div className="p-2.5 rounded-xl bg-zinc-900/90 border border-zinc-800 flex flex-col items-center justify-center text-center">
+                  <div className="flex items-center gap-1 text-red-400 mb-0.5">
+                    <Gauge className="w-3.5 h-3.5" />
+                    <span className="text-[10px] text-zinc-400">VEL. MÁX</span>
+                  </div>
+                  <span className="font-racing text-sm sm:text-base text-white font-bold italic">
+                    {selectedVehicle.topSpeed} KM/H
+                  </span>
+                </div>
+
+                <div className="p-2.5 rounded-xl bg-zinc-900/90 border border-zinc-800 flex flex-col items-center justify-center text-center">
+                  <div className="flex items-center gap-1 text-blue-400 mb-0.5">
+                    <Palette className="w-3.5 h-3.5" />
+                    <span className="text-[10px] text-zinc-400">COLOR</span>
+                  </div>
+                  <span className="font-mono text-xs sm:text-sm text-zinc-200 font-bold truncate max-w-full">
+                    {selectedVehicle.color || 'Serie Motorsport'}
+                  </span>
+                </div>
+              </div>
+
+              {/* Action Buttons: Favoritos + Cerrar */}
+              <div className="relative z-10 pt-2 border-t border-zinc-800 flex items-center justify-between gap-3">
+                <button
+                  onMouseEnter={() => sound.playHover()}
+                  onClick={() => toggleFavorite(selectedVehicle.id)}
+                  className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-racing italic font-bold uppercase transition-all cursor-pointer border ${
+                    favorites.includes(selectedVehicle.id)
+                      ? 'bg-amber-500/20 text-amber-300 border-amber-500 shadow-[0_0_15px_rgba(245,158,11,0.3)]'
+                      : 'bg-zinc-900 hover:bg-zinc-800 text-zinc-300 border-zinc-700 hover:border-zinc-500'
+                  }`}
+                >
+                  <Star
+                    className={`w-4 h-4 ${
+                      favorites.includes(selectedVehicle.id)
+                        ? 'fill-amber-400 text-amber-400'
+                        : 'text-zinc-400'
+                    }`}
+                  />
+                  <span>
+                    {favorites.includes(selectedVehicle.id)
+                      ? 'EN FAVORITOS'
+                      : 'AGREGAR A FAVORITOS'}
+                  </span>
+                </button>
+
+                <button
+                  onMouseEnter={() => sound.playHover()}
+                  onClick={() => {
+                    sound.playSelect();
+                    setSelectedVehicle(null);
+                  }}
+                  className="px-4 py-2.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 text-zinc-300 hover:text-white text-xs font-racing italic font-bold uppercase cursor-pointer transition-colors"
+                >
+                  CERRAR
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
