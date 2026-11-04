@@ -19,7 +19,8 @@ import {
   ChevronDown,
   ArrowRight,
   Palette,
-  Star
+  Star,
+  Copy
 } from 'lucide-react';
 
 const tierGlowStyles = {
@@ -260,6 +261,7 @@ export default function TeamFleetModal() {
     });
 
     const totalFavorites = vehicles.filter(v => v.isFavorite).length;
+    const totalDuplicates = vehicles.filter(v => v.inventoryCount > 0).length;
 
     return {
       vehicles,
@@ -267,6 +269,7 @@ export default function TeamFleetModal() {
       totalLocked: catalog.length - totalUnlocked,
       totalCopies,
       totalFavorites,
+      totalDuplicates,
     };
   }, [catalog, pastedVehicles, inventory, favorites]);
 
@@ -284,7 +287,7 @@ export default function TeamFleetModal() {
     const baseList = fleetData.vehicles.filter(v => {
       if (viewMode === 'FAVORITES') return v.isFavorite;
       if (viewMode === 'UNLOCKED') return v.isUnlocked;
-      if (viewMode === 'LOCKED') return !v.isUnlocked;
+      if (viewMode === 'DUPLICATES') return v.inventoryCount > 0;
       return true;
     });
 
@@ -414,7 +417,7 @@ export default function TeamFleetModal() {
           {/* ======================================================== */}
           <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-2.5 pt-1">
             
-            {/* View Mode Tabs */}
+            {/* View Mode Tabs: Unified Clean Filters */}
             <div className="flex items-center gap-1 bg-zinc-900 p-1 rounded-xl border border-zinc-800 text-xs font-racing italic overflow-x-auto scrollbar-none">
               <button
                 onClick={() => { sound.playSelect(); setViewMode('UNLOCKED'); }}
@@ -425,7 +428,7 @@ export default function TeamFleetModal() {
                 }`}
               >
                 <CheckCircle2 className="w-3.5 h-3.5" />
-                <span>FIGURITAS DESBLOQUEADAS ({fleetData.totalUnlocked})</span>
+                <span>DESBLOQUEADAS ({fleetData.totalUnlocked})</span>
               </button>
 
               <button
@@ -441,27 +444,27 @@ export default function TeamFleetModal() {
               </button>
 
               <button
+                onClick={() => { sound.playSelect(); setViewMode('DUPLICATES'); }}
+                className={`px-3 py-1.5 rounded-lg transition-colors cursor-pointer whitespace-nowrap flex items-center gap-1.5 ${
+                  viewMode === 'DUPLICATES'
+                    ? 'bg-amber-600 text-white font-black shadow-md'
+                    : 'text-zinc-400 hover:text-white'
+                }`}
+              >
+                <Copy className="w-3.5 h-3.5" />
+                <span>REPETIDAS ({fleetData.totalDuplicates})</span>
+              </button>
+
+              <button
                 onClick={() => { sound.playSelect(); setViewMode('ALL'); }}
                 className={`px-3 py-1.5 rounded-lg transition-colors cursor-pointer whitespace-nowrap flex items-center gap-1.5 ${
                   viewMode === 'ALL'
-                    ? 'bg-amber-500 text-black font-black shadow-md'
+                    ? 'bg-zinc-200 text-black font-black shadow-md'
                     : 'text-zinc-400 hover:text-white'
                 }`}
               >
                 <Layers className="w-3.5 h-3.5" />
-                <span>COLECCIÓN COMPLETA ({catalog.length})</span>
-              </button>
-
-              <button
-                onClick={() => { sound.playSelect(); setViewMode('LOCKED'); }}
-                className={`px-3 py-1.5 rounded-lg transition-colors cursor-pointer whitespace-nowrap flex items-center gap-1.5 ${
-                  viewMode === 'LOCKED'
-                    ? 'bg-zinc-800 text-amber-300 font-black shadow border border-zinc-700'
-                    : 'text-zinc-400 hover:text-white'
-                }`}
-              >
-                <Lock className="w-3.5 h-3.5" />
-                <span>POR DESBLOQUEAR ({fleetData.totalLocked})</span>
+                <span>TODAS ({catalog.length})</span>
               </button>
             </div>
 
@@ -565,7 +568,7 @@ export default function TeamFleetModal() {
           {/* ======================================================== */}
           {/* DEDICATED FAVORITES SECTION: PINNED OR FILTER ACTIVE     */}
           {/* ======================================================== */}
-          {(viewMode === 'FAVORITES' || (fleetData.totalFavorites > 0 && viewMode !== 'LOCKED')) && (
+          {(viewMode === 'FAVORITES' || (fleetData.totalFavorites > 0 && viewMode !== 'DUPLICATES' && viewMode !== 'LOCKED')) && (
             <section
               id="theme-section-favorites"
               className="rounded-2xl bg-zinc-950/90 border border-amber-500/40 p-3 sm:p-4 shadow-[0_0_30px_rgba(245,158,11,0.08)]"
@@ -722,7 +725,7 @@ export default function TeamFleetModal() {
             const themeVehicles = fleetData.vehicles.filter(v => {
               if (v.category !== theme.categoryName) return false;
               if (viewMode === 'UNLOCKED' && !v.isUnlocked) return false;
-              if (viewMode === 'LOCKED' && v.isUnlocked) return false;
+              if (viewMode === 'DUPLICATES' && (!v.isUnlocked || v.inventoryCount <= 0)) return false;
               if (tierFilter !== 'ALL' && v.tier !== tierFilter) return false;
               return true;
             });
@@ -731,8 +734,8 @@ export default function TeamFleetModal() {
             const themeAllUnlocked = fleetData.vehicles.filter(v => v.category === theme.categoryName && v.isUnlocked).length;
             const themeTotalSlots = fleetData.vehicles.filter(v => v.category === theme.categoryName).length;
 
-            if (themeVehicles.length === 0 && viewMode === 'UNLOCKED') {
-              // If user selected "Unlocked" and has 0 in this theme, don't show an empty clutter section
+            if (themeVehicles.length === 0 && (viewMode === 'UNLOCKED' || viewMode === 'DUPLICATES')) {
+              // If user selected "Unlocked" or "Duplicates" and has 0 in this theme, don't show an empty clutter section
               return null;
             }
 
@@ -945,6 +948,27 @@ export default function TeamFleetModal() {
               </section>
             );
           })}
+
+          {/* If the user has 0 duplicates in entire fleet */}
+          {fleetData.totalDuplicates === 0 && viewMode === 'DUPLICATES' && (
+            <div className="py-16 text-center flex flex-col items-center justify-center">
+              <div className="w-16 h-16 rounded-full bg-zinc-900 border border-zinc-800 flex items-center justify-center text-amber-400 mb-3 shadow">
+                <Copy className="w-8 h-8 text-amber-400" />
+              </div>
+              <h3 className="font-racing text-lg text-white italic font-black uppercase">
+                NO TIENES FIGURITAS REPETIDAS
+              </h3>
+              <p className="text-xs font-mono text-zinc-400 max-w-md mt-1 mb-4">
+                Abre más sobres containers para obtener copias repetidas e intercambiarlas en el Paddock Trade.
+              </p>
+              <button
+                onClick={handleOpenContainers}
+                className="py-2.5 px-6 rounded-xl btn-racing-red text-white font-racing text-xs italic font-black uppercase cursor-pointer"
+              >
+                ABRIR SOBRES AHORA
+              </button>
+            </div>
+          )}
 
           {/* If the user has 0 unlocked in entire fleet */}
           {fleetData.totalUnlocked === 0 && viewMode === 'UNLOCKED' && (
