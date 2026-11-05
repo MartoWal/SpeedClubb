@@ -98,6 +98,7 @@ class Trade(Base):
     created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
     acceptor_user_id = Column(String(36), ForeignKey('users.id'), nullable=True)
     matched_at = Column(DateTime, nullable=True)
+    creator_seen = Column(Boolean, default=False, nullable=False)
 
     # Relationships
     offer_user = relationship("User", foreign_keys=[offer_user_id], back_populates="trades_offered")

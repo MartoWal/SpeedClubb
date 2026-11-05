@@ -65,6 +65,9 @@ def seed_database_if_empty():
             if "matched_at" not in trade_cols:
                 db.execute(text("ALTER TABLE trades ADD COLUMN matched_at DATETIME"))
                 print(">>> Columna 'matched_at' añadida a la tabla 'trades'.")
+            if "creator_seen" not in trade_cols:
+                db.execute(text("ALTER TABLE trades ADD COLUMN creator_seen BOOLEAN DEFAULT 0"))
+                print(">>> Columna 'creator_seen' añadida a la tabla 'trades'.")
             db.commit()
         except Exception as e:
             print(f">>> Info migración trades: {e}")
